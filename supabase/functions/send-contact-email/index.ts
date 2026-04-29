@@ -14,7 +14,9 @@ const BodySchema = z.object({
   message: z.string().trim().min(1).max(4000),
 });
 
-const DESTINATION = "hi@tintelle.com";
+// NOTE: Resend free tier only allows sending to the account owner's verified
+// email until tintelle.com is verified at resend.com/domains.
+const DESTINATION = "johnnycrypto289@gmail.com";
 
 const escape = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");

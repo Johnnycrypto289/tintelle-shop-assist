@@ -49,8 +49,11 @@ Deno.serve(async (req) => {
     const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (RESEND_API_KEY && LOVABLE_API_KEY) {
+      // Resend free tier blocks sending to arbitrary recipients until the
+      // domain is verified. Skip the welcome email until then — the signup
+      // is still saved to the database.
       try {
-        await fetch("https://connector-gateway.lovable.dev/resend/emails", {
+        const resp = await fetch("https://connector-gateway.lovable.dev/resend/emails", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -70,6 +73,10 @@ Deno.serve(async (req) => {
             </div>`,
           }),
         });
+        if (!resp.ok) {
+          const body = await resp.text();
+          console.warn("welcome email skipped (likely unverified domain):", resp.status, body);
+        }
       } catch (e) {
         console.error("welcome email failed", e);
       }
