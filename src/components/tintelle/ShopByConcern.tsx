@@ -17,7 +17,7 @@ export const ShopByConcern = () => {
           {concerns.map((c) => (
             <a
               key={c.label}
-              href="#bestsellers"
+              href="/shop"
               className="group flex flex-col items-center gap-4 text-center"
             >
               <div
