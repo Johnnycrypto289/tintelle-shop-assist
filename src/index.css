@@ -6,9 +6,9 @@
 @layer base {
   :root {
     /* Backgrounds */
-    --background: 36 47% 97%;        /* Soft Ivory #FBF8F4 */
+    --background: 6 50% 97%;         /* Soft Blush Ivory #FBF6F4 */
     --foreground: 22 11% 16%;        /* Charcoal #2D2926 */
-    --cream: 30 50% 93%;             /* Warm Cream #F5EDE3 */
+    --cream: 12 24% 93%;             /* Cool Blush Cream #F2EAE6 */
     --cream-foreground: 0 18% 36%;   /* Deep Mauve */
 
     --card: 0 0% 100%;
@@ -39,19 +39,19 @@
     --destructive: 0 65% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 35 20% 88%;            /* Cloud #E8E2DC */
-    --input: 35 20% 88%;
+    --border: 15 23% 88%;            /* Rose-tinted Cloud #E8DDD8 */
+    --input: 15 23% 88%;
     --ring: 0 38% 73%;
 
     --radius: 0.25rem;
 
-    --sidebar-background: 36 47% 97%;
+    --sidebar-background: 6 50% 97%;
     --sidebar-foreground: 22 11% 16%;
     --sidebar-primary: 0 38% 73%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 30 50% 93%;
+    --sidebar-accent: 12 24% 93%;
     --sidebar-accent-foreground: 0 18% 36%;
-    --sidebar-border: 35 20% 88%;
+    --sidebar-border: 15 23% 88%;
     --sidebar-ring: 0 38% 73%;
   }
 
