@@ -124,4 +124,5 @@ export const Footer = () => {
       <p>Skincare that shows. Color that cares.</p>
     </div>
   </footer>
-);
+  );
+};
