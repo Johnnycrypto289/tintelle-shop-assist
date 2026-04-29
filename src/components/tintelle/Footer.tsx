@@ -1,6 +1,10 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 type FooterLink = { label: string; href: string };
 
@@ -54,7 +58,34 @@ const renderLink = (l: FooterLink) => {
   );
 };
 
-export const Footer = () => (
+export const Footer = () => {
+  const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubscribe = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const trimmed = email.trim();
+    if (!trimmed || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+      toast.error("Please enter a valid email.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const { error } = await supabase.functions.invoke("subscribe-newsletter", {
+        body: { email: trimmed, source: "footer" },
+      });
+      if (error) throw error;
+      toast.success("You're in. Check your inbox for a welcome note.");
+      setEmail("");
+    } catch (err) {
+      console.error(err);
+      toast.error("Could not subscribe. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
   <footer className="bg-cream pt-16 pb-8 mt-8">
     <div className="container grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-12">
       <div className="space-y-4">
@@ -62,15 +93,18 @@ export const Footer = () => (
         <p className="text-sm text-taupe leading-relaxed max-w-xs">
           Join the Tintelle Community. Get early access to drops, shade guides, and skin-first rituals.
         </p>
-        <form onSubmit={(e) => e.preventDefault()} className="flex gap-2 pt-2">
+        <form onSubmit={handleSubscribe} className="flex gap-2 pt-2">
           <Input
             type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
+            maxLength={255}
             className="rounded-none bg-background border-mauve/30 placeholder:text-taupe/70"
             aria-label="Email address"
           />
-          <Button type="submit" className="rounded-none px-5 text-xs tracking-[0.18em] uppercase">
-            Join
+          <Button type="submit" disabled={submitting} className="rounded-none px-5 text-xs tracking-[0.18em] uppercase">
+            {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Join"}
           </Button>
         </form>
       </div>
