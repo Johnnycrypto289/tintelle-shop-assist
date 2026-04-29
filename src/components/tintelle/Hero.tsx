@@ -16,14 +16,14 @@ export const Hero = () => {
             Tinted skincare-makeup hybrids with real ingredients that deliver effortless, skin-first color.
           </p>
           <div className="flex flex-wrap gap-3 pt-2">
-            <Button asChild size="lg" className="rounded-none px-8 h-12 text-sm tracking-wider uppercase">
-              <a href="#bestsellers">Shop the Collection</a>
+            <Button asChild size="lg" className="rounded-none px-8 h-12 text-xs tracking-[0.18em] uppercase">
+              <a href="/shop">Shop the Collection</a>
             </Button>
             <Button
               asChild
               variant="outline"
               size="lg"
-              className="rounded-none px-8 h-12 text-sm tracking-wider uppercase border-mauve text-mauve hover:bg-mauve hover:text-background"
+              className="rounded-none px-8 h-12 text-xs tracking-[0.18em] uppercase border-mauve text-mauve hover:bg-mauve hover:text-background"
             >
               <a href="#routine">The Routine</a>
             </Button>
@@ -39,9 +39,9 @@ export const Hero = () => {
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="absolute -bottom-4 -left-4 hidden md:block bg-background border border-border px-6 py-4">
-            <p className="text-xs tracking-[0.2em] uppercase text-taupe">Dermatologist-tested</p>
-            <p className="font-serif text-mauve text-lg mt-1">Skin-first formulas</p>
+          <div className="absolute -bottom-4 -left-4 bg-background border border-border px-5 md:px-6 py-3 md:py-4">
+            <p className="text-[11px] tracking-[0.2em] uppercase text-taupe">Dermatologist-tested</p>
+            <p className="font-serif text-mauve text-base md:text-lg mt-1">Skin-first formulas</p>
           </div>
         </div>
       </div>
