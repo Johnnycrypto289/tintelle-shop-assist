@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { Heart, Search, User } from "lucide-react";
 import { CartDrawer } from "./CartDrawer";
+import { useCustomer } from "@/hooks/useCustomer";
 
 export const Header = () => {
+  const { isSignedIn } = useCustomer();
   const linkCls = "text-mauve hover:text-primary transition-colors text-sm";
   const iconCls = "p-2 text-mauve hover:text-primary transition-colors inline-flex items-center";
 
