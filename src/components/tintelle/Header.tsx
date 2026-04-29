@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { Heart, Search, User } from "lucide-react";
 import { CartDrawer } from "./CartDrawer";
+import { useCustomer } from "@/hooks/useCustomer";
 
 export const Header = () => {
+  const { isSignedIn } = useCustomer();
   const linkCls = "text-mauve hover:text-primary transition-colors text-sm";
   const iconCls = "p-2 text-mauve hover:text-primary transition-colors inline-flex items-center";
 
@@ -29,8 +31,16 @@ export const Header = () => {
           <Link to="/wishlist" aria-label="Wishlist" className={iconCls}>
             <Heart className="h-5 w-5" strokeWidth={1.5} />
           </Link>
-          <Link to="/account" aria-label="Account" className={`${iconCls} hidden sm:inline-flex`}>
-            <User className="h-5 w-5" strokeWidth={1.5} />
+          <Link
+            to="/account"
+            aria-label={isSignedIn ? "Account (signed in)" : "Account"}
+            className={`${iconCls} hidden sm:inline-flex ${isSignedIn ? "text-primary" : ""}`}
+          >
+            <User
+              className="h-5 w-5"
+              strokeWidth={1.5}
+              fill={isSignedIn ? "currentColor" : "none"}
+            />
           </Link>
           <CartDrawer />
         </div>

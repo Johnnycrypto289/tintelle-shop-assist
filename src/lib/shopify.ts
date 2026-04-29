@@ -125,3 +125,136 @@ export function formatPrice(amount: string | number, currency = "USD") {
   const value = typeof amount === "string" ? parseFloat(amount) : amount;
   return new Intl.NumberFormat("en-US", { style: "currency", currency, minimumFractionDigits: 0 }).format(value);
 }
+
+// ===== Shopify Customer Accounts (Storefront API) =====
+
+export interface ShopifyCustomer {
+  id: string;
+  firstName: string | null;
+  lastName: string | null;
+  email: string | null;
+  phone: string | null;
+  acceptsMarketing: boolean;
+  defaultAddress: ShopifyAddress | null;
+  orders: { edges: Array<{ node: ShopifyOrder }> };
+}
+
+export interface ShopifyAddress {
+  id?: string;
+  firstName: string | null;
+  lastName: string | null;
+  address1: string | null;
+  address2: string | null;
+  city: string | null;
+  province: string | null;
+  country: string | null;
+  zip: string | null;
+  phone: string | null;
+}
+
+export interface ShopifyOrder {
+  id: string;
+  orderNumber: number;
+  processedAt: string;
+  fulfillmentStatus: string | null;
+  financialStatus: string | null;
+  statusUrl: string;
+  totalPrice: { amount: string; currencyCode: string };
+  lineItems: {
+    edges: Array<{
+      node: {
+        title: string;
+        quantity: number;
+        variant: { image: { url: string; altText: string | null } | null } | null;
+      };
+    }>;
+  };
+  successfulFulfillments?: Array<{
+    trackingCompany: string | null;
+    trackingInfo: Array<{ number: string | null; url: string | null }>;
+  }>;
+}
+
+export interface ShopifyUserError {
+  field: string[] | null;
+  message: string;
+  code?: string;
+}
+
+export const CUSTOMER_CREATE_MUTATION = `
+  mutation customerCreate($input: CustomerCreateInput!) {
+    customerCreate(input: $input) {
+      customer { id email firstName lastName }
+      customerUserErrors { field message code }
+    }
+  }
+`;
+
+export const CUSTOMER_ACCESS_TOKEN_CREATE_MUTATION = `
+  mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
+    customerAccessTokenCreate(input: $input) {
+      customerAccessToken { accessToken expiresAt }
+      customerUserErrors { field message code }
+    }
+  }
+`;
+
+export const CUSTOMER_ACCESS_TOKEN_DELETE_MUTATION = `
+  mutation customerAccessTokenDelete($customerAccessToken: String!) {
+    customerAccessTokenDelete(customerAccessToken: $customerAccessToken) {
+      deletedAccessToken
+      userErrors { field message }
+    }
+  }
+`;
+
+export const CUSTOMER_RECOVER_MUTATION = `
+  mutation customerRecover($email: String!) {
+    customerRecover(email: $email) {
+      customerUserErrors { field message code }
+    }
+  }
+`;
+
+export const CUSTOMER_QUERY = `
+  query customer($customerAccessToken: String!) {
+    customer(customerAccessToken: $customerAccessToken) {
+      id
+      firstName
+      lastName
+      email
+      phone
+      acceptsMarketing
+      defaultAddress {
+        id firstName lastName address1 address2 city province country zip phone
+      }
+      orders(first: 20, sortKey: PROCESSED_AT, reverse: true) {
+        edges {
+          node {
+            id
+            orderNumber
+            processedAt
+            fulfillmentStatus
+            financialStatus
+            statusUrl
+            totalPrice { amount currencyCode }
+            lineItems(first: 10) {
+              edges {
+                node {
+                  title
+                  quantity
+                  variant { image { url altText } }
+                }
+              }
+            }
+            successfulFulfillments(first: 5) {
+              trackingCompany
+              trackingInfo { number url }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
