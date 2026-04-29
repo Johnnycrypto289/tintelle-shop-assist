@@ -1,31 +1,37 @@
 import { Link } from "react-router-dom";
-import { Search, User } from "lucide-react";
+import { Heart, Search, User } from "lucide-react";
 import { CartDrawer } from "./CartDrawer";
 
 export const Header = () => {
+  const linkCls = "text-mauve hover:text-primary transition-colors text-sm";
+  const iconCls = "p-2 text-mauve hover:text-primary transition-colors inline-flex items-center";
+
   return (
     <header className="sticky top-0 z-40 bg-background/85 backdrop-blur-md border-b border-border/60">
       <div className="container flex items-center justify-between h-20">
-        <nav className="hidden md:flex items-center gap-10 text-sm tracking-wide text-mauve flex-1">
-          <Link to="/" className="hover:text-primary transition-colors">Shop</Link>
-          <a href="#about" className="hover:text-primary transition-colors">About</a>
-          <a href="#routine" className="hover:text-primary transition-colors">Routine</a>
-          <a href="#journal" className="hover:text-primary transition-colors">Journal</a>
+        <nav className="hidden md:flex items-center gap-10 flex-1">
+          <Link to="/shop" className={linkCls}>Shop</Link>
+          <Link to="/about" className={linkCls}>About</Link>
+          <a href="/#routine" className={linkCls}>Routine</a>
+          <Link to="/journal" className={linkCls}>Journal</Link>
         </nav>
         <Link
           to="/"
-          className="font-serif text-2xl md:text-3xl tracking-[0.25em] text-mauve flex-1 text-center"
+          className="font-serif text-2xl md:text-[28px] font-medium tracking-[0.25em] text-mauve flex-1 text-center"
           aria-label="Tintelle home"
         >
           TINTELLE
         </Link>
-        <div className="flex items-center gap-2 md:gap-4 flex-1 justify-end text-mauve">
-          <button aria-label="Search" className="p-2 hover:text-primary transition-colors">
-            <Search className="h-5 w-5" />
-          </button>
-          <button aria-label="Account" className="p-2 hover:text-primary transition-colors hidden sm:inline-flex">
-            <User className="h-5 w-5" />
-          </button>
+        <div className="flex items-center gap-1 md:gap-2 flex-1 justify-end">
+          <Link to="/search" aria-label="Search" className={iconCls}>
+            <Search className="h-5 w-5" strokeWidth={1.5} />
+          </Link>
+          <Link to="/wishlist" aria-label="Wishlist" className={iconCls}>
+            <Heart className="h-5 w-5" strokeWidth={1.5} />
+          </Link>
+          <Link to="/account" aria-label="Account" className={`${iconCls} hidden sm:inline-flex`}>
+            <User className="h-5 w-5" strokeWidth={1.5} />
+          </Link>
           <CartDrawer />
         </div>
       </div>
