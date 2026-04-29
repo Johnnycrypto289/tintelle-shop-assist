@@ -115,8 +115,8 @@ const ProductDetail = () => {
                 <p className="text-[11px] tracking-[0.3em] uppercase text-taupe">{product.node.productType || "Tintelle"}</p>
                 <h1 className="font-serif text-3xl md:text-5xl text-mauve leading-[1.05] mt-3">{product.node.title}</h1>
                 <div className="flex items-center gap-3 mt-4">
-                  <span className="text-accent tracking-widest" aria-hidden>★★★★★</span>
-                  <span className="text-sm text-taupe">Reviews coming soon</span>
+                  <span className="text-taupe/40 tracking-widest" aria-hidden>☆☆☆☆☆</span>
+                  <span className="text-sm text-taupe">No reviews yet — be the first</span>
                 </div>
                 {variant && (
                   <p className="font-serif text-2xl text-mauve mt-5">
