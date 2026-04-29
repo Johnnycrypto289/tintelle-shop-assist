@@ -14,9 +14,8 @@ const BodySchema = z.object({
   message: z.string().trim().min(1).max(4000),
 });
 
-// NOTE: Resend free tier only allows sending to the account owner's verified
-// email until tintelle.com is verified at resend.com/domains.
-const DESTINATION = "johnnycrypto289@gmail.com";
+const DESTINATION = "hi@tintellebeauty.com";
+const FROM_ADDRESS = "Tintelle Contact <contact@tintellebeauty.com>";
 
 const escape = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -64,7 +63,7 @@ Deno.serve(async (req) => {
         "X-Connection-Api-Key": RESEND_API_KEY,
       },
       body: JSON.stringify({
-        from: "Tintelle Contact <onboarding@resend.dev>",
+        from: FROM_ADDRESS,
         to: [DESTINATION],
         reply_to: email,
         subject: `[Tintelle] ${topic} — ${firstName} ${lastName}`,

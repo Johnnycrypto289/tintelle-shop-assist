@@ -49,9 +49,6 @@ Deno.serve(async (req) => {
     const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (RESEND_API_KEY && LOVABLE_API_KEY) {
-      // Resend free tier blocks sending to arbitrary recipients until the
-      // domain is verified. Skip the welcome email until then — the signup
-      // is still saved to the database.
       try {
         const resp = await fetch("https://connector-gateway.lovable.dev/resend/emails", {
           method: "POST",
@@ -61,7 +58,7 @@ Deno.serve(async (req) => {
             "X-Connection-Api-Key": RESEND_API_KEY,
           },
           body: JSON.stringify({
-            from: "Tintelle <onboarding@resend.dev>",
+            from: "Tintelle <hello@tintellebeauty.com>",
             to: [parsed.data.email],
             subject: "Welcome to Tintelle",
             html: `<div style="font-family:Georgia,serif;color:#3a2f33;padding:24px">
