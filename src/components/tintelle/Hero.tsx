@@ -35,7 +35,11 @@ export const Hero = () => {
               src={heroImg}
               alt="Soft silk drape on warm cream marble — Tintelle aesthetic"
               width={1280}
-              height={1280}
+              height={1600}
+              loading="eager"
+              decoding="async"
+              // @ts-expect-error fetchpriority is a valid HTML attribute
+              fetchpriority="high"
               className="w-full h-full object-cover"
             />
           </div>
