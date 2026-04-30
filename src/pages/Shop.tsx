@@ -37,9 +37,15 @@ const Shop = () => {
     }
   };
 
+  // Virtual categories filter by title instead of productType
+  const VIRTUAL_CATEGORY_QUERIES: Record<string, string> = {
+    "Hydro Pencil": "title:'Eyebrow Pencil'",
+  };
+
   // If a category is set in URL, that takes precedence over filter tabs
   const query = category
-    ? `product_type:"${category.replace(/"/g, '\\"')}"`
+    ? VIRTUAL_CATEGORY_QUERIES[category] ??
+      `product_type:"${category.replace(/"/g, '\\"')}"`
     : filterFor(filter);
 
   const { data: products, isLoading } = useProducts(query, 50);
