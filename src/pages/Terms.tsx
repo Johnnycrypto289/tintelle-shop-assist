@@ -1,7 +1,7 @@
 import { LegalLayout } from "@/components/tintelle/LegalLayout";
 
 const sections = [
-  { id: "agreement", title: "1. Agreement", content: <p>By using tintelle.com you agree to these terms. If you don't, please don't use the site.</p> },
+  { id: "agreement", title: "1. Agreement", content: <p>By using tintellebeauty.com you agree to these terms. If you don't, please don't use the site.</p> },
   { id: "account", title: "2. Account", content: <p>You're responsible for the accuracy of information on your account and for keeping your password safe.</p> },
   { id: "orders", title: "3. Orders & payment", content: <p>All orders are subject to acceptance. Prices are in USD unless noted. Payment is processed by Shopify.</p> },
   { id: "shipping", title: "4. Shipping", content: <p>See our Shipping & Returns page for delivery times, rates, and address requirements.</p> },
@@ -14,13 +14,13 @@ const sections = [
   { id: "indemnity", title: "11. Indemnity", content: <p>You agree to indemnify Tintelle for losses arising from your misuse of the site or violation of these terms.</p> },
   { id: "law", title: "12. Governing law", content: <p>These terms are governed by the laws of the State of California, without regard to conflict-of-law principles.</p> },
   { id: "changes", title: "13. Changes", content: <p>We may update these terms from time to time. The effective date above reflects the latest revision.</p> },
-  { id: "contact", title: "14. Contact", content: <p>Questions: <a className="text-primary" href="mailto:hi@tintelle.com">hi@tintelle.com</a>.</p> },
+  { id: "contact", title: "14. Contact", content: <p>Questions: <a className="text-primary" href="mailto:hi@tintellebeauty.com">hi@tintellebeauty.com</a>.</p> },
 ];
 
 const Terms = () => (
   <LegalLayout
     pageTitle="Terms of Service"
-    metaDescription="The terms governing your use of tintelle.com and Tintelle products."
+    metaDescription="The terms governing your use of tintellebeauty.com and Tintelle products."
     intro="The boring-but-necessary rules for shopping with us. We've kept them as plain as possible."
     effectiveDate="April 1, 2026"
     sections={sections}

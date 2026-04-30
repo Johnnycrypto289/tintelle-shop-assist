@@ -48,7 +48,7 @@ const Shipping = () => (
         <h3 className="font-serif text-xl text-mauve">30-day Shade Match</h3>
         <p className="text-taupe leading-relaxed mt-3">
           If your shade isn't right, we'll replace it or refund — no questions, no fees. Email{" "}
-          <a className="text-mauve underline-offset-4 hover:underline" href="mailto:hi@tintelle.com">hi@tintelle.com</a>{" "}
+          <a className="text-mauve underline-offset-4 hover:underline" href="mailto:hi@tintellebeauty.com">hi@tintellebeauty.com</a>{" "}
           with your order ID and we'll send a prepaid label within the hour.
         </p>
       </div>
