@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { PageShell } from "@/components/tintelle/PageShell";
 import { Breadcrumbs } from "@/components/tintelle/Breadcrumbs";
+import { JournalHeroImage } from "@/components/tintelle/JournalHeroImage";
 import {
   JOURNAL_AUTHORS,
   JournalBlock,
@@ -85,11 +86,13 @@ const Post = () => {
 
       <div className="max-w-4xl mx-auto px-6 mb-14">
         <div className="aspect-[16/9] bg-cream overflow-hidden">
-          <img src={post.hero.src} alt={post.hero.alt} className="w-full h-full object-cover" />
+          <JournalHeroImage
+            handle={post.productHandles[0]}
+            alt={post.heroAlt}
+            loading="eager"
+            className="w-full h-full object-cover"
+          />
         </div>
-        {post.hero.credit && (
-          <p className="text-xs tracking-[0.18em] uppercase text-taupe mt-3 text-right">Photo · {post.hero.credit}</p>
-        )}
       </div>
 
       <article className="max-w-3xl mx-auto px-6 pb-20">
@@ -105,7 +108,11 @@ const Post = () => {
               {related.map((p) => (
                 <Link key={p.id} to={`/journal/${p.slug}`} className="group block bg-card border border-border">
                   <div className="aspect-[4/3] bg-cream overflow-hidden">
-                    <img src={p.hero.src} alt={p.hero.alt} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+                    <JournalHeroImage
+                      handle={p.productHandles[0]}
+                      alt={p.heroAlt}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                    />
                   </div>
                   <div className="p-5">
                     <p className="text-[10px] tracking-[0.3em] uppercase text-taupe">{p.category}</p>
