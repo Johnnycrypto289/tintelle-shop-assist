@@ -94,9 +94,9 @@ const Cart = () => {
 
   return (
     <PageShell title="Cart" description="Review your bag and check out.">
-      <section className="max-w-[1180px] mx-auto px-6 pt-14 pb-24">
-        <p className="text-xs tracking-[0.3em] uppercase text-taupe">Your bag</p>
-        <h1 className="font-serif text-4xl md:text-5xl text-mauve leading-[1.05] mt-3 mb-8">
+      <section className="max-w-[1180px] mx-auto px-4 sm:px-6 pt-10 md:pt-14 pb-24">
+        <p className="text-[11px] md:text-xs tracking-[0.3em] uppercase text-taupe">Your bag</p>
+        <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-mauve leading-[1.05] mt-2.5 md:mt-3 mb-6 md:mb-8">
           {step === "done" ? "Thank you." : "Checkout"}
         </h1>
 
@@ -112,7 +112,7 @@ const Cart = () => {
         ) : (
           <>
             <Steps />
-            <div className="grid md:grid-cols-[1fr_360px] gap-10 md:gap-12">
+            <div className="grid md:grid-cols-[1fr_360px] gap-8 md:gap-12">
               <div>
                 {step === "cart" && (
                   <div className="bg-card border border-border">
@@ -121,38 +121,43 @@ const Cart = () => {
                       return (
                         <div
                           key={i.variantId}
-                          className="grid grid-cols-[100px_1fr_auto] md:grid-cols-[120px_1fr_auto] gap-5 md:gap-6 p-5 md:p-6 border-b border-border items-center"
+                          className="grid grid-cols-[80px_1fr] sm:grid-cols-[100px_1fr_auto] md:grid-cols-[120px_1fr_auto] gap-4 sm:gap-5 md:gap-6 p-4 sm:p-5 md:p-6 border-b border-border items-start sm:items-center"
                         >
-                          <div className="w-[100px] h-[100px] md:w-[120px] md:h-[120px] bg-cream">
+                          <div className="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] md:w-[120px] md:h-[120px] bg-cream shrink-0">
                             {img && <img src={img.url} alt={i.product.node.title} className="w-full h-full object-cover" />}
                           </div>
-                          <div>
-                            <h4 className="font-serif text-mauve text-base md:text-lg">{i.product.node.title}</h4>
-                            <p className="text-sm text-taupe mt-1 mb-3">
+                          <div className="min-w-0">
+                            <h4 className="font-serif text-mauve text-sm sm:text-base md:text-lg leading-tight">{i.product.node.title}</h4>
+                            <p className="text-xs sm:text-sm text-taupe mt-1 mb-2 sm:mb-3">
                               {formatPrice(i.price.amount, i.price.currencyCode)}
                             </p>
-                            <div className="inline-flex items-center border border-mauve">
-                              <button onClick={() => updateQuantity(i.variantId, Math.max(1, i.quantity - 1))} className="px-3 h-9 text-mauve">−</button>
-                              <span className="px-3 font-serif text-mauve">{i.quantity}</span>
-                              <button onClick={() => updateQuantity(i.variantId, i.quantity + 1)} className="px-3 h-9 text-mauve">+</button>
+                            <div className="flex items-center gap-3 flex-wrap">
+                              <div className="inline-flex items-center border border-mauve">
+                                <button onClick={() => updateQuantity(i.variantId, Math.max(1, i.quantity - 1))} className="w-10 h-10 text-mauve" aria-label="Decrease">−</button>
+                                <span className="px-3 font-serif text-mauve">{i.quantity}</span>
+                                <button onClick={() => updateQuantity(i.variantId, i.quantity + 1)} className="w-10 h-10 text-mauve" aria-label="Increase">+</button>
+                              </div>
+                              <button
+                                onClick={() => removeItem(i.variantId)}
+                                className="text-[11px] tracking-[0.18em] uppercase text-taupe hover:text-mauve transition-colors"
+                              >
+                                Remove
+                              </button>
                             </div>
-                            <button
-                              onClick={() => removeItem(i.variantId)}
-                              className="ml-4 text-xs tracking-[0.18em] uppercase text-taupe hover:text-mauve transition-colors"
-                            >
-                              Remove
-                            </button>
+                            <p className="font-serif text-base sm:text-lg md:text-xl text-mauve mt-3 sm:hidden">
+                              {formatPrice(parseFloat(i.price.amount) * i.quantity, i.price.currencyCode)}
+                            </p>
                           </div>
-                          <p className="font-serif text-lg md:text-xl text-mauve">
+                          <p className="hidden sm:block font-serif text-lg md:text-xl text-mauve">
                             {formatPrice(parseFloat(i.price.amount) * i.quantity, i.price.currencyCode)}
                           </p>
                         </div>
                       );
                     })}
-                    <div className="p-5 md:p-6 flex items-center justify-between flex-wrap gap-3">
+                    <div className="p-4 sm:p-5 md:p-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                       <Link
                         to="/shop"
-                        className="text-xs tracking-[0.18em] uppercase text-taupe hover:text-mauve transition-colors"
+                        className="text-xs tracking-[0.18em] uppercase text-taupe hover:text-mauve transition-colors text-center sm:text-left"
                       >
                         ← Continue shopping
                       </Link>
@@ -160,7 +165,7 @@ const Cart = () => {
                         onClick={handleShopifyCheckout}
                         disabled={isLoading || isSyncing}
                         size="lg"
-                        className="rounded-none h-12 px-7 text-xs tracking-[0.18em] uppercase"
+                        className="rounded-none h-12 px-7 text-xs tracking-[0.18em] uppercase w-full sm:w-auto"
                       >
                         {isLoading || isSyncing ? (
                           <Loader2 className="h-4 w-4 animate-spin" />

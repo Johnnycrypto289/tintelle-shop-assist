@@ -6,12 +6,12 @@ export const Bestsellers = () => {
   const { data: products, isLoading } = useProducts("tag:bestseller", 6);
 
   return (
-    <section id="bestsellers" className="py-16 md:py-24 bg-background">
+    <section id="bestsellers" className="py-12 md:py-24 bg-background">
       <div className="container">
-        <div className="text-center max-w-xl mx-auto mb-12">
-          <p className="text-xs tracking-[0.3em] uppercase text-taupe">Bestsellers</p>
-          <h2 className="font-serif text-3xl md:text-4xl text-mauve mt-3">The Essentials</h2>
-          <p className="text-taupe mt-3">The trio our community can't put down.</p>
+        <div className="text-center max-w-xl mx-auto mb-8 md:mb-12">
+          <p className="text-[11px] md:text-xs tracking-[0.3em] uppercase text-taupe">Bestsellers</p>
+          <h2 className="font-serif text-2xl md:text-4xl text-mauve mt-2.5 md:mt-3">The Essentials</h2>
+          <p className="text-taupe mt-2.5 md:mt-3 text-sm md:text-base">The trio our community can't put down.</p>
         </div>
 
         {isLoading ? (
@@ -19,7 +19,7 @@ export const Bestsellers = () => {
             <Loader2 className="h-6 w-6 animate-spin text-mauve" />
           </div>
         ) : products && products.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 md:gap-8">
             {products.slice(0, 3).map((p) => (
               <ProductCard key={p.node.id} product={p} />
             ))}
