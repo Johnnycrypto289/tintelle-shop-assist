@@ -288,28 +288,31 @@ const ProductDetail = () => {
                   {keyIngredientsHtml && (
                     <AccordionItem value="key" className="border-border">
                       <AccordionTrigger className="text-mauve font-serif text-base">Key Ingredients</AccordionTrigger>
-                      <AccordionContent
-                        className="text-taupe leading-relaxed [&_p]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_ol]:list-decimal [&_ol]:pl-5"
-                        dangerouslySetInnerHTML={{ __html: keyIngredientsHtml }}
-                      />
+                      <AccordionContent className="text-taupe leading-relaxed">
+                        <div
+                          className="[&_p]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_ol]:list-decimal [&_ol]:pl-5"
+                          dangerouslySetInnerHTML={{ __html: keyIngredientsHtml }}
+                        />
+                      </AccordionContent>
                     </AccordionItem>
                   )}
                   {ingredientsHtml && (
                     <AccordionItem value="full" className="border-border">
                       <AccordionTrigger className="text-mauve font-serif text-base">Full Ingredient List</AccordionTrigger>
-                      <AccordionContent
-                        className="text-taupe leading-relaxed [&_p]:mb-2"
-                        dangerouslySetInnerHTML={{ __html: ingredientsHtml }}
-                      />
+                      <AccordionContent className="text-taupe leading-relaxed">
+                        <div className="[&_p]:mb-2" dangerouslySetInnerHTML={{ __html: ingredientsHtml }} />
+                      </AccordionContent>
                     </AccordionItem>
                   )}
                   {usageHtml && (
                     <AccordionItem value="how" className="border-border">
                       <AccordionTrigger className="text-mauve font-serif text-base">How to Use</AccordionTrigger>
-                      <AccordionContent
-                        className="text-taupe leading-relaxed [&_p]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_ol]:list-decimal [&_ol]:pl-5"
-                        dangerouslySetInnerHTML={{ __html: usageHtml }}
-                      />
+                      <AccordionContent className="text-taupe leading-relaxed">
+                        <div
+                          className="[&_p]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_ol]:list-decimal [&_ol]:pl-5"
+                          dangerouslySetInnerHTML={{ __html: usageHtml }}
+                        />
+                      </AccordionContent>
                     </AccordionItem>
                   )}
                 </Accordion>
