@@ -10,7 +10,7 @@ const inputCls =
 const labelCls = "block text-[11px] tracking-[0.2em] uppercase text-taupe mb-2";
 
 const CHANNELS = [
-  { icon: Mail, label: "Email", value: "hi@tintelle.com", note: "Replies within 1 business day" },
+  { icon: Mail, label: "Email", value: "hi@tintellebeauty.com", note: "Replies within 1 business day" },
   { icon: MessageCircle, label: "Live chat", value: "Mon–Fri · 9am–6pm PT", note: "From the help icon, bottom-right" },
   { icon: MapPin, label: "Studio", value: "1280 Hayes Street, San Francisco", note: "By appointment only" },
 ];
@@ -42,7 +42,7 @@ const Contact = () => {
       (e.target as HTMLFormElement).reset();
     } catch (err) {
       console.error(err);
-      toast.error("Could not send message. Please try again or email hi@tintelle.com.");
+      toast.error("Could not send message. Please try again or email hi@tintellebeauty.com.");
     } finally {
       setSubmitting(false);
     }

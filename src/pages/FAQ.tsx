@@ -7,7 +7,7 @@ const FAQ_DATA = [
     category: "Orders",
     items: [
       { q: "How long does it take to process my order?", a: "Orders ship within 1–2 business days. You'll get tracking the moment it's on the truck." },
-      { q: "Can I edit or cancel an order?", a: "Yes — within 60 minutes of placing it. After that the warehouse takes over. Email hi@tintelle.com and we'll do our best." },
+      { q: "Can I edit or cancel an order?", a: "Yes — within 60 minutes of placing it. After that the warehouse takes over. Email hi@tintellebeauty.com and we'll do our best." },
       { q: "Do you ship internationally?", a: "U.S., Canada, and the U.K. for now. EU and Australia later this year." },
     ],
   },
@@ -56,7 +56,7 @@ const FAQ = () => {
           Frequently asked.
         </h1>
         <p className="text-base md:text-lg text-taupe max-w-xl leading-relaxed mt-4">
-          Can't find your answer? Email <a className="text-mauve underline-offset-4 hover:underline" href="mailto:hi@tintelle.com">hi@tintelle.com</a>.
+          Can't find your answer? Email <a className="text-mauve underline-offset-4 hover:underline" href="mailto:hi@tintellebeauty.com">hi@tintellebeauty.com</a>.
         </p>
         <input
           value={query}
