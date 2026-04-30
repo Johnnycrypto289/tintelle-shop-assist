@@ -52,8 +52,10 @@ export const Hero = () => {
               <p className="text-[10px] md:text-[11px] tracking-[0.45em] uppercase text-white/85 mb-5 md:mb-7">
                 Tintelle — Est. Beauty
               </p>
-              <h1 className="font-serif font-light text-white leading-[1] tracking-[-0.015em] text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[88px]">
-                Color <span className="italic font-extralight">that cares.</span>
+              <h1 className="font-serif font-light text-petal leading-[0.95] tracking-[-0.015em] text-5xl sm:text-6xl md:text-7xl lg:text-[112px]">
+                Color
+                <br />
+                <span className="italic font-extralight">that cares.</span>
               </h1>
               <p className="mt-6 md:mt-8 text-white/80 text-sm md:text-base max-w-md leading-relaxed font-light">
                 Tinted skincare-makeup hybrids, crafted with real ingredients for effortless, skin-first color.
