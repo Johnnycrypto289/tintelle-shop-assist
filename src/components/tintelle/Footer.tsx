@@ -43,14 +43,36 @@ const cols: { title: string; links: FooterLink[] }[] = [
 ];
 
 const renderLink = (l: FooterLink) => {
-  const isExternalRoute = l.href.startsWith("/#") || l.href.startsWith("http");
-  if (isExternalRoute) {
+  const isHttp = l.href.startsWith("http");
+  const hasHash = l.href.includes("#");
+
+  if (isHttp) {
     return (
-      <a href={l.href} className="hover:text-primary transition-colors block py-1">
+      <a href={l.href} className="hover:text-primary transition-colors block py-1" target="_blank" rel="noreferrer">
         {l.label}
       </a>
     );
   }
+
+  // For in-app hash links, use a plain anchor so the browser scrolls to the section
+  // (react-router <Link> ignores hash fragments and PageShell forces scrollTo(0,0)).
+  if (hasHash) {
+    const handleHashClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+      const [path, hash] = l.href.split("#");
+      if (window.location.pathname === path) {
+        e.preventDefault();
+        const el = document.getElementById(hash);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      // else: let the browser navigate; effect below handles scroll on arrival
+    };
+    return (
+      <a href={l.href} onClick={handleHashClick} className="hover:text-primary transition-colors block py-1">
+        {l.label}
+      </a>
+    );
+  }
+
   return (
     <Link to={l.href} className="hover:text-primary transition-colors block py-1">
       {l.label}

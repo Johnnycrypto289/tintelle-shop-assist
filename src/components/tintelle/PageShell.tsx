@@ -31,7 +31,18 @@ export const PageShell = ({ children, title, description }: PageShellProps) => {
       document.head.appendChild(canonical);
     }
     canonical.setAttribute("href", canonicalHref);
-    window.scrollTo(0, 0);
+    // Honor hash anchors (e.g. /about#ingredients) instead of always jumping to top
+    if (window.location.hash) {
+      const id = window.location.hash.slice(1);
+      // Wait a tick for the section to render
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        else window.scrollTo(0, 0);
+      }, 50);
+    } else {
+      window.scrollTo(0, 0);
+    }
   }, [title, description]);
 
   return (
