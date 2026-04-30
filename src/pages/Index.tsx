@@ -1,4 +1,3 @@
-import { AnnouncementBar } from "@/components/tintelle/AnnouncementBar";
 import { Header } from "@/components/tintelle/Header";
 import { Hero } from "@/components/tintelle/Hero";
 import { ShopByCategory } from "@/components/tintelle/ShopByCategory";
@@ -10,7 +9,6 @@ import { Footer } from "@/components/tintelle/Footer";
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
-      <AnnouncementBar />
       <Header />
       <main>
         <Hero />
