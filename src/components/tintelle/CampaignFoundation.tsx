@@ -12,13 +12,19 @@ import model3 from "@/assets/model-foundation-3.webp";
  * featured Foundation product. Click anywhere → /shop?category=foundation
  */
 export const CampaignFoundation = () => {
-  // Try to surface a real foundation product; fall back to first product.
-  const tagged = useProducts("tag:foundation OR product_type:Foundation OR title:foundation", 1);
-  const fallback = useProducts(undefined, 1);
-  const product = tagged.data?.[0] ?? fallback.data?.[0] ?? null;
+  // Featured: Foundation - Maple
+  const mapleQuery = useProducts('title:"Foundation - Maple" OR title:Maple', 1);
+  // Sienna tile actually shows the "Amber" foundation
+  const amberQuery = useProducts('title:"Foundation - Amber" OR title:Amber', 1);
+  const fallback = useProducts("tag:foundation OR product_type:Foundation OR title:foundation", 1);
+
+  const product = mapleQuery.data?.[0] ?? fallback.data?.[0] ?? null;
+  const amberProduct = amberQuery.data?.[0] ?? null;
   const variant = product?.node.variants.edges[0]?.node;
 
-  const shopHref = "/shop?category=foundation";
+  const shopHref = "/shop?category=Foundation";
+  const mapleHref = product ? `/product/${product.node.handle}` : shopHref;
+  const amberHref = amberProduct ? `/product/${amberProduct.node.handle}` : shopHref;
 
   return (
     <section className="relative bg-background py-16 md:py-28 overflow-hidden">
@@ -48,34 +54,37 @@ export const CampaignFoundation = () => {
 
         {/* Editorial grid: 3 portraits + product detail */}
         <div className="grid grid-cols-12 gap-4 md:gap-6">
-          {/* Left tall portrait */}
+          {/* Left tall portrait — Foundation: Amber */}
           <Link
-            to={shopHref}
+            to={amberHref}
             className="col-span-6 md:col-span-4 row-span-2 group relative overflow-hidden bg-cream aspect-[3/5]"
           >
             <img
               src={model3}
-              alt="Tintelle foundation campaign — model with foundation bottle"
+              alt="Tintelle Foundation — Amber shade"
               loading="lazy"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]"
             />
             <div className="absolute inset-x-0 bottom-0 p-4 md:p-6 bg-gradient-to-t from-black/40 to-transparent">
-              <p className="text-[10px] tracking-[0.32em] uppercase text-white/90">Shade 06 — Sienna</p>
+              <p className="text-[10px] tracking-[0.32em] uppercase text-white/90">Foundation — Amber</p>
             </div>
           </Link>
 
-          {/* Top right portrait */}
+          {/* Top right portrait — Foundation: Maple */}
           <Link
-            to={shopHref}
+            to={mapleHref}
             className="col-span-6 md:col-span-5 group relative overflow-hidden bg-cream aspect-[4/3]"
           >
             <img
               src={model2}
-              alt="Tintelle foundation campaign — natural light portrait"
+              alt="Tintelle Foundation — Maple shade"
               loading="lazy"
               style={{ objectPosition: "center 25%" }}
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]"
             />
+            <div className="absolute inset-x-0 bottom-0 p-3 md:p-5 bg-gradient-to-t from-black/40 to-transparent">
+              <p className="text-[10px] tracking-[0.32em] uppercase text-white/90">Foundation — Maple</p>
+            </div>
           </Link>
 
           {/* Product detail card — replaces "boring panel" with editorial spec sheet */}
@@ -110,7 +119,7 @@ export const CampaignFoundation = () => {
                   </Link>
                 </div>
               </>
-            ) : tagged.isLoading || fallback.isLoading ? (
+            ) : mapleQuery.isLoading || fallback.isLoading ? (
               <div className="flex-1 flex items-center justify-center">
                 <Loader2 className="h-5 w-5 animate-spin text-mauve" />
               </div>
