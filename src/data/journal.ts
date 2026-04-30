@@ -361,7 +361,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
     ],
     productHandles: ["bronzer-tawny", "bronzer"],
     heroAlt: "Tintelle Bronzer compact on warm marble",
-    author: "yuki-mori">
+    author: "yuki-mori",
     publishedAt: "2026-02-25T09:00:00Z",
     readTime: 4,
     featured: false,
