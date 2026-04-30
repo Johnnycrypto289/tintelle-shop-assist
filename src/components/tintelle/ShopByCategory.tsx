@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { useProducts } from "@/hooks/useProducts";
+import { TiltedCategoryTile } from "@/components/tintelle/TiltedCategoryTile";
 import type { ShopifyProduct } from "@/lib/shopify";
 
 interface CategoryTile {
@@ -59,25 +59,13 @@ export const ShopByCategory = () => {
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-4 gap-y-8 sm:gap-x-6 sm:gap-y-10 md:gap-x-10 md:gap-y-12">
             {categories.map((c) => (
-              <Link
+              <TiltedCategoryTile
                 key={c.name}
                 to={`/shop?category=${encodeURIComponent(c.filterKey)}`}
-                className="group flex flex-col items-center gap-3 md:gap-4 text-center"
-              >
-                <div className="aspect-square w-24 sm:w-32 md:w-40 rounded-full overflow-hidden bg-cream transition-transform duration-500 group-hover:scale-105">
-                  {c.imageUrl ? (
-                    <img
-                      src={c.imageUrl}
-                      alt={c.imageAlt}
-                      loading="lazy"
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-petal" aria-hidden />
-                  )}
-                </div>
-                <span className="font-serif text-mauve text-base md:text-lg">{c.name}</span>
-              </Link>
+                name={c.name}
+                imageUrl={c.imageUrl}
+                imageAlt={c.imageAlt}
+              />
             ))}
           </div>
         )}
