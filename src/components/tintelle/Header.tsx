@@ -11,7 +11,7 @@ export const Header = () => {
 
   return (
     <header className="sticky top-0 z-40 bg-background/85 backdrop-blur-md border-b border-border/60">
-      <div className="container flex items-center justify-between h-32 md:h-36">
+      <div className="container flex items-center justify-between h-20 md:h-24">
         <nav className="hidden md:flex items-center gap-10 flex-1">
           <Link to="/" className={linkCls}>Home</Link>
           <Link to="/shop" className={linkCls}>Shop</Link>
@@ -20,13 +20,13 @@ export const Header = () => {
         </nav>
         <Link
           to="/"
-          className="flex-1 flex items-center justify-center"
+          className="flex-1 flex items-center justify-center overflow-visible"
           aria-label="Tintelle Beauty home"
         >
           <img
             src={tintelleLogo}
             alt="Tintelle Beauty"
-            className="h-24 md:h-28 w-auto object-contain"
+            className="h-32 md:h-44 w-auto object-contain scale-150 origin-center"
             loading="eager"
             decoding="async"
           />
