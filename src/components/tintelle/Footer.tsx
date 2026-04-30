@@ -149,7 +149,7 @@ export const Footer = () => {
         </div>
       </div>
       <div className="container mt-10 md:mt-12 pt-6 border-t border-border/70 flex flex-col md:flex-row justify-between gap-3 text-xs text-taupe">
-        <p>© {new Date().getFullYear()} Tintelle. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} Tintelle Beauty. All rights reserved.</p>
         <p>Skincare that shows. Color that cares.</p>
       </div>
     </footer>
