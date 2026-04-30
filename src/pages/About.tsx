@@ -52,16 +52,24 @@ const About = () => (
 
     <section id="sustainability" className="container py-16 md:py-20 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
       <div className="aspect-[5/4] overflow-hidden bg-cream order-2 md:order-1">
-        <img src={routineImg} alt="The Tintelle Routine" className="w-full h-full object-cover" />
+        <img
+          src={craftImg}
+          alt="Quiet, considered objects from the Tintelle world"
+          className="w-full h-full object-cover"
+          loading="lazy"
+          width={1024}
+          height={1024}
+        />
       </div>
       <div className="order-1 md:order-2">
-        <p className="text-xs tracking-[0.3em] uppercase text-taupe">Sustainability</p>
+        <p className="text-xs tracking-[0.3em] uppercase text-taupe">Our craft</p>
         <h2 className="font-serif text-3xl md:text-4xl text-mauve mt-3 leading-tight">
           Less, but better.
         </h2>
         <p className="text-taupe mt-5 leading-relaxed">
-          Recyclable glass primaries, FSC-certified outers, and a refill program for our most-loved formulas. We ship
-          carbon-neutral with USPS Priority and offset every order through verified reforestation projects.
+          We make a small range of tinted skincare-makeup hybrids — and we work hard to keep it small.
+          Every shade is built around a peptide, a hydrator, and a mineral filter, so a few products do
+          the work of many. Vegan, cruelty-free, and made in small batches in North America.
         </p>
         <Button asChild size="lg" className="rounded-none mt-7 px-7 h-12 text-xs tracking-[0.18em] uppercase">
           <Link to="/shop">Shop the collection</Link>
