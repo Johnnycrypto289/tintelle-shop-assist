@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { useProducts } from "@/hooks/useProducts";
 import { formatPrice } from "@/lib/shopify";
-import model1 from "@/assets/model-foundation-1.png";
-import model2 from "@/assets/model-foundation-2.png";
-import model3 from "@/assets/model-foundation-3.png";
+import model1 from "@/assets/model-foundation-1.webp";
+import model2 from "@/assets/model-foundation-2.webp";
+import model3 from "@/assets/model-foundation-3.webp";
 
 /**
  * Editorial campaign block — luxury "Hermès × Celine" feel.
@@ -21,8 +21,10 @@ export const CampaignFoundation = () => {
   const shopHref = "/shop?category=foundation";
 
   return (
-    <section className="relative bg-bone py-16 md:py-28 overflow-hidden">
-      <div className="container">
+    <section className="relative bg-background py-16 md:py-28 overflow-hidden">
+      {/* Soft brand wash — petal/cream gradient instead of flat bone */}
+      <div className="absolute inset-0 bg-gradient-to-br from-petal/30 via-background to-cream/60 pointer-events-none" />
+      <div className="container relative">
         {/* Eyebrow */}
         <div className="flex items-end justify-between mb-10 md:mb-16">
           <div>

@@ -4,7 +4,7 @@ import { Heart, Menu, Search, User, X } from "lucide-react";
 import { CartDrawer } from "./CartDrawer";
 import { useCustomer } from "@/hooks/useCustomer";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import tintelleLogo from "@/assets/tintelle-logo.png";
+import tintelleLogo from "@/assets/tintelle-logo.webp";
 
 const NAV = [
   { to: "/", label: "Home" },
