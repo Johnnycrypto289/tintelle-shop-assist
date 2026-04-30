@@ -14,7 +14,7 @@ const cols: { title: string; links: FooterLink[] }[] = [
     links: [
       { label: "All Products", href: "/shop" },
       { label: "Best Sellers", href: "/shop?sort=bestsellers" },
-      { label: "The Routine", href: "/#routine" },
+      { label: "Journal", href: "/journal" },
       { label: "Subscribe & Save", href: "/subscribe" },
       { label: "Gift Cards", href: "/shop" },
     ],
