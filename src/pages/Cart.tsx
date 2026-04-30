@@ -28,7 +28,7 @@ const Cart = () => {
     [items]
   );
   const currency = items[0]?.price.currencyCode ?? "USD";
-  const shipping = subtotal === 0 || subtotal >= 50 ? 0 : 6.5;
+  const shipping = subtotal === 0 || subtotal >= 99 ? 0 : 6.5;
   const tax = +(subtotal * 0.08).toFixed(2);
   const total = subtotal + shipping + tax;
   const totalItems = items.reduce((s, i) => s + i.quantity, 0);
