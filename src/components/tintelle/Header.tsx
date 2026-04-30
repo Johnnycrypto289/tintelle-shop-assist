@@ -28,7 +28,9 @@ export const Header = () => {
             alt="Tintelle Beauty"
             className="h-32 md:h-44 w-auto object-contain scale-150 origin-center"
             loading="eager"
-            decoding="async"
+            decoding="sync"
+            // @ts-ignore
+            fetchpriority="high"
           />
         </Link>
         <div className="flex items-center gap-1 md:gap-2 flex-1 justify-end">
