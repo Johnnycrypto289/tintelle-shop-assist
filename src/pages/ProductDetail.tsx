@@ -283,28 +283,37 @@ const ProductDetail = () => {
                 </span>
               </div>
 
-              <Accordion type="single" collapsible className="border-t border-border pt-2">
-                <AccordionItem value="key" className="border-border">
-                  <AccordionTrigger className="text-mauve font-serif text-base">Key Ingredients</AccordionTrigger>
-                  <AccordionContent className="text-taupe leading-relaxed">
-                    Peptides · Squalane · Niacinamide · Mineral SPF · Hyaluronic Acid
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="full" className="border-border">
-                  <AccordionTrigger className="text-mauve font-serif text-base">Full Ingredient List</AccordionTrigger>
-                  <AccordionContent className="text-taupe leading-relaxed">
-                    Aqua, Caprylic/Capric Triglyceride, Niacinamide, Glycerin, Squalane, Sodium Hyaluronate, Tocopherol,
-                    Palmitoyl Tripeptide-1, Zinc Oxide, Titanium Dioxide…
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="how" className="border-border">
-                  <AccordionTrigger className="text-mauve font-serif text-base">How to Use</AccordionTrigger>
-                  <AccordionContent className="text-taupe leading-relaxed">
-                    Apply 1–2 pumps to clean skin. Blend with fingertips or a damp sponge from the center outward.
-                    Build for more coverage.
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
+              {(keyIngredientsHtml || ingredientsHtml || usageHtml) && (
+                <Accordion type="single" collapsible className="border-t border-border pt-2">
+                  {keyIngredientsHtml && (
+                    <AccordionItem value="key" className="border-border">
+                      <AccordionTrigger className="text-mauve font-serif text-base">Key Ingredients</AccordionTrigger>
+                      <AccordionContent
+                        className="text-taupe leading-relaxed [&_p]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_ol]:list-decimal [&_ol]:pl-5"
+                        dangerouslySetInnerHTML={{ __html: keyIngredientsHtml }}
+                      />
+                    </AccordionItem>
+                  )}
+                  {ingredientsHtml && (
+                    <AccordionItem value="full" className="border-border">
+                      <AccordionTrigger className="text-mauve font-serif text-base">Full Ingredient List</AccordionTrigger>
+                      <AccordionContent
+                        className="text-taupe leading-relaxed [&_p]:mb-2"
+                        dangerouslySetInnerHTML={{ __html: ingredientsHtml }}
+                      />
+                    </AccordionItem>
+                  )}
+                  {usageHtml && (
+                    <AccordionItem value="how" className="border-border">
+                      <AccordionTrigger className="text-mauve font-serif text-base">How to Use</AccordionTrigger>
+                      <AccordionContent
+                        className="text-taupe leading-relaxed [&_p]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_ol]:list-decimal [&_ol]:pl-5"
+                        dangerouslySetInnerHTML={{ __html: usageHtml }}
+                      />
+                    </AccordionItem>
+                  )}
+                </Accordion>
+              )}
             </div>
           </section>
 
