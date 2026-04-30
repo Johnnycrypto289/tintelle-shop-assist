@@ -35,6 +35,7 @@
     --coral: 11 65% 76%;             /* Soft Coral #E8A598 */
     --sage: 110 14% 73%;             /* Sage Mist #B5C4B1 */
     --petal: 0 56% 89%;              /* Petal Pink #F0D4D4 */
+    --bone: 36 22% 90%;              /* Warm Bone #ECE6DC — luxury off-white */
 
     --destructive: 0 65% 55%;
     --destructive-foreground: 0 0% 100%;
@@ -74,6 +75,7 @@
     --accent-foreground: 22 11% 10%;
     --mauve: 0 28% 75%;
     --taupe: 0 14% 65%;
+    --bone: 22 11% 14%;
     --destructive: 0 65% 55%;
     --destructive-foreground: 0 0% 100%;
     --border: 22 11% 20%;
