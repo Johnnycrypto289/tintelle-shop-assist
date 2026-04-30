@@ -174,22 +174,27 @@ const ProductDetail = () => {
                 )}
               </div>
 
-              {product.node.descriptionHtml ? (
-                <div
-                  className="text-taupe leading-relaxed product-description
-                    [&_h1]:font-serif [&_h1]:text-mauve [&_h1]:text-2xl [&_h1]:mt-6 [&_h1]:mb-3
-                    [&_h2]:font-serif [&_h2]:text-mauve [&_h2]:text-xl [&_h2]:mt-6 [&_h2]:mb-2
-                    [&_h3]:font-serif [&_h3]:text-mauve [&_h3]:text-lg [&_h3]:mt-5 [&_h3]:mb-2
-                    [&_h4]:font-serif [&_h4]:text-mauve [&_h4]:text-base [&_h4]:mt-4 [&_h4]:mb-2
-                    [&_p]:mb-3
-                    [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-3 [&_ul]:space-y-1
-                    [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:mb-3 [&_ol]:space-y-1
-                    [&_li]:leading-relaxed
-                    [&_strong]:text-mauve [&_strong]:font-medium
-                    [&_a]:text-mauve [&_a]:underline
-                    [&_br]:block"
-                  dangerouslySetInnerHTML={{ __html: product.node.descriptionHtml }}
-                />
+              {summaryHtml ? (
+                <div className="space-y-2">
+                  <div
+                    className={`text-taupe leading-relaxed product-description relative
+                      [&_p]:mb-3 [&_strong]:text-mauve [&_strong]:font-medium
+                      [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-3 [&_ul]:space-y-1
+                      [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:mb-3 [&_ol]:space-y-1
+                      [&_a]:text-mauve [&_a]:underline
+                      ${!showFullDesc && hasMoreContent ? "max-h-32 overflow-hidden [mask-image:linear-gradient(to_bottom,black_60%,transparent)]" : ""}`}
+                    dangerouslySetInnerHTML={{ __html: showFullDesc ? summaryHtml + benefitsHtml : summaryHtml }}
+                  />
+                  {hasMoreContent && (
+                    <button
+                      type="button"
+                      onClick={() => setShowFullDesc((v) => !v)}
+                      className="text-xs tracking-[0.18em] uppercase text-mauve underline underline-offset-4 hover:opacity-70 transition-opacity"
+                    >
+                      {showFullDesc ? "See less" : "See more"}
+                    </button>
+                  )}
+                </div>
               ) : (
                 <p className="text-taupe leading-relaxed whitespace-pre-line">{product.node.description}</p>
               )}
