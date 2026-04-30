@@ -319,14 +319,8 @@ const ProductDetail = () => {
                 </button>
               </div>
 
-              <div className="flex flex-wrap gap-5 text-xs text-taupe">
-                <span className="inline-flex items-center gap-1.5">
-                  <Truck className="h-3.5 w-3.5" strokeWidth={1.5} /> Free shipping over $50
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <RotateCcw className="h-3.5 w-3.5" strokeWidth={1.5} /> 30-day returns
-                </span>
-              </div>
+
+
 
               {(keyIngredientsHtml || ingredientsHtml || usageHtml) && (
                 <Accordion type="single" collapsible className="border-t border-border pt-2">
