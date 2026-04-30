@@ -96,11 +96,45 @@
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-feature-settings: 'ss01', 'cv11';
     -webkit-font-smoothing: antialiased;
+    /* Prevent horizontal scroll on mobile */
+    overflow-x: hidden;
+  }
+
+  /* Prevent iOS zoom on input focus by ensuring 16px+ font-size */
+  input, select, textarea {
+    font-size: 16px;
+  }
+
+  @media (min-width: 768px) {
+    input, select, textarea {
+      font-size: inherit;
+    }
   }
 
   h1, h2, h3, h4, h5, h6, .font-serif {
     font-family: 'Playfair Display', Georgia, serif;
     font-weight: 500;
     letter-spacing: -0.01em;
+  }
+}
+
+@layer utilities {
+  /* Safe-area padding for iPhone home indicator on sticky bottom bars */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .mb-safe {
+    margin-bottom: env(safe-area-inset-bottom);
+  }
+  /* Horizontal snap carousel for mobile */
+  .snap-x-carousel {
+    @apply flex overflow-x-auto snap-x snap-mandatory scroll-smooth -mx-4 px-4 gap-4;
+    scrollbar-width: none;
+  }
+  .snap-x-carousel::-webkit-scrollbar {
+    display: none;
+  }
+  .snap-x-carousel > * {
+    @apply snap-start shrink-0;
   }
 }
