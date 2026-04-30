@@ -70,21 +70,18 @@ export const CampaignFoundation = () => {
             </div>
           </Link>
 
-          {/* Top right portrait — Foundation: Maple */}
+          {/* Top right portrait — editorial campaign image (no shade tag) */}
           <Link
-            to={mapleHref}
+            to={shopHref}
             className="col-span-6 md:col-span-5 group relative overflow-hidden bg-cream aspect-[4/3]"
           >
             <img
               src={model2}
-              alt="Tintelle Foundation — Maple shade"
+              alt="Tintelle Foundation — campaign portrait"
               loading="lazy"
               style={{ objectPosition: "center 25%" }}
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]"
             />
-            <div className="absolute inset-x-0 bottom-0 p-3 md:p-5 bg-gradient-to-t from-black/40 to-transparent">
-              <p className="text-[10px] tracking-[0.32em] uppercase text-white/90">Foundation — Maple</p>
-            </div>
           </Link>
 
           {/* Product detail card — replaces "boring panel" with editorial spec sheet */}
@@ -143,24 +140,24 @@ export const CampaignFoundation = () => {
             )}
           </div>
 
-          {/* Bottom right wide portrait */}
+          {/* Bottom right wide portrait — Foundation: Maple */}
           <Link
-            to={shopHref}
+            to={mapleHref}
             className="col-span-12 md:col-span-8 group relative overflow-hidden bg-cream aspect-[16/9] md:aspect-[16/7]"
           >
             <img
               src={model1}
-              alt="Tintelle foundation campaign — close-up swatch on cheek"
+              alt="Tintelle Foundation — Maple shade"
               loading="lazy"
               style={{ objectPosition: "center 30%" }}
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]"
             />
             <div className="absolute inset-x-0 bottom-0 p-4 md:p-8 bg-gradient-to-t from-black/40 to-transparent flex items-end justify-between">
               <p className="text-[10px] md:text-[11px] tracking-[0.32em] uppercase text-white">
-                24 Shades — One Soul
+                Foundation — Maple
               </p>
               <span className="hidden md:inline text-[11px] tracking-[0.32em] uppercase text-white/90 border-b border-white/60 pb-1 group-hover:border-white">
-                See the range →
+                Shop Maple →
               </span>
             </div>
           </Link>
