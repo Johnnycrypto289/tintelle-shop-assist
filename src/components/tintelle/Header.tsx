@@ -11,7 +11,7 @@ export const Header = () => {
 
   return (
     <header className="sticky top-0 z-40 bg-background/85 backdrop-blur-md border-b border-border/60">
-      <div className="container flex items-center justify-between h-24">
+      <div className="container flex items-center justify-between h-32 md:h-36">
         <nav className="hidden md:flex items-center gap-10 flex-1">
           <Link to="/" className={linkCls}>Home</Link>
           <Link to="/shop" className={linkCls}>Shop</Link>
@@ -26,7 +26,7 @@ export const Header = () => {
           <img
             src={tintelleLogo}
             alt="Tintelle Beauty"
-            className="h-14 md:h-16 w-auto object-contain"
+            className="h-24 md:h-28 w-auto object-contain"
             loading="eager"
             decoding="async"
           />
