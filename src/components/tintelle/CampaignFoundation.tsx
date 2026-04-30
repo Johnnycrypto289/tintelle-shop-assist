@@ -21,7 +21,9 @@ export const CampaignFoundation = () => {
   const shopHref = "/shop?category=foundation";
 
   return (
-    <section className="relative bg-bone py-16 md:py-28 overflow-hidden">
+    <section className="relative bg-background py-16 md:py-28 overflow-hidden">
+      {/* Soft brand wash — petal/cream gradient instead of flat bone */}
+      <div className="absolute inset-0 bg-gradient-to-br from-petal/30 via-background to-cream/60 pointer-events-none" />
       <div className="container">
         {/* Eyebrow */}
         <div className="flex items-end justify-between mb-10 md:mb-16">
