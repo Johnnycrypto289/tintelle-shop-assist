@@ -12,9 +12,9 @@ export const Header = () => {
     <header className="sticky top-0 z-40 bg-background/85 backdrop-blur-md border-b border-border/60">
       <div className="container flex items-center justify-between h-20">
         <nav className="hidden md:flex items-center gap-10 flex-1">
+          <Link to="/" className={linkCls}>Home</Link>
           <Link to="/shop" className={linkCls}>Shop</Link>
           <Link to="/about" className={linkCls}>About</Link>
-          <a href="/#routine" className={linkCls}>Routine</a>
           <Link to="/journal" className={linkCls}>Journal</Link>
         </nav>
         <Link
