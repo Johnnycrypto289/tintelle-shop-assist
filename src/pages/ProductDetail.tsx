@@ -9,6 +9,7 @@ import { useProduct, useProducts } from "@/hooks/useProducts";
 import { useCartStore } from "@/stores/cartStore";
 import { useWishlistStore } from "@/stores/wishlistStore";
 import { formatPrice } from "@/lib/shopify";
+import { parseProductDescription } from "@/lib/parseProductDescription";
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
@@ -21,6 +22,24 @@ const ProductDetail = () => {
   const [variantIndex, setVariantIndex] = useState(0);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [qty, setQty] = useState(1);
+  const [showFullDesc, setShowFullDesc] = useState(false);
+
+  const parsedDesc = useMemo(
+    () => parseProductDescription(product?.node.descriptionHtml),
+    [product?.node.descriptionHtml]
+  );
+  const introHtml = parsedDesc.introHtml;
+  const benefitsHtml = parsedDesc.sections.benefits?.html ?? "";
+  const applicationHtml = parsedDesc.sections.application?.html ?? "";
+  const howToUseHtml = parsedDesc.sections.howToUse?.html ?? "";
+  const ingredientsHtml = parsedDesc.sections.ingredients?.html ?? "";
+  const keyIngredientsHtml = parsedDesc.sections.keyIngredients?.html ?? "";
+
+  // Combine "How to Use" + "Application" for the accordion
+  const usageHtml = [howToUseHtml, applicationHtml].filter(Boolean).join("");
+  // Fall back: if there is no parsed intro but description exists, show full HTML in collapsible
+  const summaryHtml = introHtml || product?.node.descriptionHtml || "";
+  const hasMoreContent = Boolean(benefitsHtml || usageHtml || ingredientsHtml || keyIngredientsHtml);
 
   const variants = product?.node.variants.edges ?? [];
   const variant = variants[variantIndex]?.node;
@@ -155,22 +174,27 @@ const ProductDetail = () => {
                 )}
               </div>
 
-              {product.node.descriptionHtml ? (
-                <div
-                  className="text-taupe leading-relaxed product-description
-                    [&_h1]:font-serif [&_h1]:text-mauve [&_h1]:text-2xl [&_h1]:mt-6 [&_h1]:mb-3
-                    [&_h2]:font-serif [&_h2]:text-mauve [&_h2]:text-xl [&_h2]:mt-6 [&_h2]:mb-2
-                    [&_h3]:font-serif [&_h3]:text-mauve [&_h3]:text-lg [&_h3]:mt-5 [&_h3]:mb-2
-                    [&_h4]:font-serif [&_h4]:text-mauve [&_h4]:text-base [&_h4]:mt-4 [&_h4]:mb-2
-                    [&_p]:mb-3
-                    [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-3 [&_ul]:space-y-1
-                    [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:mb-3 [&_ol]:space-y-1
-                    [&_li]:leading-relaxed
-                    [&_strong]:text-mauve [&_strong]:font-medium
-                    [&_a]:text-mauve [&_a]:underline
-                    [&_br]:block"
-                  dangerouslySetInnerHTML={{ __html: product.node.descriptionHtml }}
-                />
+              {summaryHtml ? (
+                <div className="space-y-2">
+                  <div
+                    className={`text-taupe leading-relaxed product-description relative
+                      [&_p]:mb-3 [&_strong]:text-mauve [&_strong]:font-medium
+                      [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-3 [&_ul]:space-y-1
+                      [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:mb-3 [&_ol]:space-y-1
+                      [&_a]:text-mauve [&_a]:underline
+                      ${!showFullDesc && hasMoreContent ? "max-h-32 overflow-hidden [mask-image:linear-gradient(to_bottom,black_60%,transparent)]" : ""}`}
+                    dangerouslySetInnerHTML={{ __html: showFullDesc ? summaryHtml + benefitsHtml : summaryHtml }}
+                  />
+                  {hasMoreContent && (
+                    <button
+                      type="button"
+                      onClick={() => setShowFullDesc((v) => !v)}
+                      className="text-xs tracking-[0.18em] uppercase text-mauve underline underline-offset-4 hover:opacity-70 transition-opacity"
+                    >
+                      {showFullDesc ? "See less" : "See more"}
+                    </button>
+                  )}
+                </div>
               ) : (
                 <p className="text-taupe leading-relaxed whitespace-pre-line">{product.node.description}</p>
               )}
@@ -259,28 +283,37 @@ const ProductDetail = () => {
                 </span>
               </div>
 
-              <Accordion type="single" collapsible className="border-t border-border pt-2">
-                <AccordionItem value="key" className="border-border">
-                  <AccordionTrigger className="text-mauve font-serif text-base">Key Ingredients</AccordionTrigger>
-                  <AccordionContent className="text-taupe leading-relaxed">
-                    Peptides · Squalane · Niacinamide · Mineral SPF · Hyaluronic Acid
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="full" className="border-border">
-                  <AccordionTrigger className="text-mauve font-serif text-base">Full Ingredient List</AccordionTrigger>
-                  <AccordionContent className="text-taupe leading-relaxed">
-                    Aqua, Caprylic/Capric Triglyceride, Niacinamide, Glycerin, Squalane, Sodium Hyaluronate, Tocopherol,
-                    Palmitoyl Tripeptide-1, Zinc Oxide, Titanium Dioxide…
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="how" className="border-border">
-                  <AccordionTrigger className="text-mauve font-serif text-base">How to Use</AccordionTrigger>
-                  <AccordionContent className="text-taupe leading-relaxed">
-                    Apply 1–2 pumps to clean skin. Blend with fingertips or a damp sponge from the center outward.
-                    Build for more coverage.
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
+              {(keyIngredientsHtml || ingredientsHtml || usageHtml) && (
+                <Accordion type="single" collapsible className="border-t border-border pt-2">
+                  {keyIngredientsHtml && (
+                    <AccordionItem value="key" className="border-border">
+                      <AccordionTrigger className="text-mauve font-serif text-base">Key Ingredients</AccordionTrigger>
+                      <AccordionContent
+                        className="text-taupe leading-relaxed [&_p]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_ol]:list-decimal [&_ol]:pl-5"
+                        dangerouslySetInnerHTML={{ __html: keyIngredientsHtml }}
+                      />
+                    </AccordionItem>
+                  )}
+                  {ingredientsHtml && (
+                    <AccordionItem value="full" className="border-border">
+                      <AccordionTrigger className="text-mauve font-serif text-base">Full Ingredient List</AccordionTrigger>
+                      <AccordionContent
+                        className="text-taupe leading-relaxed [&_p]:mb-2"
+                        dangerouslySetInnerHTML={{ __html: ingredientsHtml }}
+                      />
+                    </AccordionItem>
+                  )}
+                  {usageHtml && (
+                    <AccordionItem value="how" className="border-border">
+                      <AccordionTrigger className="text-mauve font-serif text-base">How to Use</AccordionTrigger>
+                      <AccordionContent
+                        className="text-taupe leading-relaxed [&_p]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_ol]:list-decimal [&_ol]:pl-5"
+                        dangerouslySetInnerHTML={{ __html: usageHtml }}
+                      />
+                    </AccordionItem>
+                  )}
+                </Accordion>
+              )}
             </div>
           </section>
 
