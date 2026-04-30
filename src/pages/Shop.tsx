@@ -92,21 +92,25 @@ const Shop = () => {
     }
   };
 
-  const VIRTUAL_CATEGORY_QUERIES: Record<string, string> = {
-    "Hydro Pencil": "title:'Eyebrow Pencil'",
-    "BB Cream": "tag:bb-cream",
-    "Foundation": "tag:foundation",
-    "Eyeshadow Palette": "title:'Eyeshadow Palette'",
-    "Concealer": "title:Concealer",
-    "Bronzer": "title:Bronzer",
-    "Blush Palette": "title:'Blush Palette'",
-    "Skincare": "tag:skincare OR tag:serum OR title:Serum",
-    "Tools": "tag:tools OR tag:blender OR title:Blender",
-  };
+  // Subcategories resolved client-side so the category page matches the
+  // grouped section on the main shop page exactly. For these we fetch a
+  // broad result set and filter using resolveSubcategory.
+  const CLIENT_RESOLVED_CATEGORIES = new Set([
+    "Foundation",
+    "BB Cream",
+    "Concealer",
+    "Bronzer",
+    "Blush Palette",
+    "Eyeshadow Palette",
+    "Hydro Pencil",
+    "Skincare",
+    "Tools",
+  ]);
 
   const query = category
-    ? VIRTUAL_CATEGORY_QUERIES[category] ??
-      `product_type:"${category.replace(/"/g, '\\"')}"`
+    ? CLIENT_RESOLVED_CATEGORIES.has(category)
+      ? undefined
+      : `product_type:"${category.replace(/"/g, '\\"')}"`
     : filterFor(filter);
 
   const { data: products, isLoading } = useProducts(query, 100);
@@ -125,12 +129,13 @@ const Shop = () => {
 
   const list = useMemo(() => {
     const all = products ?? [];
-    if (category) return all;
-    if (filter === "Face") return all.filter((p) => !isEyeProduct(p.node as ProdNode));
-    if (filter === "Eyes") {
-      // include both API matches and any face-tagged items that are actually eye products
+    if (category) {
+      if (CLIENT_RESOLVED_CATEGORIES.has(category)) {
+        return all.filter((p) => resolveSubcategory(p.node as ProdNode) === category);
+      }
       return all;
     }
+    if (filter === "Face") return all.filter((p) => !isEyeProduct(p.node as ProdNode));
     return all;
   }, [products, filter, category]);
 
