@@ -12,19 +12,23 @@ import model3 from "@/assets/model-foundation-3.webp";
  * featured Foundation product. Click anywhere → /shop?category=foundation
  */
 export const CampaignFoundation = () => {
-  // Featured: Foundation - Maple
+  // Featured: Foundation - Maple (bottom wide tile)
   const mapleQuery = useProducts('title:"Foundation - Maple" OR title:Maple', 1);
-  // Sienna tile actually shows the "Amber" foundation
+  // Left tall tile shows the "Amber" foundation
   const amberQuery = useProducts('title:"Foundation - Amber" OR title:Amber', 1);
+  // Top right tile shows "Rich Caramel"
+  const caramelQuery = useProducts('title:"Foundation - Rich Caramel" OR title:"Rich Caramel"', 1);
   const fallback = useProducts("tag:foundation OR product_type:Foundation OR title:foundation", 1);
 
   const product = mapleQuery.data?.[0] ?? fallback.data?.[0] ?? null;
   const amberProduct = amberQuery.data?.[0] ?? null;
+  const caramelProduct = caramelQuery.data?.[0] ?? null;
   const variant = product?.node.variants.edges[0]?.node;
 
   const shopHref = "/shop?category=Foundation";
   const mapleHref = product ? `/product/${product.node.handle}` : shopHref;
   const amberHref = amberProduct ? `/product/${amberProduct.node.handle}` : shopHref;
+  const caramelHref = caramelProduct ? `/product/${caramelProduct.node.handle}` : shopHref;
 
   return (
     <section className="relative bg-background py-16 md:py-28 overflow-hidden">
@@ -70,18 +74,21 @@ export const CampaignFoundation = () => {
             </div>
           </Link>
 
-          {/* Top right portrait — editorial campaign image (no shade tag) */}
+          {/* Top right portrait — Foundation: Rich Caramel */}
           <Link
-            to={shopHref}
+            to={caramelHref}
             className="col-span-6 md:col-span-5 group relative overflow-hidden bg-cream aspect-[4/3]"
           >
             <img
               src={model2}
-              alt="Tintelle Foundation — campaign portrait"
+              alt="Tintelle Foundation — Rich Caramel shade"
               loading="lazy"
               style={{ objectPosition: "center 25%" }}
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]"
             />
+            <div className="absolute inset-x-0 bottom-0 p-3 md:p-5 bg-gradient-to-t from-black/40 to-transparent">
+              <p className="text-[10px] tracking-[0.32em] uppercase text-white/90">Foundation — Rich Caramel</p>
+            </div>
           </Link>
 
           {/* Product detail card — replaces "boring panel" with editorial spec sheet */}
