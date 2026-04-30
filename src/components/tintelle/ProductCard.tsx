@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
-import { Loader2 } from "lucide-react";
+import { Heart, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/stores/cartStore";
+import { useWishlistStore } from "@/stores/wishlistStore";
 import { formatPrice, type ShopifyProduct } from "@/lib/shopify";
+import { toast } from "sonner";
 
 interface ProductCardProps {
   product: ShopifyProduct;
@@ -12,9 +14,12 @@ interface ProductCardProps {
 export const ProductCard = ({ product, fromCategory }: ProductCardProps) => {
   const addItem = useCartStore((s) => s.addItem);
   const isLoading = useCartStore((s) => s.isLoading);
+  const wishlistHas = useWishlistStore((s) => s.has);
+  const wishlistToggle = useWishlistStore((s) => s.toggle);
   const node = product.node;
   const firstVariant = node.variants.edges[0]?.node;
   const firstImage = node.images.edges[0]?.node;
+  const saved = wishlistHas(node.handle);
 
   const handleAdd = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -29,12 +34,19 @@ export const ProductCard = ({ product, fromCategory }: ProductCardProps) => {
     });
   };
 
+  const handleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    wishlistToggle(node.handle);
+    toast.success(saved ? "Removed from wishlist" : "Saved to wishlist");
+  };
+
   return (
     <Link
       to={`/product/${node.handle}${fromCategory ? `?from=${encodeURIComponent(fromCategory)}` : ""}`}
       className="group block bg-card border border-border/70 hover:border-primary/40 transition-colors"
     >
-      <div className="aspect-square bg-cream overflow-hidden">
+      <div className="relative aspect-square bg-cream overflow-hidden">
         {firstImage ? (
           <img
             src={firstImage.url}
@@ -45,6 +57,19 @@ export const ProductCard = ({ product, fromCategory }: ProductCardProps) => {
         ) : (
           <div className="w-full h-full bg-cream" />
         )}
+        <button
+          type="button"
+          onClick={handleWishlist}
+          aria-label={saved ? "Remove from wishlist" : "Save to wishlist"}
+          aria-pressed={saved}
+          className="absolute top-2 right-2 h-9 w-9 inline-flex items-center justify-center rounded-full bg-background/90 backdrop-blur-sm border border-border/60 text-mauve hover:text-primary transition-colors"
+        >
+          <Heart
+            className="h-4 w-4"
+            strokeWidth={1.5}
+            fill={saved ? "currentColor" : "none"}
+          />
+        </button>
       </div>
       <div className="p-3 sm:p-5 md:p-6 text-center space-y-1.5 sm:space-y-2">
         <p className="text-[9px] sm:text-[10px] tracking-[0.3em] uppercase text-taupe truncate">{node.productType || "Tintelle"}</p>
