@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { JOURNAL_AUTHORS, JOURNAL_CATEGORIES, JOURNAL_POSTS } from "@/data/journal";
 import { PageShell } from "@/components/tintelle/PageShell";
+import { JournalHeroImage } from "@/components/tintelle/JournalHeroImage";
 
 const formatDate = (iso: string) =>
   new Date(iso).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
@@ -51,9 +52,10 @@ const Journal = () => {
             className="grid md:grid-cols-2 gap-8 md:gap-12 group items-center bg-card border border-border"
           >
             <div className="aspect-[4/3] bg-cream overflow-hidden">
-              <img
-                src={featured.hero.src}
-                alt={featured.hero.alt}
+              <JournalHeroImage
+                handle={featured.productHandles[0]}
+                alt={featured.heroAlt}
+                loading="eager"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
               />
             </div>
@@ -101,10 +103,9 @@ const Journal = () => {
             {filtered.map((p) => (
               <Link key={p.id} to={`/journal/${p.slug}`} className="group block">
                 <div className="aspect-[4/5] bg-cream overflow-hidden">
-                  <img
-                    src={p.hero.src}
-                    alt={p.hero.alt}
-                    loading="lazy"
+                  <JournalHeroImage
+                    handle={p.productHandles[0]}
+                    alt={p.heroAlt}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                   />
                 </div>
