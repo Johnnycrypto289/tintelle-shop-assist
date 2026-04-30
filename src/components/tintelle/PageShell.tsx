@@ -22,6 +22,15 @@ export const PageShell = ({ children, title, description }: PageShellProps) => {
       }
       meta.setAttribute("content", description);
     }
+    // Canonical URL per route
+    const canonicalHref = `https://www.tintellebeauty.com${window.location.pathname}`;
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", canonicalHref);
     window.scrollTo(0, 0);
   }, [title, description]);
 
