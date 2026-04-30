@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { Heart, Loader2, RotateCcw, Truck } from "lucide-react";
+import { Link, useParams, useSearchParams } from "react-router-dom";
+import { ArrowLeft, Heart, Loader2, RotateCcw, Truck } from "lucide-react";
 import { PageShell } from "@/components/tintelle/PageShell";
 import { Breadcrumbs } from "@/components/tintelle/Breadcrumbs";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,10 @@ import { parseProductDescription } from "@/lib/parseProductDescription";
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
+  const [searchParams] = useSearchParams();
+  const fromCategory = searchParams.get("from");
+  const backToShopHref = fromCategory ? `/shop?category=${encodeURIComponent(fromCategory)}` : "/shop";
+  const fromQuery = fromCategory ? `?from=${encodeURIComponent(fromCategory)}` : "";
   const { data: product, isLoading } = useProduct(handle);
   const { data: relatedProducts } = useProducts(undefined, 6);
   const addItem = useCartStore((s) => s.addItem);
@@ -111,9 +115,21 @@ const ProductDetail = () => {
         items={[
           { label: "Home", href: "/" },
           { label: "Shop", href: "/shop" },
+          ...(fromCategory ? [{ label: fromCategory, href: backToShopHref }] : []),
           { label: product?.node.title ?? "Product" },
         ]}
       />
+      {fromCategory && (
+        <div className="container -mt-2 mb-2">
+          <Link
+            to={backToShopHref}
+            className="inline-flex items-center gap-1.5 text-xs tracking-[0.18em] uppercase text-mauve hover:opacity-70 transition-opacity"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" strokeWidth={1.5} />
+            Back to {fromCategory}
+          </Link>
+        </div>
+      )}
 
       {isLoading ? (
         <div className="container py-20 flex justify-center">
@@ -331,7 +347,7 @@ const ProductDetail = () => {
                     return (
                       <Link
                         key={p.node.id}
-                        to={`/product/${p.node.handle}`}
+                        to={`/product/${p.node.handle}${fromQuery}`}
                         className="group bg-card border border-border hover:border-primary/40 transition-colors"
                       >
                         <div className="aspect-square bg-cream overflow-hidden">
