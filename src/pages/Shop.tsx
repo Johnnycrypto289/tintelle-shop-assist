@@ -104,7 +104,29 @@ const Shop = () => {
     : filterFor(filter);
 
   const { data: products, isLoading } = useProducts(query, 100);
-  const list = useMemo(() => products ?? [], [products]);
+
+  // Client-side guard: keep eye-related products out of "Face" and include them in "Eyes",
+  // since some eye items are tagged with cheek/complexion and would otherwise leak across tabs.
+  const isEyeProduct = (node: ProdNode) => {
+    const t = node.title || "";
+    const tags = (node.tags || []).map((x) => x.toLowerCase());
+    return (
+      /eyeshadow|eye\s*makeup|eye\s*treatment|eyeliner|mascara|eyebrow/i.test(t) ||
+      tags.includes("eyes") ||
+      tags.includes("eye")
+    );
+  };
+
+  const list = useMemo(() => {
+    const all = products ?? [];
+    if (category) return all;
+    if (filter === "Face") return all.filter((p) => !isEyeProduct(p.node as ProdNode));
+    if (filter === "Eyes") {
+      // include both API matches and any face-tagged items that are actually eye products
+      return all;
+    }
+    return all;
+  }, [products, filter, category]);
 
   const grouped = useMemo(() => {
     if (category) return null;
