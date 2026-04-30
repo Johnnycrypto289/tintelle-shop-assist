@@ -25,7 +25,7 @@ export const Hero = () => {
               size="lg"
               className="rounded-none px-8 h-12 text-xs tracking-[0.18em] uppercase border-mauve text-mauve hover:bg-mauve hover:text-background"
             >
-              <a href="#routine">The Routine</a>
+              <a href="/journal">Read the Journal</a>
             </Button>
           </div>
         </div>
