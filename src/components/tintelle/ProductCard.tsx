@@ -46,17 +46,17 @@ export const ProductCard = ({ product, fromCategory }: ProductCardProps) => {
           <div className="w-full h-full bg-cream" />
         )}
       </div>
-      <div className="p-5 md:p-6 text-center space-y-2">
-        <p className="text-[10px] tracking-[0.3em] uppercase text-taupe">{node.productType || "Tintelle"}</p>
-        <h3 className="font-serif text-lg md:text-xl text-mauve">{node.title}</h3>
-        <p className="text-mauve">
+      <div className="p-3 sm:p-5 md:p-6 text-center space-y-1.5 sm:space-y-2">
+        <p className="text-[9px] sm:text-[10px] tracking-[0.3em] uppercase text-taupe truncate">{node.productType || "Tintelle"}</p>
+        <h3 className="font-serif text-sm sm:text-lg md:text-xl text-mauve leading-tight line-clamp-2">{node.title}</h3>
+        <p className="text-mauve text-sm sm:text-base">
           {formatPrice(node.priceRange.minVariantPrice.amount, node.priceRange.minVariantPrice.currencyCode)}
         </p>
         <Button
           onClick={handleAdd}
           disabled={isLoading || !firstVariant}
           variant="outline"
-          className="w-full rounded-none border-mauve text-mauve hover:bg-mauve hover:text-background mt-3 text-xs tracking-wider uppercase"
+          className="w-full rounded-none border-mauve text-mauve hover:bg-mauve hover:text-background mt-2 sm:mt-3 text-[10px] sm:text-xs tracking-wider uppercase h-10 sm:h-11 px-2"
         >
           {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Add to Bag"}
         </Button>
