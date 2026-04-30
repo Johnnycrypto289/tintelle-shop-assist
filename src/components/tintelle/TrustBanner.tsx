@@ -1,9 +1,9 @@
-import { Leaf, ShieldCheck, Sparkles } from "lucide-react";
+import { Leaf, ShieldCheck, FlaskConical } from "lucide-react";
 
 const items = [
   { icon: ShieldCheck, label: "Dermatologist Tested", body: "Formulated and reviewed by board-certified dermatologists." },
   { icon: Leaf, label: "Clean & Vegan", body: "Plant-based, cruelty-free, never silicones or parabens." },
-  { icon: Sparkles, label: "30-Day Shade Match", body: "Find your shade — or send it back, no questions asked." },
+  { icon: FlaskConical, label: "Crafted in Small Batches", body: "Made in limited runs for fresher formulas." },
 ];
 
 export const TrustBanner = () => (
