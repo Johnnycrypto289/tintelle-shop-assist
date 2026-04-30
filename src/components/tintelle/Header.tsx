@@ -33,13 +33,10 @@ export const Header = () => {
               </button>
             </SheetTrigger>
             <SheetContent side="left" className="w-[85vw] max-w-sm bg-background p-0 flex flex-col">
-              <div className="flex items-center justify-between px-5 h-16 border-b border-border">
+              <div className="flex items-center px-5 h-16 border-b border-border">
                 <Link to="/" onClick={() => setOpen(false)} className="flex items-center" aria-label="Tintelle home">
                   <img src={tintelleLogo} alt="Tintelle Beauty" className="h-10 w-auto object-contain" />
                 </Link>
-                <button onClick={() => setOpen(false)} aria-label="Close menu" className={iconCls}>
-                  <X className="h-5 w-5" strokeWidth={1.5} />
-                </button>
               </div>
               <nav className="flex flex-col py-4">
                 {NAV.map((n) => {
