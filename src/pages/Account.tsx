@@ -139,10 +139,10 @@ const Account = () => {
               </Link>
             </div>
             <div className="bg-card border border-border p-6">
-              <p className="text-xs tracking-[0.18em] uppercase text-taupe">Subscriptions</p>
-              <p className="font-serif text-mauve mt-2">No active subscriptions.</p>
-              <Link to="/subscribe" className="text-sm text-primary mt-3 inline-block">
-                Set one up →
+              <p className="text-xs tracking-[0.18em] uppercase text-taupe">Wishlist</p>
+              <p className="font-serif text-mauve mt-2">Your saved items live here.</p>
+              <Link to="/wishlist" className="text-sm text-primary mt-3 inline-block">
+                Open wishlist →
               </Link>
             </div>
             <div className="bg-card border border-border p-6">
