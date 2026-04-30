@@ -4,22 +4,38 @@ import { useProducts } from "@/hooks/useProducts";
 import type { ShopifyProduct } from "@/lib/shopify";
 
 interface CategoryTile {
-  name: string;
+  name: string;        // display name
+  filterKey: string;   // value passed in ?category=
   imageUrl: string | null;
   imageAlt: string;
 }
 
+// Virtual sub-categories detected by product title keywords.
+// Each rule overrides the productType so eyebrow pencils get their own tile
+// instead of being lumped under "Eye Makeup".
+const VIRTUAL_CATEGORIES: { match: RegExp; name: string }[] = [
+  { match: /eyebrow pencil/i, name: "Hydro Pencil" },
+];
+
+const resolveCategory = (p: ShopifyProduct): string | null => {
+  for (const v of VIRTUAL_CATEGORIES) {
+    if (v.match.test(p.node.title)) return v.name;
+  }
+  return p.node.productType?.trim() || null;
+};
+
 const buildCategories = (products: ShopifyProduct[]): CategoryTile[] => {
   const map = new Map<string, CategoryTile>();
   for (const p of products) {
-    const type = p.node.productType?.trim();
-    if (!type) continue;
-    if (map.has(type)) continue;
+    const name = resolveCategory(p);
+    if (!name) continue;
+    if (map.has(name)) continue;
     const img = p.node.images.edges[0]?.node;
-    map.set(type, {
-      name: type,
+    map.set(name, {
+      name,
+      filterKey: name,
       imageUrl: img?.url ?? null,
-      imageAlt: img?.altText || type,
+      imageAlt: img?.altText || name,
     });
   }
   return Array.from(map.values());
@@ -34,7 +50,7 @@ export const ShopByCategory = () => {
       <div className="container">
         <div className="text-center max-w-xl mx-auto mb-12">
           <p className="text-xs tracking-[0.3em] uppercase text-taupe">Shop by Category</p>
-          <h2 className="font-serif text-3xl md:text-4xl text-mauve mt-3">Find Your Tint</h2>
+          <h2 className="font-serif text-3xl md:text-4xl text-mauve mt-3">Explore the Collection</h2>
         </div>
 
         {isLoading ? (
@@ -48,7 +64,7 @@ export const ShopByCategory = () => {
             {categories.map((c) => (
               <Link
                 key={c.name}
-                to={`/shop?category=${encodeURIComponent(c.name)}`}
+                to={`/shop?category=${encodeURIComponent(c.filterKey)}`}
                 className="group flex flex-col items-center gap-4 text-center"
               >
                 <div className="aspect-square w-32 md:w-40 rounded-full overflow-hidden bg-cream transition-transform duration-500 group-hover:scale-105">
