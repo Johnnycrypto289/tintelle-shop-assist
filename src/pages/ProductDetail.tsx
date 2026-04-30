@@ -9,6 +9,7 @@ import { useProduct, useProducts } from "@/hooks/useProducts";
 import { useCartStore } from "@/stores/cartStore";
 import { useWishlistStore } from "@/stores/wishlistStore";
 import { formatPrice } from "@/lib/shopify";
+import { parseProductDescription } from "@/lib/parseProductDescription";
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
