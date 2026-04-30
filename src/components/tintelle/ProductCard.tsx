@@ -6,9 +6,10 @@ import { formatPrice, type ShopifyProduct } from "@/lib/shopify";
 
 interface ProductCardProps {
   product: ShopifyProduct;
+  fromCategory?: string;
 }
 
-export const ProductCard = ({ product }: ProductCardProps) => {
+export const ProductCard = ({ product, fromCategory }: ProductCardProps) => {
   const addItem = useCartStore((s) => s.addItem);
   const isLoading = useCartStore((s) => s.isLoading);
   const node = product.node;
@@ -30,7 +31,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <Link
-      to={`/product/${node.handle}`}
+      to={`/product/${node.handle}${fromCategory ? `?from=${encodeURIComponent(fromCategory)}` : ""}`}
       className="group block bg-card border border-border/70 hover:border-primary/40 transition-colors"
     >
       <div className="aspect-square bg-cream overflow-hidden">
