@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
-import { ArrowLeft, Heart, Loader2, RotateCcw, Truck } from "lucide-react";
+import { ArrowLeft, Heart, Loader2 } from "lucide-react";
 import { PageShell } from "@/components/tintelle/PageShell";
 import { Breadcrumbs } from "@/components/tintelle/Breadcrumbs";
 import { Button } from "@/components/ui/button";
@@ -179,10 +179,7 @@ const ProductDetail = () => {
               <div>
                 <p className="text-[11px] tracking-[0.3em] uppercase text-taupe">{product.node.productType || "Tintelle"}</p>
                 <h1 className="font-serif text-2xl sm:text-3xl md:text-5xl text-mauve leading-[1.05] mt-2.5 md:mt-3">{product.node.title}</h1>
-                <div className="flex items-center gap-3 mt-3 md:mt-4">
-                  <span className="text-taupe/40 tracking-widest" aria-hidden>☆☆☆☆☆</span>
-                  <span className="text-xs sm:text-sm text-taupe">No reviews yet — be the first</span>
-                </div>
+                {/* Reviews intentionally hidden until a real reviews app (e.g. Judge.me, Loox) is connected */}
                 {variant && (
                   <p className="font-serif text-xl md:text-2xl text-mauve mt-4 md:mt-5">
                     {formatPrice(variant.price.amount, variant.price.currencyCode)}
@@ -322,14 +319,8 @@ const ProductDetail = () => {
                 </button>
               </div>
 
-              <div className="flex flex-wrap gap-5 text-xs text-taupe">
-                <span className="inline-flex items-center gap-1.5">
-                  <Truck className="h-3.5 w-3.5" strokeWidth={1.5} /> Free shipping over $50
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <RotateCcw className="h-3.5 w-3.5" strokeWidth={1.5} /> 30-day returns
-                </span>
-              </div>
+
+
 
               {(keyIngredientsHtml || ingredientsHtml || usageHtml) && (
                 <Accordion type="single" collapsible className="border-t border-border pt-2">
