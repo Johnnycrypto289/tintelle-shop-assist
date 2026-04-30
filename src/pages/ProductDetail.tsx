@@ -390,11 +390,11 @@ const ProductDetail = () => {
           </div>
 
           {cross.length > 0 && (
-            <section className="bg-cream py-16 md:py-20">
+            <section className="bg-cream py-12 md:py-20 pb-28 md:pb-20">
               <div className="container">
                 <p className="text-xs tracking-[0.3em] uppercase text-taupe">Pairs well with</p>
-                <h2 className="font-serif text-3xl md:text-4xl text-mauve mt-3 mb-8">Build the routine.</h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <h2 className="font-serif text-2xl md:text-4xl text-mauve mt-3 mb-6 md:mb-8">Build the routine.</h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6">
                   {cross.map((p) => {
                     const img = p.node.images.edges[0]?.node;
                     return (
