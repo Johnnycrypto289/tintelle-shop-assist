@@ -20,15 +20,26 @@ const filterFor = (label: (typeof FILTERS)[number]) => {
   }
 };
 
-// Order in which product-type groups should appear when showing "All" or a Face/Lips/Eyes view.
+// Order in which subcategory groups should appear when showing "All" or a Face/Lips/Eyes view.
 const GROUP_ORDER = [
+  // Lips
   "Lip Tint",
   "Lip Gloss",
   "Lip Liner",
-  "Face",
+  // Face — granular subcategories
+  "Foundation",
+  "BB Cream",
+  "Concealer",
+  "Bronzer",
   "Blush Palette",
+  "Skincare",
+  "Tools",
+  "Face",
+  // Eyes
+  "Eyeshadow Palette",
   "Eye Makeup",
   "Eye Treatment",
+  "Hydro Pencil",
 ];
 
 const sortGroups = (a: string, b: string) => {
@@ -40,13 +51,38 @@ const sortGroups = (a: string, b: string) => {
   return ai - bi;
 };
 
+// Resolve a finer-grained subcategory using title + tags so the giant generic
+// "Face" bucket gets split into real subgroups customers expect.
+type ProdNode = {
+  title: string;
+  productType?: string;
+  tags?: string[];
+};
+
+const resolveSubcategory = (node: ProdNode): string => {
+  const title = node.title || "";
+  const tags = (node.tags || []).map((t) => t.toLowerCase());
+  const has = (t: string) => tags.includes(t);
+
+  if (/foundation/i.test(title) || has("foundation")) return "Foundation";
+  if (/bb\s*cream/i.test(title) || has("bb-cream")) return "BB Cream";
+  if (/concealer/i.test(title) || has("concealer")) return "Concealer";
+  if (/bronzer/i.test(title)) return "Bronzer";
+  if (/blush\s*palette/i.test(title)) return "Blush Palette";
+  if (/eyeshadow\s*palette/i.test(title)) return "Eyeshadow Palette";
+  if (/eyebrow\s*pencil/i.test(title)) return "Hydro Pencil";
+  if (/serum/i.test(title) || has("serum") || has("skincare")) return "Skincare";
+  if (/blender|brush|sponge/i.test(title) || has("tools") || has("blender")) return "Tools";
+
+  return node.productType?.trim() || "Other";
+};
+
 
 const Shop = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const category = searchParams.get("category");
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("All");
 
-  // When user clicks a top-level filter tab, clear the category param
   const handleFilterClick = (f: (typeof FILTERS)[number]) => {
     setFilter(f);
     if (category) {
@@ -56,14 +92,12 @@ const Shop = () => {
     }
   };
 
-  // Virtual categories filter by title instead of productType
   const VIRTUAL_CATEGORY_QUERIES: Record<string, string> = {
     "Hydro Pencil": "title:'Eyebrow Pencil'",
     "BB Cream": "tag:bb-cream",
     "Foundation": "tag:foundation",
   };
 
-  // If a category is set in URL, that takes precedence over filter tabs
   const query = category
     ? VIRTUAL_CATEGORY_QUERIES[category] ??
       `product_type:"${category.replace(/"/g, '\\"')}"`
@@ -72,15 +106,13 @@ const Shop = () => {
   const { data: products, isLoading } = useProducts(query, 100);
   const list = useMemo(() => products ?? [], [products]);
 
-  // Group products by productType when no specific category is selected (i.e. "All", "Face", "Lips", "Eyes" tabs).
-  // When a single category page is shown (?category=...), keep the flat grid.
   const grouped = useMemo(() => {
     if (category) return null;
     const map = new Map<string, typeof list>();
     list.forEach((p) => {
-      const type = (p.node as { productType?: string }).productType?.trim() || "Other";
-      if (!map.has(type)) map.set(type, []);
-      map.get(type)!.push(p);
+      const sub = resolveSubcategory(p.node as ProdNode);
+      if (!map.has(sub)) map.set(sub, []);
+      map.get(sub)!.push(p);
     });
     return Array.from(map.entries()).sort(([a], [b]) => sortGroups(a, b));
   }, [list, category]);
