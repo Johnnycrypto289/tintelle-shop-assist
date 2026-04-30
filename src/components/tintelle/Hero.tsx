@@ -1,54 +1,108 @@
-import { Button } from "@/components/ui/button";
-import heroImg from "@/assets/tintelle-hero.jpg";
+import { useEffect, useState } from "react";
+import hero1 from "@/assets/hero-1.png";
+import hero2 from "@/assets/hero-2.png";
+import hero3 from "@/assets/hero-3.png";
+import hero4 from "@/assets/hero-4.png";
+
+const slides = [
+  { src: hero1, alt: "Tintelle model with natural glow holding lip product" },
+  { src: hero2, alt: "Tintelle pouch with signature lip tint" },
+  { src: hero3, alt: "Tintelle model in soft brown knit holding tinted lip" },
+  { src: hero4, alt: "Tintelle BB cream held by model in natural light" },
+];
 
 export const Hero = () => {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setIndex((i) => (i + 1) % slides.length);
+    }, 5500);
+    return () => clearInterval(id);
+  }, []);
+
   return (
-    <section className="bg-cream">
-      <div className="container grid md:grid-cols-2 gap-8 md:gap-16 items-center py-10 md:py-24">
-        {/* Image first on mobile so it's the visual anchor; second on desktop */}
-        <div className="relative order-1 md:order-2 -mx-4 md:mx-0">
-          <div className="aspect-[4/5] md:aspect-square overflow-hidden">
-            <img
-              src={heroImg}
-              alt="Model holding Tintelle tinted lip product"
-              width={1200}
-              height={1200}
-              loading="eager"
-              decoding="async"
-              // @ts-expect-error fetchpriority is a valid HTML attribute
-              fetchpriority="high"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="absolute -bottom-3 left-4 md:-bottom-4 md:-left-4 bg-background border border-border px-4 md:px-6 py-2.5 md:py-4">
-            <p className="text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-taupe">Dermatologist-tested</p>
-            <p className="font-serif text-mauve text-sm md:text-lg mt-0.5 md:mt-1">Skin-first formulas</p>
+    <section className="relative bg-bone overflow-hidden">
+      {/* Full-bleed image stage */}
+      <div className="relative h-[88vh] min-h-[640px] max-h-[920px] w-full">
+        {slides.map((s, i) => (
+          <img
+            key={s.src}
+            src={s.src}
+            alt={s.alt}
+            loading={i === 0 ? "eager" : "lazy"}
+            decoding="async"
+            // @ts-expect-error fetchpriority is a valid HTML attribute
+            fetchpriority={i === 0 ? "high" : "low"}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1800ms] ease-in-out ${
+              i === index ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
+
+        {/* Editorial gradient overlay — keeps text crisp without killing the photo */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/25 to-black/55" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
+
+        {/* Asymmetric typography — Hermès-style */}
+        <div className="absolute inset-0 flex flex-col justify-end">
+          <div className="container pb-14 md:pb-20">
+            <div className="max-w-3xl">
+              <p className="text-[10px] md:text-[11px] tracking-[0.45em] uppercase text-white/85 mb-5 md:mb-7">
+                Tintelle — Est. Beauty
+              </p>
+              <h1 className="font-serif font-light text-white leading-[0.95] tracking-[-0.01em] text-5xl sm:text-6xl md:text-7xl lg:text-[112px]">
+                Color
+                <br />
+                <span className="italic font-extralight">that cares.</span>
+              </h1>
+              <p className="mt-6 md:mt-8 text-white/80 text-sm md:text-base max-w-md leading-relaxed font-light">
+                Tinted skincare-makeup hybrids, crafted with real ingredients for effortless, skin-first color.
+              </p>
+
+              {/* Thin underlined text links — no buttons */}
+              <div className="mt-8 md:mt-10 flex flex-col sm:flex-row gap-5 sm:gap-10">
+                <a
+                  href="/shop"
+                  className="group inline-flex items-center text-[11px] md:text-xs tracking-[0.32em] uppercase text-white pb-1.5 border-b border-white/60 hover:border-white transition-colors w-fit"
+                >
+                  <span>Shop the Collection</span>
+                  <span className="ml-3 transition-transform group-hover:translate-x-1">→</span>
+                </a>
+                <a
+                  href="/journal"
+                  className="group inline-flex items-center text-[11px] md:text-xs tracking-[0.32em] uppercase text-white/85 pb-1.5 border-b border-white/30 hover:border-white/80 hover:text-white transition-colors w-fit"
+                >
+                  <span>Read the Journal</span>
+                  <span className="ml-3 transition-transform group-hover:translate-x-1">→</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="space-y-5 md:space-y-6 animate-fade-up order-2 md:order-1 pt-6 md:pt-0">
-          <p className="text-[11px] md:text-xs tracking-[0.3em] uppercase text-taupe">Tinted skincare, redefined</p>
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-mauve leading-[1.05]">
-            Skincare that shows.
-            <br />
-            <span className="text-primary italic">Color that cares.</span>
-          </h1>
-          <p className="text-base md:text-lg text-taupe max-w-md leading-relaxed">
-            Tinted skincare-makeup hybrids with real ingredients that deliver effortless, skin-first color.
+        {/* Slide indicators — minimal, top-right */}
+        <div className="absolute top-6 right-6 md:top-10 md:right-10 flex items-center gap-2">
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(i)}
+              aria-label={`View slide ${i + 1}`}
+              className={`h-px transition-all duration-500 ${
+                i === index ? "w-10 bg-white" : "w-5 bg-white/40 hover:bg-white/70"
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* Tiny corner mark — Celine-style */}
+        <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10 text-right">
+          <p className="text-[9px] md:text-[10px] tracking-[0.4em] uppercase text-white/70">
+            Tinted Skincare
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 pt-2">
-            <Button asChild size="lg" className="rounded-none px-8 h-12 text-xs tracking-[0.18em] uppercase w-full sm:w-auto">
-              <a href="/shop">Shop the Collection</a>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="rounded-none px-8 h-12 text-xs tracking-[0.18em] uppercase border-mauve text-mauve hover:bg-mauve hover:text-background w-full sm:w-auto"
-            >
-              <a href="/journal">Read the Journal</a>
-            </Button>
-          </div>
+          <p className="text-[9px] md:text-[10px] tracking-[0.4em] uppercase text-white/50 mt-1">
+            Redefined
+          </p>
         </div>
       </div>
     </section>

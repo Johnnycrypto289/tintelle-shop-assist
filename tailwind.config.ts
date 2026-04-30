@@ -36,6 +36,7 @@ export default {
         coral: "hsl(var(--coral))",
         sage: "hsl(var(--sage))",
         petal: "hsl(var(--petal))",
+        bone: "hsl(var(--bone))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
