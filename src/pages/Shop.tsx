@@ -60,6 +60,7 @@ const Shop = () => {
   const VIRTUAL_CATEGORY_QUERIES: Record<string, string> = {
     "Hydro Pencil": "title:'Eyebrow Pencil'",
     "BB Cream": "tag:bb-cream",
+    "Foundation": "tag:foundation",
   };
 
   // If a category is set in URL, that takes precedence over filter tabs

@@ -18,13 +18,22 @@ const VIRTUAL_CATEGORIES: { match: (p: ShopifyProduct) => boolean; name: string 
       (p.node.tags ?? []).some((t) => /bb[-\s]?cream/i.test(t)),
     name: "BB Cream",
   },
+  {
+    match: (p) =>
+      /foundation/i.test(p.node.title) ||
+      (p.node.tags ?? []).some((t) => /^foundation$/i.test(t)),
+    name: "Foundation",
+  },
 ];
 
 const resolveCategory = (p: ShopifyProduct): string | null => {
   for (const v of VIRTUAL_CATEGORIES) {
     if (v.match(p)) return v.name;
   }
-  return p.node.productType?.trim() || null;
+  const type = p.node.productType?.trim();
+  // Replace generic "Face" tile with Foundation category instead
+  if (type === "Face") return null;
+  return type || null;
 };
 
 const buildCategories = (products: ShopifyProduct[]): CategoryTile[] => {
