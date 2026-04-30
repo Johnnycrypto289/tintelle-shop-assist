@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { useEffect } from "react";
-import { AnnouncementBar } from "./AnnouncementBar";
+
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 
@@ -36,7 +36,7 @@ export const PageShell = ({ children, title, description }: PageShellProps) => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <AnnouncementBar />
+      
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
