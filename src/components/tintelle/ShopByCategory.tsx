@@ -10,13 +10,19 @@ interface CategoryTile {
   imageAlt: string;
 }
 
-const VIRTUAL_CATEGORIES: { match: RegExp; name: string }[] = [
-  { match: /eyebrow pencil/i, name: "Hydro Pencil" },
+const VIRTUAL_CATEGORIES: { match: (p: ShopifyProduct) => boolean; name: string }[] = [
+  { match: (p) => /eyebrow pencil/i.test(p.node.title), name: "Hydro Pencil" },
+  {
+    match: (p) =>
+      /bb cream/i.test(p.node.title) ||
+      (p.node.tags ?? []).some((t) => /bb[-\s]?cream/i.test(t)),
+    name: "BB Cream",
+  },
 ];
 
 const resolveCategory = (p: ShopifyProduct): string | null => {
   for (const v of VIRTUAL_CATEGORIES) {
-    if (v.match.test(p.node.title)) return v.name;
+    if (v.match(p)) return v.name;
   }
   return p.node.productType?.trim() || null;
 };
