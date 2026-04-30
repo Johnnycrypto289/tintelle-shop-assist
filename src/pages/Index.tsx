@@ -2,6 +2,7 @@ import { Header } from "@/components/tintelle/Header";
 import { Hero } from "@/components/tintelle/Hero";
 import { ShopByCategory } from "@/components/tintelle/ShopByCategory";
 import { Bestsellers } from "@/components/tintelle/Bestsellers";
+import { CampaignFoundation } from "@/components/tintelle/CampaignFoundation";
 import { TrustBanner } from "@/components/tintelle/TrustBanner";
 import { BestsellerSpotlight } from "@/components/tintelle/BestsellerSpotlight";
 import { Footer } from "@/components/tintelle/Footer";
@@ -14,6 +15,7 @@ const Index = () => {
         <Hero />
         <ShopByCategory />
         <Bestsellers />
+        <CampaignFoundation />
         <TrustBanner />
         <BestsellerSpotlight />
       </main>
