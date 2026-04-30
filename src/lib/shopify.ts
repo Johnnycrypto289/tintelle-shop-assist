@@ -86,6 +86,7 @@ export const PRODUCT_BY_HANDLE_QUERY = `
             price { amount currencyCode }
             availableForSale
             selectedOptions { name value }
+            image { url altText }
           }
         }
       }
