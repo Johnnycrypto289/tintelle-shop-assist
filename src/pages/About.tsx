@@ -3,7 +3,7 @@ import { Leaf, ShieldCheck, Sparkles, Heart } from "lucide-react";
 import { PageShell } from "@/components/tintelle/PageShell";
 import { Button } from "@/components/ui/button";
 import heroImg from "@/assets/tintelle-hero.jpg";
-import routineImg from "@/assets/tintelle-routine.jpg";
+import craftImg from "@/assets/tintelle-craft.jpg";
 
 const PILLARS = [
   { icon: ShieldCheck, label: "Skin-first", body: "Every formula starts with what skin actually needs — peptides, squalane, mineral SPF, hyaluronic acid." },
