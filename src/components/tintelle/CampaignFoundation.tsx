@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { useProducts } from "@/hooks/useProducts";
 import { formatPrice } from "@/lib/shopify";
-import model1 from "@/assets/model-foundation-1.png";
-import model2 from "@/assets/model-foundation-2.png";
-import model3 from "@/assets/model-foundation-3.png";
+import model1 from "@/assets/model-foundation-1.webp";
+import model2 from "@/assets/model-foundation-2.webp";
+import model3 from "@/assets/model-foundation-3.webp";
 
 /**
  * Editorial campaign block — luxury "Hermès × Celine" feel.

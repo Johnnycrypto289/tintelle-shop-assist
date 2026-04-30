@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import hero1 from "@/assets/hero-1.png";
-import hero2 from "@/assets/hero-2.png";
-import hero3 from "@/assets/hero-3.png";
-import hero4 from "@/assets/hero-4.png";
+import hero1 from "@/assets/hero-1.webp";
+import hero2 from "@/assets/hero-2.webp";
+import hero3 from "@/assets/hero-3.webp";
+import hero4 from "@/assets/hero-4.webp";
 
 const slides = [
   { src: hero1, alt: "Tintelle model with natural glow holding lip product" },
