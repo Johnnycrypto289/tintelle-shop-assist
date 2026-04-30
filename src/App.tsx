@@ -12,7 +12,7 @@ import Wishlist from "./pages/Wishlist.tsx";
 import Search from "./pages/Search.tsx";
 import Journal from "./pages/Journal.tsx";
 import Post from "./pages/Post.tsx";
-import Subscribe from "./pages/Subscribe.tsx";
+
 import Account from "./pages/Account.tsx";
 import Track from "./pages/Track.tsx";
 import About from "./pages/About.tsx";
