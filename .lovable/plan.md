@@ -1,66 +1,41 @@
-# Mobile-First Optimization Plan
+# Shop by Category — Interactive Tilt Hover
 
-Goal: make Tintelle feel native on phones — fast, thumb-friendly, no horizontal scroll, no awkward gaps. Desktop stays intact; we just stop letting it dictate the mobile experience.
+## Goal
+Make the round product images in **Shop by Category** ("Explore the Collection") feel premium and tactile: when a visitor hovers a tile, the circle gently tilts in 3D toward the cursor, lifts/scales slightly, and a small floating caption follows the cursor showing the category name (e.g. "Shop Lip Gloss →"). Click behavior is unchanged — still navigates to that category in `/shop`.
 
-## 1. Global foundations
+The reference component (TiltedCard) is the right interaction pattern. We will **not** copy its black/white styling, hard tooltip pill, or "optimized for desktop" warning. Instead we adapt the motion to Tintelle's brand: cream/mauve/petal palette, serif type, soft shadows, no harsh edges.
 
-- **Header**: replace desktop-only nav with a mobile hamburger drawer (slide-in sheet) showing Home / Shop / About / Journal / Account. Shrink the giant logo on mobile (currently `h-32 scale-150` — eats ~190px of vertical space). Target: 56–64px header height on mobile, 96px on desktop.
-- **Tap targets**: all icons and buttons → minimum 44×44px hit area.
-- **Container padding**: tighten to `px-4` on mobile, `px-6 md:px-8` on larger.
-- **Typography scale**: drop hero from `text-4xl` to `text-3xl` on small phones to prevent line-break ugliness; keep `md:text-6xl lg:text-7xl`.
-- **Footer**: stack columns, collapse link groups into accordions on mobile.
+## What changes visually
 
-## 2. Home page sections
+- Each circular category tile gains a subtle 3D parallax tilt that follows the cursor (max ~10° — softer than the reference's 14° to feel elegant, not gimmicky).
+- On hover: tile lifts gently (scale ~1.06), a soft mauve-tinted shadow blooms underneath the circle.
+- A small caption floats near the cursor with the category name in serif italic + a thin underline, tinted `text-mauve` on a translucent cream background — no hard pill, no drop-shadow box.
+- On mobile (touch / `<md`): tilt and cursor caption are **disabled**; tiles keep the existing simple `scale-105` hover so nothing breaks on phones.
+- The category label below the circle stays exactly where it is.
 
-- **Hero**: stack image-above-text on mobile; image fills width edge-to-edge; CTAs become full-width stacked buttons.
-- **Bestsellers / ShopByCategory / ShopByConcern**: convert multi-column grids to a horizontal swipe carousel on mobile (snap-x), 2-col grid on `sm`, full grid on `md+`.
-- **TrustBanner**: stack vertically on mobile with larger icons.
-- **BestsellerSpotlight**: single column on mobile, image first.
+## Technical section
 
-## 3. Shop & Product pages
+**New component**: `src/components/tintelle/TiltedCategoryTile.tsx`
+- Adapted from the provided TiltedCard, stripped to what we need.
+- Uses `framer-motion` (already installed via existing project deps — verify; if missing, add it).
+- Props: `imageUrl`, `imageAlt`, `name`, `to` (link href).
+- Renders a `<Link>` wrapping a `motion.div` with `transformStyle: 'preserve-3d'` and motion values for `rotateX`, `rotateY`, `scale`. Inside: the circular image (`rounded-full`, `aspect-square`) with `translateZ(30px)` so it pops forward, and the existing `<span>` label below (kept outside the tilt for legibility).
+- Cursor caption: a `motion.figcaption` positioned `fixed`/absolute that tracks `mouseX`/`mouseY`, fades in on enter, says `Shop {name}` in `font-serif italic text-mauve text-sm` on a `bg-cream/90 backdrop-blur` chip with a thin `border-mauve/20`. No drop shadow.
+- Mobile guard: detect via `useMediaQuery('(hover: hover) and (pointer: fine)')` (or simple `matchMedia` check) — if false, render the current static markup with no motion handlers.
+- Spring config tuned softer than reference: `{ damping: 28, stiffness: 90, mass: 1.4 }` for a calm, expensive feel.
+- No "mobile warning" overlay. No external tooltip library.
 
-- **Shop grid**: 2 columns on mobile (not 1), 3 on tablet, 4 on desktop. Sticky filter button at bottom that opens a bottom-sheet for filters/sort instead of a sidebar.
-- **ProductCard**: tighter spacing, price + title legible at small sizes, "Add to cart" as a full-width button below image on mobile.
-- **ProductDetail**: image gallery becomes swipeable carousel with dots; sticky "Add to cart" bar pinned to bottom of viewport on mobile so users never lose the buy button while scrolling specs.
+**Edit**: `src/components/tintelle/ShopByCategory.tsx`
+- Replace the inner `<Link>` block (lines ~62–80) with `<TiltedCategoryTile />`.
+- Keep grid, spacing, loading state, and empty state untouched.
 
-## 4. Cart & Checkout flow
+**Brand tokens used** (from existing `index.css` / `tailwind.config.ts`): `cream`, `mauve`, `taupe`, `petal`, `border`. No new colors introduced.
 
-- **Cart page**: line items as stacked cards (image left, title/price/qty right), not a wide table. Order summary pinned to bottom on mobile with a sticky "Checkout" button.
-- **CartDrawer**: full-height sheet on mobile, sticky checkout CTA at bottom.
-- Quantity steppers sized for thumbs (44px buttons).
-
-## 5. Account, Auth, Forms
-
-- **Account / Wishlist / Search / Subscribe / Contact**: single-column layouts, inputs at `h-12` with `text-base` (prevents iOS zoom-on-focus), labels above fields.
-- **Track order / FAQ**: ensure no fixed-width tables; FAQ accordions already mobile-friendly, just verify spacing.
-
-## 6. Content pages (About / Journal / Post / Legal)
-
-- Tighten prose width, larger line-height on mobile, images full-bleed where appropriate.
-- Journal grid: 1 col mobile, 2 col tablet, 3 col desktop.
-
-## 7. Performance for mobile
-
-- Verify all hero/product images use `loading="lazy"` except above-the-fold.
-- Add `srcset` / responsive sizes where we serve large images.
-- Confirm no layout shift (width/height on imgs).
-
-## Technical notes
-
-Tailwind breakpoints used: default (mobile) → `sm` 640 → `md` 768 → `lg` 1024.
-Mobile-first means no `md:` prefix on base styles — base = phone, prefixes scale up.
-
-Sticky bars use `sticky bottom-0` inside a relative container, or `fixed bottom-0 inset-x-0 md:hidden` for true mobile-only overlays. `safe-area-inset-bottom` padding for iPhone home indicator.
-
-New components:
-- `MobileNav.tsx` (hamburger drawer)
-- `MobileFilterSheet.tsx` (shop filters bottom sheet)
-- `StickyAddToCart.tsx` (product page mobile bar)
-
-Files touched (≈18): Header, Footer, Hero, Bestsellers, BestsellerSpotlight, ShopByCategory, ShopByConcern, TrustBanner, ProductCard, CartDrawer, plus all 18 pages for layout/padding audits.
+**Files touched**
+- New: `src/components/tintelle/TiltedCategoryTile.tsx`
+- Edit: `src/components/tintelle/ShopByCategory.tsx`
 
 ## Out of scope
-
-- Visual redesign / color changes (keeps current palette and typography).
-- Shopify checkout itself (Shopify-hosted, mobile-optimized by them).
-- New features — purely responsive/UX work.
+- No changes to colors, typography, layout, category data, or routing.
+- No tilt effect on product cards in Shop / Bestsellers (this request is scoped to Shop by Category only).
+- No mobile-specific tilt — mobile keeps current behavior.
