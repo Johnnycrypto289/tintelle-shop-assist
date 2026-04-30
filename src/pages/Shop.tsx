@@ -61,19 +61,19 @@ const Shop = () => {
 
   return (
     <PageShell title={category ?? "Shop"} description="The full Tintelle collection — tinted skincare hybrids.">
-      <section className="container pt-16 pb-6">
-        <p className="text-xs tracking-[0.3em] uppercase text-taupe">{eyebrow}</p>
-        <h1 className="font-serif text-4xl md:text-6xl text-mauve mt-3 leading-[1.05]">{heading}</h1>
-        <p className="text-base md:text-lg text-taupe max-w-xl leading-relaxed mt-4">
+      <section className="container pt-10 md:pt-16 pb-4 md:pb-6">
+        <p className="text-[11px] md:text-xs tracking-[0.3em] uppercase text-taupe">{eyebrow}</p>
+        <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl text-mauve mt-3 leading-[1.05]">{heading}</h1>
+        <p className="text-sm md:text-lg text-taupe max-w-xl leading-relaxed mt-3 md:mt-4">
           {category
             ? `Browse all ${category.toLowerCase()}.`
             : "Every formula is a skincare-makeup hybrid. Build your routine one tint at a time."}
         </p>
       </section>
 
-      <section className="container pb-24">
+      <section className="container pb-16 md:pb-24">
         {!category && (
-          <div className="flex gap-6 md:gap-8 mb-8 border-b border-border pb-4 overflow-x-auto">
+          <div className="flex gap-5 md:gap-8 mb-6 md:mb-8 border-b border-border pb-3 md:pb-4 overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
             {FILTERS.map((f) => (
               <button
                 key={f}
@@ -97,7 +97,7 @@ const Shop = () => {
         ) : list.length === 0 ? (
           <p className="text-center text-taupe py-20">No products found.</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 md:gap-8">
             {list.map((p) => (
               <ProductCard key={p.node.id} product={p} fromCategory={category ?? undefined} />
             ))}
