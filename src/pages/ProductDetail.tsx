@@ -22,6 +22,24 @@ const ProductDetail = () => {
   const [variantIndex, setVariantIndex] = useState(0);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [qty, setQty] = useState(1);
+  const [showFullDesc, setShowFullDesc] = useState(false);
+
+  const parsedDesc = useMemo(
+    () => parseProductDescription(product?.node.descriptionHtml),
+    [product?.node.descriptionHtml]
+  );
+  const introHtml = parsedDesc.introHtml;
+  const benefitsHtml = parsedDesc.sections.benefits?.html ?? "";
+  const applicationHtml = parsedDesc.sections.application?.html ?? "";
+  const howToUseHtml = parsedDesc.sections.howToUse?.html ?? "";
+  const ingredientsHtml = parsedDesc.sections.ingredients?.html ?? "";
+  const keyIngredientsHtml = parsedDesc.sections.keyIngredients?.html ?? "";
+
+  // Combine "How to Use" + "Application" for the accordion
+  const usageHtml = [howToUseHtml, applicationHtml].filter(Boolean).join("");
+  // Fall back: if there is no parsed intro but description exists, show full HTML in collapsible
+  const summaryHtml = introHtml || product?.node.descriptionHtml || "";
+  const hasMoreContent = Boolean(benefitsHtml || usageHtml || ingredientsHtml || keyIngredientsHtml);
 
   const variants = product?.node.variants.edges ?? [];
   const variant = variants[variantIndex]?.node;
