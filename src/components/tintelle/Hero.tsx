@@ -30,12 +30,12 @@ export const Hero = () => {
           </div>
         </div>
         <div className="relative">
-          <div className="aspect-[4/5] overflow-hidden">
+          <div className="aspect-square overflow-hidden">
             <img
               src={heroImg}
-              alt="Soft silk drape on warm cream marble — Tintelle aesthetic"
-              width={1280}
-              height={1600}
+              alt="Model holding Tintelle tinted lip product"
+              width={1200}
+              height={1200}
               loading="eager"
               decoding="async"
               // @ts-expect-error fetchpriority is a valid HTML attribute
