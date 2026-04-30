@@ -122,6 +122,34 @@ const Shop = () => {
     if (category) setFilter("All");
   }, [category]);
 
+  // Slug helper for section ids
+  const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+  // Track which subcategory section is currently in view (for active chip highlight)
+  const [activeGroup, setActiveGroup] = useState<string | null>(null);
+  const sectionRefs = useRef<Map<string, HTMLElement>>(new Map());
+
+  useEffect(() => {
+    if (!grouped || grouped.length < 2) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActiveGroup(visible.target.getAttribute("data-group"));
+      },
+      { rootMargin: "-30% 0px -55% 0px", threshold: [0, 0.25, 0.5, 1] }
+    );
+    sectionRefs.current.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [grouped]);
+
+  const handleJumpTo = (groupName: string) => {
+    const el = sectionRefs.current.get(groupName);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    setActiveGroup(groupName);
+  };
+
   const heading = category ?? "Shop everything.";
   const eyebrow = category ? "Category" : "The Collection";
 
@@ -156,6 +184,33 @@ const Shop = () => {
           </div>
         )}
 
+        {/* Subcategory quick-jump chips: appears when there are 2+ groups */}
+        {!isLoading && grouped && grouped.length >= 2 && (
+          <div className="sticky top-[64px] md:top-[80px] z-20 -mx-4 px-4 md:mx-0 md:px-0 bg-background/95 backdrop-blur-sm py-2 md:py-3 mb-6 md:mb-8 border-b border-border/60">
+            <div className="flex gap-2 md:gap-2.5 overflow-x-auto" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+              {grouped.map(([groupName, items]) => {
+                const isActive = activeGroup === groupName;
+                return (
+                  <button
+                    key={groupName}
+                    onClick={() => handleJumpTo(groupName)}
+                    className={`flex-shrink-0 inline-flex items-center gap-1.5 px-3.5 md:px-4 py-1.5 md:py-2 rounded-full border text-[11px] md:text-xs tracking-[0.12em] uppercase transition-all ${
+                      isActive
+                        ? "bg-mauve text-background border-mauve"
+                        : "bg-cream text-mauve border-mauve/25 hover:border-mauve hover:bg-mauve/5"
+                    }`}
+                  >
+                    <span>{groupName}</span>
+                    <span className={`text-[10px] ${isActive ? "text-background/70" : "text-taupe"}`}>
+                      {items.length}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {isLoading ? (
           <div className="flex justify-center py-20">
             <Loader2 className="h-6 w-6 animate-spin text-mauve" />
@@ -165,7 +220,16 @@ const Shop = () => {
         ) : grouped ? (
           <div className="space-y-14 md:space-y-20">
             {grouped.map(([groupName, items]) => (
-              <div key={groupName}>
+              <section
+                key={groupName}
+                id={`group-${slugify(groupName)}`}
+                data-group={groupName}
+                ref={(el) => {
+                  if (el) sectionRefs.current.set(groupName, el);
+                  else sectionRefs.current.delete(groupName);
+                }}
+                className="scroll-mt-32 md:scroll-mt-40"
+              >
                 <div className="flex items-baseline justify-between mb-5 md:mb-8 pb-2 md:pb-3 border-b border-border">
                   <h2 className="font-serif text-2xl md:text-3xl text-mauve">{groupName}</h2>
                   <span className="text-[11px] md:text-xs tracking-[0.2em] uppercase text-taupe">
@@ -177,7 +241,7 @@ const Shop = () => {
                     <ProductCard key={p.node.id} product={p} fromCategory={groupName} />
                   ))}
                 </div>
-              </div>
+              </section>
             ))}
           </div>
         ) : (
