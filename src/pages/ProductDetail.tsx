@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
-import { ArrowLeft, Heart, Loader2, RotateCcw, Truck } from "lucide-react";
+import { ArrowLeft, Heart, Loader2 } from "lucide-react";
 import { PageShell } from "@/components/tintelle/PageShell";
 import { Breadcrumbs } from "@/components/tintelle/Breadcrumbs";
 import { Button } from "@/components/ui/button";
