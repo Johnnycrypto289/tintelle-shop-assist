@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { useProducts } from "@/hooks/useProducts";
+import { TiltedCategoryTile } from "@/components/tintelle/TiltedCategoryTile";
 import type { ShopifyProduct } from "@/lib/shopify";
 
 interface CategoryTile {
