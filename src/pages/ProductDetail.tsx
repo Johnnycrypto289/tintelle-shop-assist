@@ -10,13 +10,6 @@ import { useCartStore } from "@/stores/cartStore";
 import { useWishlistStore } from "@/stores/wishlistStore";
 import { formatPrice } from "@/lib/shopify";
 
-const SHADE_PALETTE_FALLBACK: Record<string, string[]> = {
-  "skin-tint": ["#F7DBC6","#EFC9AC","#E5B58F","#D69972","#B57A55","#8C5A3C","#6B4429","#4A2E1C","#F0CFB8","#DCAA85","#A87454","#5B3825"],
-  "lip-tint": ["#D4A0A0","#E8A598","#C97D7D","#B05B5B","#A04545","#82303D"],
-  "cheek-tint": ["#F0D4D4","#E8A598","#D4A0A0","#B57A7A"],
-  "eye-serum": ["#F5C9B5"],
-};
-
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
   const { data: product, isLoading } = useProduct(handle);
@@ -26,16 +19,48 @@ const ProductDetail = () => {
   const wishlistHas = useWishlistStore((s) => s.has);
   const wishlistToggle = useWishlistStore((s) => s.toggle);
   const [variantIndex, setVariantIndex] = useState(0);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [qty, setQty] = useState(1);
 
   const variants = product?.node.variants.edges ?? [];
   const variant = variants[variantIndex]?.node;
-  const images = useMemo(() => product?.node.images.edges.map((e) => e.node) ?? [], [product]);
-  const palette = useMemo(() => {
-    if (!product) return [];
-    if (variants.length > 1) return variants.map((v) => v.node.title);
-    return SHADE_PALETTE_FALLBACK[handle ?? ""] ?? [];
-  }, [product, variants, handle]);
+  const productImages = useMemo(() => product?.node.images.edges.map((e) => e.node) ?? [], [product]);
+
+  // Build the gallery: variant images first (deduped), then remaining product images
+  const gallery = useMemo(() => {
+    const seen = new Set<string>();
+    const list: { url: string; altText: string | null }[] = [];
+    variants.forEach((v) => {
+      const img = v.node.image;
+      if (img?.url && !seen.has(img.url)) {
+        seen.add(img.url);
+        list.push(img);
+      }
+    });
+    productImages.forEach((img) => {
+      if (img?.url && !seen.has(img.url)) {
+        seen.add(img.url);
+        list.push(img);
+      }
+    });
+    return list;
+  }, [variants, productImages]);
+
+  // Reset image index when product changes
+  useEffect(() => {
+    setActiveImageIndex(0);
+    setVariantIndex(0);
+  }, [handle]);
+
+  // When user picks a shade, swap the main image to that variant's image
+  const handleSelectVariant = (i: number) => {
+    setVariantIndex(i);
+    const variantImageUrl = variants[i]?.node.image?.url;
+    if (variantImageUrl) {
+      const idx = gallery.findIndex((g) => g.url === variantImageUrl);
+      if (idx >= 0) setActiveImageIndex(idx);
+    }
+  };
 
   const saved = handle ? wishlistHas(handle) : false;
 
@@ -58,6 +83,9 @@ const ProductDetail = () => {
     [relatedProducts, handle]
   );
 
+  const hasMultipleVariants = variants.length > 1;
+  const activeImage = gallery[activeImageIndex] ?? gallery[0];
+
   return (
     <PageShell title={product?.node.title} description={product?.node.description?.slice(0, 155)}>
       <Breadcrumbs
@@ -79,33 +107,35 @@ const ProductDetail = () => {
           <section className="container pb-16 md:pb-24 grid md:grid-cols-2 gap-10 md:gap-16">
             <div>
               <div className="aspect-square bg-cream overflow-hidden">
-                {images[0] && (
+                {activeImage && (
                   <img
-                    src={images[0].url}
-                    alt={images[0].altText || product.node.title}
+                    src={activeImage.url}
+                    alt={activeImage.altText || product.node.title}
                     className="w-full h-full object-cover"
                   />
                 )}
               </div>
-              {images.length > 1 && (
-                <div className="grid grid-cols-4 gap-2 mt-2">
-                  {[0, 1, 2, 3].map((i) => {
-                    const img = images[i] ?? images[0];
-                    return (
-                      <div
-                        key={i}
-                        className={`aspect-square bg-cream overflow-hidden border ${
-                          i === 0 ? "border-mauve" : "border-border"
+              {gallery.length > 1 && (
+                <div className="grid grid-cols-5 gap-2 mt-2">
+                  {gallery.slice(0, 10).map((img, i) => (
+                    <button
+                      key={`${img.url}-${i}`}
+                      type="button"
+                      onClick={() => setActiveImageIndex(i)}
+                      aria-label={`View image ${i + 1}`}
+                      className={`aspect-square bg-cream overflow-hidden border transition-colors ${
+                        i === activeImageIndex ? "border-mauve" : "border-border hover:border-mauve/50"
+                      }`}
+                    >
+                      <img
+                        src={img.url}
+                        alt={img.altText || ""}
+                        className={`w-full h-full object-cover transition-opacity ${
+                          i === activeImageIndex ? "opacity-100" : "opacity-80 hover:opacity-100"
                         }`}
-                      >
-                        <img
-                          src={img.url}
-                          alt={img.altText || ""}
-                          className="w-full h-full object-cover opacity-90"
-                        />
-                      </div>
-                    );
-                  })}
+                      />
+                    </button>
+                  ))}
                 </div>
               )}
             </div>
@@ -127,28 +157,30 @@ const ProductDetail = () => {
 
               <p className="text-taupe leading-relaxed whitespace-pre-line">{product.node.description}</p>
 
-              {palette.length > 1 && (
+              {hasMultipleVariants && (
                 <div className="space-y-3">
                   <p className="text-[11px] tracking-[0.25em] uppercase text-taupe">
-                    {variants.length > 1 ? "Shade" : "Available shades"} · {String(variantIndex + 1).padStart(2, "0")}
+                    Shade · <span className="text-mauve">{variant?.title}</span>
                   </p>
-                  <div className="flex flex-wrap gap-2.5">
-                    {palette.map((shade, i) => {
-                      const color =
-                        variants.length > 1
-                          ? SHADE_PALETTE_FALLBACK[handle ?? ""]?.[i] ?? "hsl(var(--primary))"
-                          : (shade as string);
+                  <div className="flex flex-wrap gap-2">
+                    {variants.map((v, i) => {
+                      const isActive = i === variantIndex;
+                      const unavailable = !v.node.availableForSale;
                       return (
                         <button
-                          key={i}
-                          onClick={() => variants.length > 1 && setVariantIndex(i)}
-                          aria-label={`Shade ${i + 1}`}
-                          className={`w-9 h-9 rounded-full transition-all ${
-                            i === variantIndex ? "ring-2 ring-mauve ring-offset-2 ring-offset-background" : "border border-border"
-                          }`}
-                          style={{ backgroundColor: color }}
-                          disabled={variants.length <= 1}
-                        />
+                          key={v.node.id}
+                          onClick={() => handleSelectVariant(i)}
+                          aria-pressed={isActive}
+                          aria-label={`Select shade ${v.node.title}`}
+                          title={v.node.title}
+                          className={`px-3.5 h-9 text-xs tracking-wide border transition-colors ${
+                            isActive
+                              ? "bg-mauve text-background border-mauve"
+                              : "border-border text-mauve hover:border-mauve"
+                          } ${unavailable ? "opacity-50 line-through" : ""}`}
+                        >
+                          {v.node.title}
+                        </button>
                       );
                     })}
                   </div>
@@ -182,7 +214,11 @@ const ProductDetail = () => {
                   {isAdding ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
                   ) : (
-                    `Add to Bag · ${variant ? formatPrice(parseFloat(variant.price.amount) * qty, variant.price.currencyCode) : ""}`
+                    <>
+                      Add to Bag
+                      {hasMultipleVariants && variant ? ` · ${variant.title}` : ""}
+                      {variant ? ` · ${formatPrice(parseFloat(variant.price.amount) * qty, variant.price.currencyCode)}` : ""}
+                    </>
                   )}
                 </Button>
                 <button
