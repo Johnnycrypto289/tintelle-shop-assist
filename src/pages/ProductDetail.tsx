@@ -180,6 +180,13 @@ const ProductDetail = () => {
                 <p className="text-[11px] tracking-[0.3em] uppercase text-taupe">{product.node.productType || "Tintelle"}</p>
                 <h1 className="font-serif text-2xl sm:text-3xl md:text-5xl text-mauve leading-[1.05] mt-2.5 md:mt-3">{product.node.title}</h1>
                 {/* Reviews intentionally hidden until a real reviews app (e.g. Judge.me, Loox) is connected */}
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-3 md:mt-4 text-[11px] tracking-[0.18em] uppercase text-taupe">
+                  <span>Vegan</span>
+                  <span aria-hidden className="text-taupe/40">·</span>
+                  <span>Cruelty-free</span>
+                  <span aria-hidden className="text-taupe/40">·</span>
+                  <span>Made in North America</span>
+                </div>
                 {variant && (
                   <p className="font-serif text-xl md:text-2xl text-mauve mt-4 md:mt-5">
                     {formatPrice(variant.price.amount, variant.price.currencyCode)}
