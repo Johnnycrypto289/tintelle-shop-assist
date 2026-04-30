@@ -5,22 +5,41 @@ import { PageShell } from "@/components/tintelle/PageShell";
 import { ProductCard } from "@/components/tintelle/ProductCard";
 import { useProducts } from "@/hooks/useProducts";
 
-const FILTERS = ["All", "Face", "Lips", "Eyes", "Bundles"] as const;
+const FILTERS = ["All", "Face", "Lips", "Eyes"] as const;
 
 const filterFor = (label: (typeof FILTERS)[number]) => {
   switch (label) {
     case "Face":
-      return "tag:face OR product_type:Face OR product_type:Cheek OR product_type:'Skin Tint'";
+      return "tag:face OR product_type:Face OR product_type:Cheek OR product_type:'Skin Tint' OR product_type:'Blush Palette'";
     case "Lips":
-      return "tag:lips OR product_type:Lip OR product_type:'Lip Tint'";
+      return "tag:lips OR product_type:Lip OR product_type:'Lip Tint' OR product_type:'Lip Gloss' OR product_type:'Lip Liner'";
     case "Eyes":
-      return "tag:eyes OR product_type:Eye OR product_type:'Eye Treatment'";
-    case "Bundles":
-      return "tag:bundle OR product_type:Bundle";
+      return "tag:eyes OR product_type:Eye OR product_type:'Eye Treatment' OR product_type:'Eye Makeup'";
     default:
       return undefined;
   }
 };
+
+// Order in which product-type groups should appear when showing "All" or a Face/Lips/Eyes view.
+const GROUP_ORDER = [
+  "Lip Tint",
+  "Lip Gloss",
+  "Lip Liner",
+  "Face",
+  "Blush Palette",
+  "Eye Makeup",
+  "Eye Treatment",
+];
+
+const sortGroups = (a: string, b: string) => {
+  const ai = GROUP_ORDER.indexOf(a);
+  const bi = GROUP_ORDER.indexOf(b);
+  if (ai === -1 && bi === -1) return a.localeCompare(b);
+  if (ai === -1) return 1;
+  if (bi === -1) return -1;
+  return ai - bi;
+};
+
 
 const Shop = () => {
   const [searchParams, setSearchParams] = useSearchParams();
