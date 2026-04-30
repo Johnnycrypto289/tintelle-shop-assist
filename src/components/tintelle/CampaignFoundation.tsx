@@ -24,7 +24,7 @@ export const CampaignFoundation = () => {
     <section className="relative bg-background py-16 md:py-28 overflow-hidden">
       {/* Soft brand wash — petal/cream gradient instead of flat bone */}
       <div className="absolute inset-0 bg-gradient-to-br from-petal/30 via-background to-cream/60 pointer-events-none" />
-      <div className="container">
+      <div className="container relative">
         {/* Eyebrow */}
         <div className="flex items-end justify-between mb-10 md:mb-16">
           <div>
