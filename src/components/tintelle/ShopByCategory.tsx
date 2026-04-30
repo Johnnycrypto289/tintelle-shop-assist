@@ -4,15 +4,12 @@ import { useProducts } from "@/hooks/useProducts";
 import type { ShopifyProduct } from "@/lib/shopify";
 
 interface CategoryTile {
-  name: string;        // display name
-  filterKey: string;   // value passed in ?category=
+  name: string;
+  filterKey: string;
   imageUrl: string | null;
   imageAlt: string;
 }
 
-// Virtual sub-categories detected by product title keywords.
-// Each rule overrides the productType so eyebrow pencils get their own tile
-// instead of being lumped under "Eye Makeup".
 const VIRTUAL_CATEGORIES: { match: RegExp; name: string }[] = [
   { match: /eyebrow pencil/i, name: "Hydro Pencil" },
 ];
@@ -46,11 +43,11 @@ export const ShopByCategory = () => {
   const categories = buildCategories(products ?? []);
 
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-12 md:py-24">
       <div className="container">
-        <div className="text-center max-w-xl mx-auto mb-12">
-          <p className="text-xs tracking-[0.3em] uppercase text-taupe">Shop by Category</p>
-          <h2 className="font-serif text-3xl md:text-4xl text-mauve mt-3">Explore the Collection</h2>
+        <div className="text-center max-w-xl mx-auto mb-8 md:mb-12">
+          <p className="text-[11px] md:text-xs tracking-[0.3em] uppercase text-taupe">Shop by Category</p>
+          <h2 className="font-serif text-2xl md:text-4xl text-mauve mt-2.5 md:mt-3">Explore the Collection</h2>
         </div>
 
         {isLoading ? (
@@ -60,14 +57,14 @@ export const ShopByCategory = () => {
         ) : categories.length === 0 ? (
           <p className="text-center text-taupe py-12">No categories found.</p>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 md:gap-x-10 md:gap-y-12">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-4 gap-y-8 sm:gap-x-6 sm:gap-y-10 md:gap-x-10 md:gap-y-12">
             {categories.map((c) => (
               <Link
                 key={c.name}
                 to={`/shop?category=${encodeURIComponent(c.filterKey)}`}
-                className="group flex flex-col items-center gap-4 text-center"
+                className="group flex flex-col items-center gap-3 md:gap-4 text-center"
               >
-                <div className="aspect-square w-32 md:w-40 rounded-full overflow-hidden bg-cream transition-transform duration-500 group-hover:scale-105">
+                <div className="aspect-square w-24 sm:w-32 md:w-40 rounded-full overflow-hidden bg-cream transition-transform duration-500 group-hover:scale-105">
                   {c.imageUrl ? (
                     <img
                       src={c.imageUrl}
@@ -79,7 +76,7 @@ export const ShopByCategory = () => {
                     <div className="w-full h-full bg-petal" aria-hidden />
                   )}
                 </div>
-                <span className="font-serif text-mauve text-lg">{c.name}</span>
+                <span className="font-serif text-mauve text-base md:text-lg">{c.name}</span>
               </Link>
             ))}
           </div>
