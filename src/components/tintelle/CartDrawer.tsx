@@ -39,10 +39,10 @@ export const CartDrawer = () => {
           )}
         </button>
       </SheetTrigger>
-      <SheetContent className="w-full sm:max-w-md flex flex-col bg-background">
+      <SheetContent className="w-full sm:max-w-md flex flex-col bg-background p-4 sm:p-6">
         <SheetHeader>
-          <SheetTitle className="font-serif text-2xl text-mauve">Your Bag</SheetTitle>
-          <SheetDescription className="text-taupe">
+          <SheetTitle className="font-serif text-xl sm:text-2xl text-mauve">Your Bag</SheetTitle>
+          <SheetDescription className="text-taupe text-sm">
             {totalItems === 0 ? "Your bag is empty" : `${totalItems} item${totalItems === 1 ? "" : "s"}`}
           </SheetDescription>
         </SheetHeader>
@@ -70,25 +70,25 @@ export const CartDrawer = () => {
                         <h4 className="font-serif text-mauve">{item.product.node.title}</h4>
                         <p className="text-xs text-taupe">{item.selectedOptions.map((o) => o.value).join(" · ")}</p>
                         <p className="text-sm text-mauve">{formatPrice(item.price.amount, item.price.currencyCode)}</p>
-                        <div className="flex items-center gap-2 pt-1">
+                        <div className="flex items-center gap-2 pt-2">
                           <button
                             onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
-                            className="h-6 w-6 border border-border flex items-center justify-center hover:border-mauve"
+                            className="h-9 w-9 border border-border flex items-center justify-center hover:border-mauve"
                             aria-label="Decrease"
                           >
-                            <Minus className="h-3 w-3" />
+                            <Minus className="h-3.5 w-3.5" />
                           </button>
-                          <span className="w-6 text-center text-sm">{item.quantity}</span>
+                          <span className="w-8 text-center text-sm">{item.quantity}</span>
                           <button
                             onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
-                            className="h-6 w-6 border border-border flex items-center justify-center hover:border-mauve"
+                            className="h-9 w-9 border border-border flex items-center justify-center hover:border-mauve"
                             aria-label="Increase"
                           >
-                            <Plus className="h-3 w-3" />
+                            <Plus className="h-3.5 w-3.5" />
                           </button>
                           <button
                             onClick={() => removeItem(item.variantId)}
-                            className="ml-auto p-1 text-taupe hover:text-destructive"
+                            className="ml-auto h-9 w-9 flex items-center justify-center text-taupe hover:text-destructive"
                             aria-label="Remove"
                           >
                             <Trash2 className="h-4 w-4" />
