@@ -59,7 +59,7 @@ const Shop = () => {
   // Virtual categories filter by title instead of productType
   const VIRTUAL_CATEGORY_QUERIES: Record<string, string> = {
     "Hydro Pencil": "title:'Eyebrow Pencil'",
-    "BB Cream": "tag:bb-cream OR title:'BB Cream'",
+    "BB Cream": "tag:bb-cream",
   };
 
   // If a category is set in URL, that takes precedence over filter tabs
