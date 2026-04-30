@@ -67,8 +67,21 @@ const Shop = () => {
       `product_type:"${category.replace(/"/g, '\\"')}"`
     : filterFor(filter);
 
-  const { data: products, isLoading } = useProducts(query, 50);
+  const { data: products, isLoading } = useProducts(query, 100);
   const list = useMemo(() => products ?? [], [products]);
+
+  // Group products by productType when no specific category is selected (i.e. "All", "Face", "Lips", "Eyes" tabs).
+  // When a single category page is shown (?category=...), keep the flat grid.
+  const grouped = useMemo(() => {
+    if (category) return null;
+    const map = new Map<string, typeof list>();
+    list.forEach((p) => {
+      const type = (p.node as { productType?: string }).productType?.trim() || "Other";
+      if (!map.has(type)) map.set(type, []);
+      map.get(type)!.push(p);
+    });
+    return Array.from(map.entries()).sort(([a], [b]) => sortGroups(a, b));
+  }, [list, category]);
 
   // Reset tab highlight when category param is active
   useEffect(() => {
