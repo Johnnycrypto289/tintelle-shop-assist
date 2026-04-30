@@ -96,6 +96,12 @@ const Shop = () => {
     "Hydro Pencil": "title:'Eyebrow Pencil'",
     "BB Cream": "tag:bb-cream",
     "Foundation": "tag:foundation",
+    "Eyeshadow Palette": "title:'Eyeshadow Palette'",
+    "Concealer": "title:Concealer",
+    "Bronzer": "title:Bronzer",
+    "Blush Palette": "title:'Blush Palette'",
+    "Skincare": "tag:skincare OR tag:serum OR title:Serum",
+    "Tools": "tag:tools OR tag:blender OR title:Blender",
   };
 
   const query = category
