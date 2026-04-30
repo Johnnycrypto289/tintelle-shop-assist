@@ -139,9 +139,9 @@ const ProductDetail = () => {
         <p className="container text-center text-taupe py-20">Product not found.</p>
       ) : (
         <>
-          <section className="container pb-16 md:pb-24 grid md:grid-cols-2 gap-10 md:gap-16">
+          <section className="container pb-24 md:pb-24 grid md:grid-cols-2 gap-8 md:gap-16">
             <div>
-              <div className="aspect-square bg-cream overflow-hidden">
+              <div className="aspect-square bg-cream overflow-hidden -mx-4 md:mx-0">
                 {activeImage && (
                   <img
                     src={activeImage.url}
@@ -151,7 +151,7 @@ const ProductDetail = () => {
                 )}
               </div>
               {gallery.length > 1 && (
-                <div className="grid grid-cols-5 gap-2 mt-2">
+                <div className="grid grid-cols-5 gap-1.5 sm:gap-2 mt-2">
                   {gallery.slice(0, 10).map((img, i) => (
                     <button
                       key={`${img.url}-${i}`}
@@ -175,16 +175,16 @@ const ProductDetail = () => {
               )}
             </div>
 
-            <div className="md:sticky md:top-28 md:self-start space-y-6">
+            <div className="md:sticky md:top-28 md:self-start space-y-5 md:space-y-6">
               <div>
                 <p className="text-[11px] tracking-[0.3em] uppercase text-taupe">{product.node.productType || "Tintelle"}</p>
-                <h1 className="font-serif text-3xl md:text-5xl text-mauve leading-[1.05] mt-3">{product.node.title}</h1>
-                <div className="flex items-center gap-3 mt-4">
+                <h1 className="font-serif text-2xl sm:text-3xl md:text-5xl text-mauve leading-[1.05] mt-2.5 md:mt-3">{product.node.title}</h1>
+                <div className="flex items-center gap-3 mt-3 md:mt-4">
                   <span className="text-taupe/40 tracking-widest" aria-hidden>☆☆☆☆☆</span>
-                  <span className="text-sm text-taupe">No reviews yet — be the first</span>
+                  <span className="text-xs sm:text-sm text-taupe">No reviews yet — be the first</span>
                 </div>
                 {variant && (
-                  <p className="font-serif text-2xl text-mauve mt-5">
+                  <p className="font-serif text-xl md:text-2xl text-mauve mt-4 md:mt-5">
                     {formatPrice(variant.price.amount, variant.price.currencyCode)}
                   </p>
                 )}
@@ -193,7 +193,7 @@ const ProductDetail = () => {
               {summaryHtml ? (
                 <div className="space-y-2">
                   <div
-                    className={`text-taupe leading-relaxed product-description relative
+                    className={`text-taupe leading-relaxed product-description relative text-sm md:text-base
                       [&_p]:mb-3 [&_strong]:text-mauve [&_strong]:font-medium
                       [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-3 [&_ul]:space-y-1
                       [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:mb-3 [&_ol]:space-y-1
@@ -212,7 +212,7 @@ const ProductDetail = () => {
                   )}
                 </div>
               ) : (
-                <p className="text-taupe leading-relaxed whitespace-pre-line">{product.node.description}</p>
+                <p className="text-taupe leading-relaxed whitespace-pre-line text-sm md:text-base">{product.node.description}</p>
               )}
 
               {hasMultipleVariants && (
@@ -231,7 +231,7 @@ const ProductDetail = () => {
                           aria-pressed={isActive}
                           aria-label={`Select shade ${v.node.title}`}
                           title={v.node.title}
-                          className={`px-3.5 h-9 text-xs tracking-wide border transition-colors ${
+                          className={`px-3.5 min-h-11 text-xs tracking-wide border transition-colors ${
                             isActive
                               ? "bg-mauve text-background border-mauve"
                               : "border-border text-mauve hover:border-mauve"
@@ -245,19 +245,20 @@ const ProductDetail = () => {
                 </div>
               )}
 
-              <div className="flex gap-3">
+              {/* Add to cart row — visible on desktop, hidden on mobile (sticky bar handles it) */}
+              <div className="hidden md:flex gap-3">
                 <div className="inline-flex items-center border border-mauve">
                   <button
                     onClick={() => setQty(Math.max(1, qty - 1))}
-                    className="px-4 h-12 text-mauve hover:bg-mauve/5 transition-colors"
+                    className="w-12 h-12 text-mauve hover:bg-mauve/5 transition-colors text-lg"
                     aria-label="Decrease quantity"
                   >
                     −
                   </button>
-                  <span className="px-4 font-serif text-mauve min-w-[2ch] text-center">{qty}</span>
+                  <span className="px-3 font-serif text-mauve min-w-[2ch] text-center">{qty}</span>
                   <button
                     onClick={() => setQty(qty + 1)}
-                    className="px-4 h-12 text-mauve hover:bg-mauve/5 transition-colors"
+                    className="w-12 h-12 text-mauve hover:bg-mauve/5 transition-colors text-lg"
                     aria-label="Increase quantity"
                   >
                     +
@@ -287,6 +288,37 @@ const ProductDetail = () => {
                   }`}
                 >
                   <Heart className="h-[18px] w-[18px]" strokeWidth={1.5} fill={saved ? "currentColor" : "none"} />
+                </button>
+              </div>
+
+              {/* Mobile: qty + wishlist row, sticky bar holds the add-to-bag */}
+              <div className="flex md:hidden items-center justify-between gap-3">
+                <div className="inline-flex items-center border border-mauve">
+                  <button
+                    onClick={() => setQty(Math.max(1, qty - 1))}
+                    className="w-11 h-11 text-mauve text-lg"
+                    aria-label="Decrease quantity"
+                  >
+                    −
+                  </button>
+                  <span className="px-3 font-serif text-mauve min-w-[2ch] text-center">{qty}</span>
+                  <button
+                    onClick={() => setQty(qty + 1)}
+                    className="w-11 h-11 text-mauve text-lg"
+                    aria-label="Increase quantity"
+                  >
+                    +
+                  </button>
+                </div>
+                <button
+                  onClick={() => handle && wishlistToggle(handle)}
+                  aria-label={saved ? "Remove from wishlist" : "Save to wishlist"}
+                  className={`h-11 px-4 border border-mauve transition-colors flex items-center gap-2 text-xs tracking-[0.18em] uppercase ${
+                    saved ? "bg-mauve text-background" : "text-mauve"
+                  }`}
+                >
+                  <Heart className="h-4 w-4" strokeWidth={1.5} fill={saved ? "currentColor" : "none"} />
+                  {saved ? "Saved" : "Save"}
                 </button>
               </div>
 
@@ -335,6 +367,27 @@ const ProductDetail = () => {
               )}
             </div>
           </section>
+
+          {/* Sticky mobile add-to-cart bar */}
+          <div className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-background/95 backdrop-blur-md border-t border-border pb-safe">
+            <div className="px-4 py-3">
+              <Button
+                onClick={handleAdd}
+                disabled={isAdding || !variant?.availableForSale}
+                size="lg"
+                className="w-full rounded-none h-12 text-xs tracking-[0.18em] uppercase"
+              >
+                {isAdding ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <>
+                    Add to Bag
+                    {variant ? ` · ${formatPrice(parseFloat(variant.price.amount) * qty, variant.price.currencyCode)}` : ""}
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
 
           {cross.length > 0 && (
             <section className="bg-cream py-16 md:py-20">
