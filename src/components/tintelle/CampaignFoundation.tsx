@@ -12,13 +12,19 @@ import model3 from "@/assets/model-foundation-3.webp";
  * featured Foundation product. Click anywhere → /shop?category=foundation
  */
 export const CampaignFoundation = () => {
-  // Try to surface a real foundation product; fall back to first product.
-  const tagged = useProducts("tag:foundation OR product_type:Foundation OR title:foundation", 1);
-  const fallback = useProducts(undefined, 1);
-  const product = tagged.data?.[0] ?? fallback.data?.[0] ?? null;
+  // Featured: Foundation - Maple
+  const mapleQuery = useProducts('title:"Foundation - Maple" OR title:Maple', 1);
+  // Sienna tile actually shows the "Amber" foundation
+  const amberQuery = useProducts('title:"Foundation - Amber" OR title:Amber', 1);
+  const fallback = useProducts("tag:foundation OR product_type:Foundation OR title:foundation", 1);
+
+  const product = mapleQuery.data?.[0] ?? fallback.data?.[0] ?? null;
+  const amberProduct = amberQuery.data?.[0] ?? null;
   const variant = product?.node.variants.edges[0]?.node;
 
-  const shopHref = "/shop?category=foundation";
+  const shopHref = "/shop?category=Foundation";
+  const mapleHref = product ? `/product/${product.node.handle}` : shopHref;
+  const amberHref = amberProduct ? `/product/${amberProduct.node.handle}` : shopHref;
 
   return (
     <section className="relative bg-background py-16 md:py-28 overflow-hidden">
