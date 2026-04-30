@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { PageShell } from "@/components/tintelle/PageShell";
 import { ProductCard } from "@/components/tintelle/ProductCard";
@@ -22,37 +23,66 @@ const filterFor = (label: (typeof FILTERS)[number]) => {
 };
 
 const Shop = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const category = searchParams.get("category");
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("All");
-  const { data: products, isLoading } = useProducts(filterFor(filter), 24);
 
+  // When user clicks a top-level filter tab, clear the category param
+  const handleFilterClick = (f: (typeof FILTERS)[number]) => {
+    setFilter(f);
+    if (category) {
+      const next = new URLSearchParams(searchParams);
+      next.delete("category");
+      setSearchParams(next, { replace: true });
+    }
+  };
+
+  // If a category is set in URL, that takes precedence over filter tabs
+  const query = category
+    ? `product_type:"${category.replace(/"/g, '\\"')}"`
+    : filterFor(filter);
+
+  const { data: products, isLoading } = useProducts(query, 50);
   const list = useMemo(() => products ?? [], [products]);
 
+  // Reset tab highlight when category param is active
+  useEffect(() => {
+    if (category) setFilter("All");
+  }, [category]);
+
+  const heading = category ?? "Shop everything.";
+  const eyebrow = category ? "Category" : "The Collection";
+
   return (
-    <PageShell title="Shop" description="The full Tintelle collection — tinted skincare hybrids.">
+    <PageShell title={category ?? "Shop"} description="The full Tintelle collection — tinted skincare hybrids.">
       <section className="container pt-16 pb-6">
-        <p className="text-xs tracking-[0.3em] uppercase text-taupe">The Collection</p>
-        <h1 className="font-serif text-4xl md:text-6xl text-mauve mt-3 leading-[1.05]">Shop everything.</h1>
+        <p className="text-xs tracking-[0.3em] uppercase text-taupe">{eyebrow}</p>
+        <h1 className="font-serif text-4xl md:text-6xl text-mauve mt-3 leading-[1.05]">{heading}</h1>
         <p className="text-base md:text-lg text-taupe max-w-xl leading-relaxed mt-4">
-          Every formula is a skincare-makeup hybrid. Build your routine one tint at a time.
+          {category
+            ? `Browse all ${category.toLowerCase()}.`
+            : "Every formula is a skincare-makeup hybrid. Build your routine one tint at a time."}
         </p>
       </section>
 
       <section className="container pb-24">
-        <div className="flex gap-6 md:gap-8 mb-8 border-b border-border pb-4 overflow-x-auto">
-          {FILTERS.map((f) => (
-            <button
-              key={f}
-              onClick={() => setFilter(f)}
-              className={`text-xs tracking-[0.18em] uppercase pb-1.5 border-b transition-colors whitespace-nowrap ${
-                filter === f
-                  ? "text-mauve border-mauve"
-                  : "text-taupe border-transparent hover:text-mauve"
-              }`}
-            >
-              {f}
-            </button>
-          ))}
-        </div>
+        {!category && (
+          <div className="flex gap-6 md:gap-8 mb-8 border-b border-border pb-4 overflow-x-auto">
+            {FILTERS.map((f) => (
+              <button
+                key={f}
+                onClick={() => handleFilterClick(f)}
+                className={`text-xs tracking-[0.18em] uppercase pb-1.5 border-b transition-colors whitespace-nowrap ${
+                  filter === f
+                    ? "text-mauve border-mauve"
+                    : "text-taupe border-transparent hover:text-mauve"
+                }`}
+              >
+                {f}
+              </button>
+            ))}
+          </div>
+        )}
 
         {isLoading ? (
           <div className="flex justify-center py-20">
