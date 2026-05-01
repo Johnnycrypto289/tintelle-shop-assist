@@ -4,7 +4,7 @@ import { Loader2 } from "lucide-react";
 import { PageShell } from "@/components/tintelle/PageShell";
 import { ProductCard } from "@/components/tintelle/ProductCard";
 import { useProducts } from "@/hooks/useProducts";
-import { resolveSubcategory, type ProdNode } from "@/lib/categories";
+import { resolveSubcategory, resolveExtraSubcategories, type ProdNode } from "@/lib/categories";
 
 const FILTERS = ["All", "Face", "Lips", "Eyes"] as const;
 
@@ -98,6 +98,8 @@ const Shop = () => {
     "Eyeshadow Palette",
     "Hydro Pencil",
     "Skincare",
+    "Eye Treatment",
+    "Eye Makeup",
     "Tools",
   ]);
 
@@ -133,8 +135,12 @@ const Shop = () => {
         .sort((a, b) => (order.get(a.node.title.toLowerCase()) ?? 99) - (order.get(b.node.title.toLowerCase()) ?? 99));
     }
     if (category) {
-      if (CLIENT_RESOLVED_CATEGORIES.has(category)) {
-        return all.filter((p) => resolveSubcategory(p.node as ProdNode) === category);
+      if (CLIENT_RESOLVED_CATEGORIES.has(category) || category === "Eye Treatment" || category === "Skincare") {
+        return all.filter((p) => {
+          const node = p.node as ProdNode;
+          const cats = [resolveSubcategory(node), ...resolveExtraSubcategories(node)];
+          return cats.includes(category);
+        });
       }
       return all;
     }
@@ -146,9 +152,12 @@ const Shop = () => {
     if (category || edit) return null;
     const map = new Map<string, typeof list>();
     list.forEach((p) => {
-      const sub = resolveSubcategory(p.node as ProdNode);
-      if (!map.has(sub)) map.set(sub, []);
-      map.get(sub)!.push(p);
+      const node = p.node as ProdNode;
+      const cats = [resolveSubcategory(node), ...resolveExtraSubcategories(node)];
+      cats.forEach((sub) => {
+        if (!map.has(sub)) map.set(sub, []);
+        map.get(sub)!.push(p);
+      });
     });
     return Array.from(map.entries()).sort(([a], [b]) => sortGroups(a, b));
   }, [list, category, edit]);
