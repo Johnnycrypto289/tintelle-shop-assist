@@ -14,7 +14,7 @@ const Index = () => {
       <main>
         <Hero />
         <ShopByCategory />
-        <Bestsellers />
+        <CuratedFavorites />
         <CampaignFoundation />
         <TrustBanner />
         <BestsellerSpotlight />
