@@ -101,7 +101,9 @@ const Shop = () => {
     "Tools",
   ]);
 
-  const query = category
+  const query = edit
+    ? edit.titles.map((t) => `title:"${t.replace(/"/g, '\\"')}"`).join(" OR ")
+    : category
     ? CLIENT_RESOLVED_CATEGORIES.has(category)
       ? undefined
       : `product_type:"${category.replace(/"/g, '\\"')}"`
