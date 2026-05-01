@@ -133,8 +133,12 @@ const Shop = () => {
         .sort((a, b) => (order.get(a.node.title.toLowerCase()) ?? 99) - (order.get(b.node.title.toLowerCase()) ?? 99));
     }
     if (category) {
-      if (CLIENT_RESOLVED_CATEGORIES.has(category)) {
-        return all.filter((p) => resolveSubcategory(p.node as ProdNode) === category);
+      if (CLIENT_RESOLVED_CATEGORIES.has(category) || category === "Eye Treatment" || category === "Skincare") {
+        return all.filter((p) => {
+          const node = p.node as ProdNode;
+          const cats = [resolveSubcategory(node), ...resolveExtraSubcategories(node)];
+          return cats.includes(category);
+        });
       }
       return all;
     }
