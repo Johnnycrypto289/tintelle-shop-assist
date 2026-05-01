@@ -52,31 +52,6 @@ const sortGroups = (a: string, b: string) => {
   return ai - bi;
 };
 
-// Resolve a finer-grained subcategory using title + tags so the giant generic
-// "Face" bucket gets split into real subgroups customers expect.
-type ProdNode = {
-  title: string;
-  productType?: string;
-  tags?: string[];
-};
-
-const resolveSubcategory = (node: ProdNode): string => {
-  const title = node.title || "";
-  const tags = (node.tags || []).map((t) => t.toLowerCase());
-  const has = (t: string) => tags.includes(t);
-
-  if (/foundation/i.test(title) || has("foundation")) return "Foundation";
-  if (/bb\s*cream/i.test(title) || has("bb-cream")) return "BB Cream";
-  if (/concealer/i.test(title) || has("concealer")) return "Concealer";
-  if (/bronzer/i.test(title)) return "Bronzer";
-  if (/blush\s*palette/i.test(title)) return "Blush Palette";
-  if (/eyeshadow\s*palette/i.test(title)) return "Eyeshadow Palette";
-  if (/eyebrow\s*pencil/i.test(title)) return "Hydro Pencil";
-  if (/serum/i.test(title) || has("serum") || has("skincare")) return "Skincare";
-  if (/blender|brush|sponge/i.test(title) || has("tools") || has("blender")) return "Tools";
-
-  return node.productType?.trim() || "Other";
-};
 
 
 const Shop = () => {
