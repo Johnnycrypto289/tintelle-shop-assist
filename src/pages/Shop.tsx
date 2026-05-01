@@ -186,23 +186,26 @@ const Shop = () => {
     setActiveGroup(groupName);
   };
 
-  const heading = category ?? "Shop everything.";
-  const eyebrow = category ? "Category" : "The Collection";
+  const heading = edit ? edit.title : (category ?? "Shop everything.");
+  const eyebrow = edit ? edit.eyebrow : category ? "Category" : "The Collection";
+  const subtitle = edit
+    ? edit.subtitle
+    : category
+    ? `Browse all ${category.toLowerCase()}.`
+    : "Every formula is a skincare-makeup hybrid. Build your routine one tint at a time.";
 
   return (
-    <PageShell title={category ?? "Shop"} description="The full Tintelle collection — tinted skincare hybrids.">
+    <PageShell title={edit?.title ?? category ?? "Shop"} description="The full Tintelle collection — tinted skincare hybrids.">
       <section className="container pt-10 md:pt-16 pb-4 md:pb-6">
         <p className="text-[11px] md:text-xs tracking-[0.3em] uppercase text-taupe">{eyebrow}</p>
         <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl text-mauve mt-3 leading-[1.05]">{heading}</h1>
         <p className="text-sm md:text-lg text-taupe max-w-xl leading-relaxed mt-3 md:mt-4">
-          {category
-            ? `Browse all ${category.toLowerCase()}.`
-            : "Every formula is a skincare-makeup hybrid. Build your routine one tint at a time."}
+          {subtitle}
         </p>
       </section>
 
       <section className="container pb-16 md:pb-24">
-        {!category && (
+        {!category && !edit && (
           <div className="flex gap-5 md:gap-8 mb-6 md:mb-8 border-b border-border pb-3 md:pb-4 overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
             {FILTERS.map((f) => (
               <button
