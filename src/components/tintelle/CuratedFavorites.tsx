@@ -35,8 +35,8 @@ export const CuratedFavorites = () => {
     <section className="py-12 md:py-24 bg-background">
       <div className="container">
         <div className="text-center max-w-xl mx-auto mb-8 md:mb-10">
-          <p className="text-[11px] md:text-xs tracking-[0.3em] uppercase text-taupe">Shop by Category</p>
-          <h2 className="font-serif text-2xl md:text-4xl text-mauve mt-2.5 md:mt-3">Curated Favorites</h2>
+          <p className="text-[11px] md:text-xs tracking-[0.3em] uppercase text-taupe">Shop the Edit</p>
+          <h2 className="font-serif text-2xl md:text-4xl text-mauve mt-2.5 md:mt-3">Loved by You</h2>
         </div>
 
         {/* Tabs */}
