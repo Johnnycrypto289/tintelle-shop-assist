@@ -98,6 +98,8 @@ const Shop = () => {
     "Eyeshadow Palette",
     "Hydro Pencil",
     "Skincare",
+    "Eye Treatment",
+    "Eye Makeup",
     "Tools",
   ]);
 
