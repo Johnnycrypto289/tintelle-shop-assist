@@ -4,6 +4,7 @@ import { Loader2 } from "lucide-react";
 import { PageShell } from "@/components/tintelle/PageShell";
 import { ProductCard } from "@/components/tintelle/ProductCard";
 import { useProducts } from "@/hooks/useProducts";
+import { resolveSubcategory, type ProdNode } from "@/lib/categories";
 
 const FILTERS = ["All", "Face", "Lips", "Eyes"] as const;
 
