@@ -54,9 +54,27 @@ const sortGroups = (a: string, b: string) => {
 
 
 
+// Curated edits — keep titles in sync with homepage `ShopByCategory`
+const EDITS: Record<string, { titles: string[]; eyebrow: string; title: string; subtitle: string }> = {
+  "the-edit": {
+    titles: [
+      "Lip Liner - Raspberry",
+      "Blush Palette - Kissable",
+      "BB Cream - Pearly",
+      "Lip Gloss - Brick",
+    ],
+    eyebrow: "The Edit",
+    title: "Four to fall for.",
+    subtitle:
+      "A hand-picked quartet of staples — the shades our community keeps coming back for.",
+  },
+};
+
 const Shop = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const category = searchParams.get("category");
+  const editKey = searchParams.get("edit");
+  const edit = editKey ? EDITS[editKey] : null;
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("All");
 
   const handleFilterClick = (f: (typeof FILTERS)[number]) => {
@@ -83,7 +101,9 @@ const Shop = () => {
     "Tools",
   ]);
 
-  const query = category
+  const query = edit
+    ? edit.titles.map((t) => `title:"${t.replace(/"/g, '\\"')}"`).join(" OR ")
+    : category
     ? CLIENT_RESOLVED_CATEGORIES.has(category)
       ? undefined
       : `product_type:"${category.replace(/"/g, '\\"')}"`
@@ -105,6 +125,13 @@ const Shop = () => {
 
   const list = useMemo(() => {
     const all = products ?? [];
+    if (edit) {
+      // Sort by curated order from EDITS config
+      const order = new Map(edit.titles.map((t, i) => [t.toLowerCase(), i]));
+      return [...all]
+        .filter((p) => order.has(p.node.title.toLowerCase()))
+        .sort((a, b) => (order.get(a.node.title.toLowerCase()) ?? 99) - (order.get(b.node.title.toLowerCase()) ?? 99));
+    }
     if (category) {
       if (CLIENT_RESOLVED_CATEGORIES.has(category)) {
         return all.filter((p) => resolveSubcategory(p.node as ProdNode) === category);
@@ -113,10 +140,10 @@ const Shop = () => {
     }
     if (filter === "Face") return all.filter((p) => !isEyeProduct(p.node as ProdNode));
     return all;
-  }, [products, filter, category]);
+  }, [products, filter, category, edit]);
 
   const grouped = useMemo(() => {
-    if (category) return null;
+    if (category || edit) return null;
     const map = new Map<string, typeof list>();
     list.forEach((p) => {
       const sub = resolveSubcategory(p.node as ProdNode);
@@ -124,7 +151,7 @@ const Shop = () => {
       map.get(sub)!.push(p);
     });
     return Array.from(map.entries()).sort(([a], [b]) => sortGroups(a, b));
-  }, [list, category]);
+  }, [list, category, edit]);
 
   // Reset tab highlight when category param is active
   useEffect(() => {
@@ -159,23 +186,26 @@ const Shop = () => {
     setActiveGroup(groupName);
   };
 
-  const heading = category ?? "Shop everything.";
-  const eyebrow = category ? "Category" : "The Collection";
+  const heading = edit ? edit.title : (category ?? "Shop everything.");
+  const eyebrow = edit ? edit.eyebrow : category ? "Category" : "The Collection";
+  const subtitle = edit
+    ? edit.subtitle
+    : category
+    ? `Browse all ${category.toLowerCase()}.`
+    : "Every formula is a skincare-makeup hybrid. Build your routine one tint at a time.";
 
   return (
-    <PageShell title={category ?? "Shop"} description="The full Tintelle collection — tinted skincare hybrids.">
+    <PageShell title={edit?.title ?? category ?? "Shop"} description="The full Tintelle collection — tinted skincare hybrids.">
       <section className="container pt-10 md:pt-16 pb-4 md:pb-6">
         <p className="text-[11px] md:text-xs tracking-[0.3em] uppercase text-taupe">{eyebrow}</p>
         <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl text-mauve mt-3 leading-[1.05]">{heading}</h1>
         <p className="text-sm md:text-lg text-taupe max-w-xl leading-relaxed mt-3 md:mt-4">
-          {category
-            ? `Browse all ${category.toLowerCase()}.`
-            : "Every formula is a skincare-makeup hybrid. Build your routine one tint at a time."}
+          {subtitle}
         </p>
       </section>
 
       <section className="container pb-16 md:pb-24">
-        {!category && (
+        {!category && !edit && (
           <div className="flex gap-5 md:gap-8 mb-6 md:mb-8 border-b border-border pb-3 md:pb-4 overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
             {FILTERS.map((f) => (
               <button

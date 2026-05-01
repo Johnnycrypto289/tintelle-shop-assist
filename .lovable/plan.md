@@ -1,69 +1,46 @@
-# Magazine-Style Editorial Redesign — "The Edit" Section
+# Add "The Edit" Section to the Shop Page
 
-Move away from the "four equal squares" look into an **asymmetric editorial spread** — same family as the Campaign Foundation block, but distinct enough that the page doesn't feel repetitive.
+When a user clicks **"Shop the edit"** from the homepage, they currently land on the generic `/shop` page. We'll wire that link to a dedicated "The Edit" view that shows just the four hand-picked products from the homepage editorial.
 
-## The core idea
+## How it works
 
-Use a **12-column asymmetric grid**, mixing portrait and landscape image sizes so no two tiles share the same shape. A small "editorial sidebar" on one side carries the section title + intro copy, the way fashion magazines lead an editorial page.
+### Route
+- Use a query param: `/shop?edit=the-edit`
+- The homepage `Shop the edit →` link updates from `/shop` to `/shop?edit=the-edit`.
+- (Future-proof: more curated edits could be added later, e.g. `?edit=summer-staples`.)
 
-## Desktop layout (12-col grid)
+### The four products in The Edit
+The exact same products featured on the homepage:
 
-```text
-┌────────────────────┬──────────────────────────────────────────┐
-│                    │   ┌──────────────┐  ┌─────────────────┐  │
-│  THE EDIT          │   │              │  │                 │  │
-│  Four to           │   │  LIP LINER   │  │   BLUSH         │  │
-│  fall for.         │   │  Raspberry   │  │   PALETTE       │  │
-│                    │   │  (3:4 tall)  │  │   Kissable      │  │
-│  Intro copy here   │   │              │  │   (4:3 wide)    │  │
-│  about hand-       │   │              │  └─────────────────┘  │
-│  picked staples.   │   │              │  ┌─────────────────┐  │
-│                    │   │              │  │                 │  │
-│  Discover all →    │   │              │  │   BB CREAM      │  │
-│  (sidebar = 3 col) │   └──────────────┘  │   Pearly        │  │
-│                    │                     │   (tall)        │  │
-│                    │   ┌─────────────┐   │                 │  │
-│                    │   │             │   └─────────────────┘  │
-│                    │   │  LIP GLOSS  │                        │
-│                    │   │  Brick      │                        │
-│                    │   │  (4:5 wide) │                        │
-│                    │   └─────────────┘                        │
-└────────────────────┴──────────────────────────────────────────┘
-   3 cols                 4 cols              5 cols
+| N° | Product title (Shopify match) |
+|---|---|
+| 01 | Lip Liner — Raspberry |
+| 02 | Blush Palette — Kissable |
+| 03 | BB Cream — Pearly |
+| 04 | Lip Gloss — Brick |
+
+These are matched by exact title via Shopify Storefront API.
+
+### Shop page behavior when `?edit=the-edit` is present
+- Hide the Face/Lips/Eyes filter tabs and the subcategory quick-jump chips.
+- Replace the page heading with an editorial intro:
+  - Eyebrow: `THE EDIT`
+  - Title: *"Four to fall for."*
+  - Subtitle: "A hand-picked quartet of staples — the shades our community keeps coming back for."
+- Show the 4 products in a clean responsive grid (same `ProductCard` component already used on Shop).
+- Each card keeps its existing add-to-cart + "View" routing.
+- Loading and empty states reuse existing patterns.
+
+### Files
+
+- **Edit** `src/pages/Shop.tsx` — read `edit` search param; when set, fetch the four titles and render the curated view (skipping filters, groups, and chips). Default behavior unchanged when `edit` isn't present.
+- **Edit** `src/components/tintelle/ShopByCategory.tsx` — change the sidebar link from `/shop` to `/shop?edit=the-edit`.
+
+### Technical detail (data fetch)
+A single Storefront API query with the four titles OR'd together:
 ```
-
-Result: **no two tiles are the same size**, sidebar text anchors the left, images breathe with offsets and varied aspect ratios — that's the magazine feel.
-
-### Specifics
-
-- **Left sidebar (col-span-3)**: sticky-feeling text block with eyebrow `THE EDIT`, big serif `Four to fall for.`, short intro paragraph, and a `Shop the edit →` link. Vertically centered.
-- **Tile 1 — Lip Liner Raspberry (col-span-4)**: tall 3:4 portrait, spans full section height. Caption overlaid bottom-left in a small backdrop-blur chip.
-- **Tile 2 — Blush Palette Kissable (col-span-5, top)**: short landscape 4:3, sits at the top of the right column.
-- **Tile 3 — BB Cream Pearly (col-span-5, bottom)**: portrait 3:4, sits below blush. Slight horizontal offset (small left margin) to break alignment.
-- **Tile 4 — Lip Gloss Brick (col-span-4, bottom)**: 4:5 portrait sitting under Lip Liner with a top margin gap, deliberately misaligned with the right column to feel hand-laid.
-
-### Magazine touches
-
-- Tiny **N° numerals** ("N° 01", "N° 02"…) on each caption — same typographic system as the Campaign block.
-- A **thin horizontal hairline rule** between sidebar text and the link.
-- **Caption style**: bottom-left chip on the image with `CATEGORY — Shade` in 10px tracked uppercase mauve on translucent background — same vocabulary as Campaign tiles.
-- **Hover**: image scales 1.04 over ~1400ms (slow, luxe), and the small `Discover →` underneath each tile draws its underline.
-- A **soft petal/cream gradient wash** behind the section (same trick as Campaign) so the white background isn't flat.
-- Generous vertical breathing room (`py-20 md:py-32`) and `max-w-6xl` container so it reads as an editorial spread, not a product grid.
-
-## Mobile layout
-
-The sidebar collapses to the top (centered text). Below it, tiles stack in a **single column with alternating offsets** — odd-numbered tiles full-width, even-numbered tiles indented 8% from the right — keeping the asymmetric, hand-laid feel without a busy grid.
-
-## What stays / what changes
-
-- **Files edited**: only `src/components/tintelle/ShopByCategory.tsx`.
-- **Images**: reuse the four WebPs already in `src/assets/`.
-- **Tokens**: only semantic tokens (`mauve`, `taupe`, `cream`, `petal`, `background`).
-- **Routing & data**: identical — each tile still links to `/shop?category=...`.
-
-## Why this works
-
-It mirrors the **structural rhythm** of Campaign Foundation (asymmetric grid + sidebar + caption chips + slow hover) without copying it: Campaign features one product in three shades; this section features four different categories. Same luxury vocabulary, different story.
+title:"Lip Liner - Raspberry" OR title:"Blush Palette - Kissable" OR title:"BB Cream - Pearly" OR title:"Lip Gloss - Brick"
+```
+Then the result is sorted into the curated order N° 01 → 04 client-side so the display always matches the homepage order, regardless of API order.
 
 Awaiting approval before implementing.
