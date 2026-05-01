@@ -125,6 +125,13 @@ const Shop = () => {
 
   const list = useMemo(() => {
     const all = products ?? [];
+    if (edit) {
+      // Sort by curated order from EDITS config
+      const order = new Map(edit.titles.map((t, i) => [t.toLowerCase(), i]));
+      return [...all]
+        .filter((p) => order.has(p.node.title.toLowerCase()))
+        .sort((a, b) => (order.get(a.node.title.toLowerCase()) ?? 99) - (order.get(b.node.title.toLowerCase()) ?? 99));
+    }
     if (category) {
       if (CLIENT_RESOLVED_CATEGORIES.has(category)) {
         return all.filter((p) => resolveSubcategory(p.node as ProdNode) === category);
@@ -133,10 +140,10 @@ const Shop = () => {
     }
     if (filter === "Face") return all.filter((p) => !isEyeProduct(p.node as ProdNode));
     return all;
-  }, [products, filter, category]);
+  }, [products, filter, category, edit]);
 
   const grouped = useMemo(() => {
-    if (category) return null;
+    if (category || edit) return null;
     const map = new Map<string, typeof list>();
     list.forEach((p) => {
       const sub = resolveSubcategory(p.node as ProdNode);
@@ -144,7 +151,7 @@ const Shop = () => {
       map.get(sub)!.push(p);
     });
     return Array.from(map.entries()).sort(([a], [b]) => sortGroups(a, b));
-  }, [list, category]);
+  }, [list, category, edit]);
 
   // Reset tab highlight when category param is active
   useEffect(() => {
