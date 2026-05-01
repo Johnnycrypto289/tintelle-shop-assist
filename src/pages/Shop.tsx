@@ -150,9 +150,12 @@ const Shop = () => {
     if (category || edit) return null;
     const map = new Map<string, typeof list>();
     list.forEach((p) => {
-      const sub = resolveSubcategory(p.node as ProdNode);
-      if (!map.has(sub)) map.set(sub, []);
-      map.get(sub)!.push(p);
+      const node = p.node as ProdNode;
+      const cats = [resolveSubcategory(node), ...resolveExtraSubcategories(node)];
+      cats.forEach((sub) => {
+        if (!map.has(sub)) map.set(sub, []);
+        map.get(sub)!.push(p);
+      });
     });
     return Array.from(map.entries()).sort(([a], [b]) => sortGroups(a, b));
   }, [list, category, edit]);
