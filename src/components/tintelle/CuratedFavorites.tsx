@@ -97,6 +97,28 @@ export const CuratedFavorites = () => {
             ))}
           </div>
         )}
+
+        {/* See more link — hidden on Bestsellers (no dedicated page) */}
+        {!isLoading && activeKey !== "bestsellers" && (
+          <div className="flex justify-center mt-8 md:mt-12">
+            <Link
+              to={`/shop?category=${encodeURIComponent(activeTab.label)}`}
+              className="text-[11px] md:text-xs tracking-[0.18em] uppercase text-mauve border-b border-mauve pb-1 hover:opacity-70 transition-opacity"
+            >
+              See all {activeTab.label} →
+            </Link>
+          </div>
+        )}
+        {!isLoading && activeKey === "bestsellers" && (
+          <div className="flex justify-center mt-8 md:mt-12">
+            <Link
+              to="/shop"
+              className="text-[11px] md:text-xs tracking-[0.18em] uppercase text-mauve border-b border-mauve pb-1 hover:opacity-70 transition-opacity"
+            >
+              See all Bestsellers →
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );
