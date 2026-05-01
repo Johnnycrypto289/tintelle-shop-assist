@@ -54,9 +54,27 @@ const sortGroups = (a: string, b: string) => {
 
 
 
+// Curated edits — keep titles in sync with homepage `ShopByCategory`
+const EDITS: Record<string, { titles: string[]; eyebrow: string; title: string; subtitle: string }> = {
+  "the-edit": {
+    titles: [
+      "Lip Liner - Raspberry",
+      "Blush Palette - Kissable",
+      "BB Cream - Pearly",
+      "Lip Gloss - Brick",
+    ],
+    eyebrow: "The Edit",
+    title: "Four to fall for.",
+    subtitle:
+      "A hand-picked quartet of staples — the shades our community keeps coming back for.",
+  },
+};
+
 const Shop = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const category = searchParams.get("category");
+  const editKey = searchParams.get("edit");
+  const edit = editKey ? EDITS[editKey] : null;
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("All");
 
   const handleFilterClick = (f: (typeof FILTERS)[number]) => {

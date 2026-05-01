@@ -10,7 +10,7 @@ import lipGlossImg from "@/assets/featured-lip-gloss-brick.webp";
  * Sidebar copy on the left, four tiles of mixed sizes on the right.
  */
 export const ShopByCategory = () => {
-  const shopAllHref = "/shop";
+  const shopAllHref = "/shop?edit=the-edit";
 
   return (
     <section className="relative bg-background py-20 md:py-32 overflow-hidden">
