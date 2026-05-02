@@ -146,27 +146,27 @@ const FeaturedTile = ({
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]"
         />
         {/* Caption chip */}
-        <div className="absolute left-3 bottom-3 md:left-4 md:bottom-4 bg-background/85 backdrop-blur-sm px-3 py-1.5">
-          <p className="text-[9px] md:text-[10px] tracking-[0.32em] uppercase text-mauve">
+        <div className="absolute left-2 bottom-2 md:left-4 md:bottom-4 bg-background/85 backdrop-blur-sm px-2 py-1 md:px-3 md:py-1.5">
+          <p className="text-[8px] md:text-[10px] tracking-[0.28em] md:tracking-[0.32em] uppercase text-mauve">
             {category} — {shade}
           </p>
         </div>
       </div>
 
       {/* Caption beneath */}
-      <div className="mt-4 md:mt-5 flex items-end justify-between gap-4">
-        <div>
-          <p className="text-[10px] tracking-[0.32em] uppercase text-taupe">
+      <div className="mt-3 md:mt-5 flex items-end justify-between gap-2 md:gap-4">
+        <div className="min-w-0">
+          <p className="text-[9px] md:text-[10px] tracking-[0.28em] md:tracking-[0.32em] uppercase text-taupe truncate">
             {number} — {category}
           </p>
-          <h3 className="font-serif text-mauve text-2xl md:text-[28px] leading-tight mt-1.5">
+          <h3 className="font-serif text-mauve text-lg sm:text-xl md:text-[28px] leading-tight mt-1 md:mt-1.5">
             {shade}
           </h3>
-          <p className="font-serif italic text-sm md:text-[15px] text-taupe mt-1">
+          <p className="font-serif italic text-[12px] sm:text-sm md:text-[15px] text-taupe mt-0.5 md:mt-1">
             {tagline}
           </p>
         </div>
-        <span className="shrink-0 mb-1 text-[10px] tracking-[0.32em] uppercase text-mauve pb-0.5 border-b border-mauve/50 group-hover:border-mauve transition-colors">
+        <span className="hidden sm:inline-block shrink-0 mb-1 text-[9px] md:text-[10px] tracking-[0.28em] md:tracking-[0.32em] uppercase text-mauve pb-0.5 border-b border-mauve/50 group-hover:border-mauve transition-colors">
           Discover →
         </span>
       </div>
