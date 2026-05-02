@@ -13,30 +13,30 @@ export const ShopByCategory = () => {
   const shopAllHref = "/shop?edit=the-edit";
 
   return (
-    <section className="relative bg-background py-20 md:py-32 overflow-hidden">
+    <section className="relative bg-background py-14 md:py-32 overflow-hidden">
       {/* Soft brand wash */}
       <div className="absolute inset-0 bg-gradient-to-bl from-cream/50 via-background to-petal/25 pointer-events-none" />
 
-      <div className="container relative max-w-6xl">
-        <div className="grid grid-cols-12 gap-x-6 md:gap-x-10 gap-y-10">
+      <div className="container relative max-w-6xl px-4 sm:px-6">
+        <div className="grid grid-cols-12 gap-x-4 sm:gap-x-6 md:gap-x-10 gap-y-8 md:gap-y-10">
           {/* ============ Sidebar (editorial intro) ============ */}
           <aside className="col-span-12 md:col-span-3 md:sticky md:top-24 md:self-start md:py-8">
             <p className="text-[10px] md:text-[11px] tracking-[0.42em] uppercase text-taupe">
               The Edit
             </p>
-            <h2 className="font-serif font-light text-mauve leading-[0.95] tracking-[-0.015em] mt-3 text-4xl md:text-5xl lg:text-[64px]">
+            <h2 className="font-serif font-light text-mauve leading-[0.95] tracking-[-0.015em] mt-2.5 md:mt-3 text-[40px] sm:text-5xl md:text-5xl lg:text-[64px]">
               Four to
               <br />
               <span className="italic font-extralight">fall for.</span>
             </h2>
-            <div className="hidden md:block w-10 h-px bg-mauve/30 mt-7" />
-            <p className="text-sm md:text-[15px] leading-relaxed text-taupe mt-5 md:mt-6 max-w-xs">
+            <div className="w-10 h-px bg-mauve/30 mt-5 md:mt-7" />
+            <p className="text-[13px] sm:text-sm md:text-[15px] leading-relaxed text-taupe mt-4 md:mt-6 max-w-xs">
               A hand-picked quartet of staples — the shades our community keeps
               coming back for, season after season.
             </p>
             <Link
               to={shopAllHref}
-              className="group inline-flex items-center mt-7 text-[10px] md:text-[11px] tracking-[0.32em] uppercase text-mauve pb-1.5 border-b border-mauve/50 hover:border-mauve transition-colors"
+              className="group inline-flex items-center mt-5 md:mt-7 text-[10px] md:text-[11px] tracking-[0.32em] uppercase text-mauve pb-1.5 border-b border-mauve/50 hover:border-mauve transition-colors"
             >
               <span>Shop the edit</span>
               <span className="ml-3 transition-transform group-hover:translate-x-1">→</span>
@@ -45,10 +45,11 @@ export const ShopByCategory = () => {
 
           {/* ============ Editorial tile cluster ============ */}
           <div className="col-span-12 md:col-span-9">
-            <div className="grid grid-cols-9 gap-x-4 md:gap-x-6 gap-y-8 md:gap-y-10">
-              {/* Tile 1 — Lip Liner Raspberry — TALL LEFT, spans both rows */}
+            {/* 6-col grid on mobile preserves magazine asymmetry; 9-col on md+ keeps existing desktop spread */}
+            <div className="grid grid-cols-6 md:grid-cols-9 gap-x-3 sm:gap-x-4 md:gap-x-6 gap-y-6 sm:gap-y-7 md:gap-y-10">
+              {/* Tile 1 — Lip Liner Raspberry — TALL LEFT (mobile: 3 cols spans 2 rows) */}
               <FeaturedTile
-                className="col-span-9 md:col-span-4 md:row-span-2 md:mt-0"
+                className="col-span-3 row-span-2 md:col-span-4 md:row-span-2 md:mt-0"
                 href="/shop?category=Lip%20Liner"
                 src={lipLinerImg}
                 alt="Model holding Tintelle Raspberry lip liner"
@@ -59,13 +60,13 @@ export const ShopByCategory = () => {
                 tagline="Define. Soften. Stay."
               />
 
-              {/* Tile 2 — Blush Kissable — landscape top right */}
+              {/* Tile 2 — Blush Kissable — top right (mobile: 3 cols, landscape) */}
               <FeaturedTile
-                className="col-span-9 md:col-span-5 md:mt-8 lg:mt-12"
+                className="col-span-3 md:col-span-5 md:mt-8 lg:mt-12"
                 href="/shop?category=Blush%20Palette"
                 src={blushImg}
                 alt="Model with Tintelle Kissable blush palette"
-                aspect="aspect-[4/3]"
+                aspect="aspect-[4/5] md:aspect-[4/3]"
                 objectPosition="center 30%"
                 number="N° 02"
                 category="Blush Palette"
@@ -73,9 +74,9 @@ export const ShopByCategory = () => {
                 tagline="A flush, three ways."
               />
 
-              {/* Tile 3 — BB Cream Pearly — portrait bottom right, offset */}
+              {/* Tile 3 — BB Cream Pearly — bottom right offset (mobile: 3 cols portrait) */}
               <FeaturedTile
-                className="col-span-9 md:col-span-4 md:col-start-6 md:ml-4 lg:ml-8"
+                className="col-span-3 md:col-span-4 md:col-start-6 md:ml-4 lg:ml-8"
                 href="/shop?category=BB%20Cream"
                 src={bbCreamImg}
                 alt="Model holding Tintelle Pearly BB cream"
@@ -86,13 +87,13 @@ export const ShopByCategory = () => {
                 tagline="Skin, only better."
               />
 
-              {/* Tile 4 — Lip Gloss Brick — wide bottom under Lip Liner */}
+              {/* Tile 4 — Lip Gloss Brick — wide bottom (mobile: full 6 cols, landscape) */}
               <FeaturedTile
-                className="col-span-9 md:col-span-4 md:col-start-1 md:-mt-8 md:mr-6"
+                className="col-span-6 md:col-span-4 md:col-start-1 md:-mt-8 md:mr-6"
                 href="/shop?category=Lip%20Gloss"
                 src={lipGlossImg}
                 alt="Close-up lips wearing Tintelle Brick lip gloss"
-                aspect="aspect-[4/5]"
+                aspect="aspect-[16/10] md:aspect-[4/5]"
                 objectPosition="center 35%"
                 number="N° 04"
                 category="Lip Gloss"
@@ -145,27 +146,27 @@ const FeaturedTile = ({
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]"
         />
         {/* Caption chip */}
-        <div className="absolute left-3 bottom-3 md:left-4 md:bottom-4 bg-background/85 backdrop-blur-sm px-3 py-1.5">
-          <p className="text-[9px] md:text-[10px] tracking-[0.32em] uppercase text-mauve">
+        <div className="absolute left-2 bottom-2 md:left-4 md:bottom-4 bg-background/85 backdrop-blur-sm px-2 py-1 md:px-3 md:py-1.5">
+          <p className="text-[8px] md:text-[10px] tracking-[0.28em] md:tracking-[0.32em] uppercase text-mauve">
             {category} — {shade}
           </p>
         </div>
       </div>
 
       {/* Caption beneath */}
-      <div className="mt-4 md:mt-5 flex items-end justify-between gap-4">
-        <div>
-          <p className="text-[10px] tracking-[0.32em] uppercase text-taupe">
+      <div className="mt-3 md:mt-5 flex items-end justify-between gap-2 md:gap-4">
+        <div className="min-w-0">
+          <p className="text-[9px] md:text-[10px] tracking-[0.28em] md:tracking-[0.32em] uppercase text-taupe truncate">
             {number} — {category}
           </p>
-          <h3 className="font-serif text-mauve text-2xl md:text-[28px] leading-tight mt-1.5">
+          <h3 className="font-serif text-mauve text-lg sm:text-xl md:text-[28px] leading-tight mt-1 md:mt-1.5">
             {shade}
           </h3>
-          <p className="font-serif italic text-sm md:text-[15px] text-taupe mt-1">
+          <p className="font-serif italic text-[12px] sm:text-sm md:text-[15px] text-taupe mt-0.5 md:mt-1">
             {tagline}
           </p>
         </div>
-        <span className="shrink-0 mb-1 text-[10px] tracking-[0.32em] uppercase text-mauve pb-0.5 border-b border-mauve/50 group-hover:border-mauve transition-colors">
+        <span className="hidden sm:inline-block shrink-0 mb-1 text-[9px] md:text-[10px] tracking-[0.28em] md:tracking-[0.32em] uppercase text-mauve pb-0.5 border-b border-mauve/50 group-hover:border-mauve transition-colors">
           Discover →
         </span>
       </div>
