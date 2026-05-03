@@ -105,7 +105,7 @@ export const Header = () => {
           <img
             src={tintelleLogo}
             alt="Tintelle Beauty"
-            className="h-12 md:h-44 w-auto object-contain md:scale-150 origin-center"
+            className="h-12 md:h-28 lg:h-44 w-auto object-contain md:scale-110 lg:scale-150 origin-center"
             loading="eager"
             decoding="sync"
             // @ts-ignore
