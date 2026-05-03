@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Heart, Menu, Search, User, X } from "lucide-react";
 import { CartDrawer } from "./CartDrawer";
+import { AnnouncementBar } from "./AnnouncementBar";
+import { SocialLinks } from "./SocialLinks";
 import { useCustomer } from "@/hooks/useCustomer";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import tintelleLogo from "@/assets/tintelle-logo.webp";
