@@ -4,6 +4,7 @@ import { ChevronDown, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
+import { SocialLinks } from "./SocialLinks";
 import { toast } from "sonner";
 
 type FooterLink = { label: string; href: string };
