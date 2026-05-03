@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Mail, MessageCircle, MapPin, Loader2 } from "lucide-react";
 import { PageShell } from "@/components/tintelle/PageShell";
+import { SocialLinks } from "@/components/tintelle/SocialLinks";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -94,6 +95,12 @@ const Contact = () => {
               <p className="text-sm text-taupe mt-1">{note}</p>
             </div>
           ))}
+          <div className="bg-card border border-border p-6">
+            <p className="text-[11px] tracking-[0.25em] uppercase text-taupe">Follow us</p>
+            <p className="font-serif text-mauve text-lg mt-1">@tintellebeauty</p>
+            <p className="text-sm text-taupe mt-1 mb-4">Tag us for a chance to be featured.</p>
+            <SocialLinks iconClassName="h-6 w-6" />
+          </div>
         </aside>
       </section>
     </PageShell>

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Heart, Menu, Search, User, X } from "lucide-react";
 import { CartDrawer } from "./CartDrawer";
+import { AnnouncementBar } from "./AnnouncementBar";
+import { SocialLinks } from "./SocialLinks";
 import { useCustomer } from "@/hooks/useCustomer";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import tintelleLogo from "@/assets/tintelle-logo.webp";
@@ -23,6 +25,7 @@ export const Header = () => {
 
   return (
     <header className="sticky top-0 z-40 bg-background/90 backdrop-blur-md border-b border-border/60">
+      <AnnouncementBar />
       <div className="container flex items-center justify-between h-16 md:h-24 gap-2">
         {/* Mobile: hamburger */}
         <div className="flex-1 flex md:hidden">
@@ -76,6 +79,10 @@ export const Header = () => {
                   Track Order
                 </Link>
               </nav>
+              <div className="mt-auto px-6 py-6 border-t border-border/40">
+                <p className="text-[11px] tracking-[0.25em] uppercase text-taupe mb-3">Follow us</p>
+                <SocialLinks iconClassName="h-6 w-6" />
+              </div>
             </SheetContent>
           </Sheet>
         </div>

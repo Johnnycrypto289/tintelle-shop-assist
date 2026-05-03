@@ -4,6 +4,7 @@ import { ChevronDown, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
+import { SocialLinks } from "./SocialLinks";
 import { toast } from "sonner";
 
 type FooterLink = { label: string; href: string };
@@ -136,6 +137,10 @@ export const Footer = () => {
                 {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Join"}
               </Button>
             </form>
+            <div className="pt-4">
+              <p className="text-[11px] tracking-[0.25em] uppercase text-taupe mb-3">Follow us</p>
+              <SocialLinks />
+            </div>
           </div>
 
           {/* Mobile: accordion. Desktop: open columns. */}
