@@ -15,11 +15,17 @@ const TikTokIcon = ({ className }: { className?: string }) => (
 interface Props {
   className?: string;
   iconClassName?: string;
+  linkClassName?: string;
   label?: string;
 }
 
-export const SocialLinks = ({ className = "", iconClassName = "h-5 w-5", label = "Follow Tintelle on" }: Props) => {
-  const linkCls = "text-mauve hover:text-primary transition-colors inline-flex items-center justify-center";
+export const SocialLinks = ({
+  className = "",
+  iconClassName = "h-5 w-5",
+  linkClassName = "text-mauve hover:text-primary",
+  label = "Follow Tintelle on",
+}: Props) => {
+  const linkCls = `${linkClassName} transition-colors inline-flex items-center justify-center`;
   return (
     <div className={`flex items-center gap-4 ${className}`}>
       <a href={SOCIALS.instagram} target="_blank" rel="noreferrer" aria-label={`${label} Instagram`} className={linkCls}>
