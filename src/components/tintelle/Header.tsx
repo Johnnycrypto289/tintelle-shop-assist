@@ -88,7 +88,7 @@ export const Header = () => {
         </div>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-10 flex-1">
+        <nav className="hidden md:flex items-center gap-5 lg:gap-10 flex-1">
           {NAV.map((n) => (
             <Link key={n.to} to={n.to} className={linkCls}>
               {n.label}
