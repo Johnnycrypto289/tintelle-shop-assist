@@ -79,6 +79,10 @@ export const Header = () => {
                   Track Order
                 </Link>
               </nav>
+              <div className="mt-auto px-6 py-6 border-t border-border/40">
+                <p className="text-[11px] tracking-[0.25em] uppercase text-taupe mb-3">Follow us</p>
+                <SocialLinks iconClassName="h-6 w-6" />
+              </div>
             </SheetContent>
           </Sheet>
         </div>
