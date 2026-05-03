@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Mail, MessageCircle, MapPin, Loader2 } from "lucide-react";
 import { PageShell } from "@/components/tintelle/PageShell";
+import { SocialLinks } from "@/components/tintelle/SocialLinks";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
