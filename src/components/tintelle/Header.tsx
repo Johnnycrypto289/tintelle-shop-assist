@@ -25,6 +25,7 @@ export const Header = () => {
 
   return (
     <header className="sticky top-0 z-40 bg-background/90 backdrop-blur-md border-b border-border/60">
+      <AnnouncementBar />
       <div className="container flex items-center justify-between h-16 md:h-24 gap-2">
         {/* Mobile: hamburger */}
         <div className="flex-1 flex md:hidden">
