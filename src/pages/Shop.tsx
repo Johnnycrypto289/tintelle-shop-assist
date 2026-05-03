@@ -284,7 +284,7 @@ const Shop = () => {
                     {items.length} {items.length === 1 ? "product" : "products"}
                   </span>
                 </div>
-                <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 md:gap-8">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6 md:gap-8">
                   {items.map((p) => (
                     <ProductCard key={p.node.id} product={p} fromCategory={groupName} />
                   ))}
@@ -293,7 +293,7 @@ const Shop = () => {
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 md:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6 md:gap-8">
             {list.map((p) => (
               <ProductCard key={p.node.id} product={p} fromCategory={category ?? undefined} />
             ))}
