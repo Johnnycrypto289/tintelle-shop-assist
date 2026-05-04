@@ -1,7 +1,7 @@
 import { PageShell } from "@/components/tintelle/PageShell";
 
 const RATES = [
-  { method: "Standard (USPS Priority)", time: "3–5 business days", cost: "$6.50 · Free over $50" },
+  { method: "Standard (USPS Priority)", time: "3–5 business days", cost: "$6.50" },
   { method: "Expedited (USPS Express)", time: "1–2 business days", cost: "$14.50" },
   { method: "Canada", time: "5–8 business days", cost: "$12.00" },
   { method: "United Kingdom", time: "7–10 business days", cost: "$18.00" },
@@ -15,7 +15,7 @@ const Shipping = () => (
         Quick to arrive. Easy to send back.
       </h1>
       <p className="text-base md:text-lg text-taupe max-w-xl leading-relaxed mt-4">
-        Free U.S. shipping over $50, carbon-neutral delivery on every order, and a 30-day shade match guarantee.
+        Carbon-neutral delivery on every order, with a 30-day shade match guarantee.
       </p>
     </section>
 
