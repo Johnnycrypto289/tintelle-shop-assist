@@ -114,17 +114,6 @@ export const Header = () => {
           <Link to="/wishlist" aria-label="Wishlist" className={`${iconCls} hidden sm:inline-flex`}>
             <Heart className="h-5 w-5" strokeWidth={1.5} />
           </Link>
-          <Link
-            to="/account"
-            aria-label={isSignedIn ? "Account (signed in)" : "Account"}
-            className={`${iconCls} hidden sm:inline-flex ${isSignedIn ? "text-primary" : ""}`}
-          >
-            <User
-              className="h-5 w-5"
-              strokeWidth={1.5}
-              fill={isSignedIn ? "currentColor" : "none"}
-            />
-          </Link>
           <CartDrawer />
         </div>
       </div>
