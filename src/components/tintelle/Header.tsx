@@ -58,13 +58,6 @@ export const Header = () => {
                   );
                 })}
                 <Link
-                  to="/account"
-                  onClick={() => setOpen(false)}
-                  className="px-6 py-4 font-serif text-2xl text-mauve hover:text-primary border-b border-border/40"
-                >
-                  {isSignedIn ? "Account" : "Sign In"}
-                </Link>
-                <Link
                   to="/wishlist"
                   onClick={() => setOpen(false)}
                   className="px-6 py-4 font-serif text-2xl text-mauve hover:text-primary border-b border-border/40"
