@@ -12,6 +12,7 @@ import Wishlist from "./pages/Wishlist.tsx";
 import Search from "./pages/Search.tsx";
 import Journal from "./pages/Journal.tsx";
 import Post from "./pages/Post.tsx";
+import CleanBeautyBrands from "./pages/CleanBeautyBrands.tsx";
 
 import Account from "./pages/Account.tsx";
 import Track from "./pages/Track.tsx";
@@ -37,6 +38,7 @@ const AppRoutes = () => {
       <Route path="/search" element={<Search />} />
       <Route path="/journal" element={<Journal />} />
       <Route path="/journal/:slug" element={<Post />} />
+      <Route path="/clean-beauty-brands" element={<CleanBeautyBrands />} />
       
       <Route path="/account" element={<Account />} />
       <Route path="/track" element={<Track />} />

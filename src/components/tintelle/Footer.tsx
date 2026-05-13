@@ -21,6 +21,15 @@ const cols: { title: string; links: FooterLink[] }[] = [
     ],
   },
   {
+    title: "Clean Beauty",
+    links: [
+      { label: "Clean Beauty Brands", href: "/clean-beauty-brands" },
+      { label: "What is clean beauty", href: "/clean-beauty-brands" },
+      { label: "Ingredient standards", href: "/about#ingredients" },
+      { label: "Sustainability", href: "/about#sustainability" },
+    ],
+  },
+  {
     title: "About",
     links: [
       { label: "Our Story", href: "/about" },
