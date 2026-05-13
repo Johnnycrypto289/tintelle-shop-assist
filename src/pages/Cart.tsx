@@ -19,6 +19,11 @@ const inputCls =
   "w-full px-4 py-3 bg-background border border-border focus:border-primary outline-none text-sm font-sans rounded-none transition-colors";
 const labelCls = "block text-[11px] tracking-[0.2em] uppercase text-taupe mb-2";
 
+const isItemAvailable = (item: { variantId: string; product: { node: { variants: { edges: Array<{ node: { id: string; availableForSale: boolean } }> } } } }) => {
+  const v = item.product.node.variants.edges.find((e) => e.node.id === item.variantId);
+  return v ? v.node.availableForSale : true;
+};
+
 const Cart = () => {
   const { items, updateQuantity, removeItem, getCheckoutUrl, isLoading, isSyncing } = useCartStore();
   const [step, setStep] = useState<StepId>("cart");
@@ -33,8 +38,11 @@ const Cart = () => {
   const total = subtotal + shipping + tax;
   const totalItems = items.reduce((s, i) => s + i.quantity, 0);
   const stepIdx = STEPS.findIndex((s) => s.id === step);
+  const unavailableCount = items.filter((i) => !isItemAvailable(i)).length;
+  const hasUnavailable = unavailableCount > 0;
 
   const handleShopifyCheckout = () => {
+    if (hasUnavailable) return;
     const url = getCheckoutUrl();
     if (url) window.open(url, "_blank");
   };
@@ -118,19 +126,28 @@ const Cart = () => {
                   <div className="bg-card border border-border">
                     {items.map((i) => {
                       const img = i.product.node.images.edges[0]?.node;
+                      const available = isItemAvailable(i);
                       return (
                         <div
                           key={i.variantId}
                           className="grid grid-cols-[80px_1fr] sm:grid-cols-[100px_1fr_auto] md:grid-cols-[120px_1fr_auto] gap-4 sm:gap-5 md:gap-6 p-4 sm:p-5 md:p-6 border-b border-border items-start sm:items-center"
                         >
-                          <div className="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] md:w-[120px] md:h-[120px] bg-cream shrink-0">
-                            {img && <img src={img.url} alt={i.product.node.title} className="w-full h-full object-cover" />}
+                          <div className="w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] md:w-[120px] md:h-[120px] bg-cream shrink-0 relative">
+                            {img && <img src={img.url} alt={i.product.node.title} className={`w-full h-full object-cover ${available ? "" : "opacity-50"}`} />}
+                            {!available && (
+                              <span className="absolute top-1 left-1 px-1.5 py-0.5 text-[9px] tracking-[0.2em] uppercase bg-background/95 text-mauve border border-mauve/40">
+                                Sold Out
+                              </span>
+                            )}
                           </div>
                           <div className="min-w-0">
                             <h4 className="font-serif text-mauve text-sm sm:text-base md:text-lg leading-tight">{i.product.node.title}</h4>
                             <p className="text-xs sm:text-sm text-taupe mt-1 mb-2 sm:mb-3">
                               {formatPrice(i.price.amount, i.price.currencyCode)}
                             </p>
+                            {!available && (
+                              <p className="text-[11px] tracking-[0.18em] uppercase text-destructive mb-2">Unavailable — please remove</p>
+                            )}
                             <div className="flex items-center gap-3 flex-wrap">
                               <div className="inline-flex items-center border border-mauve">
                                 <button onClick={() => updateQuantity(i.variantId, Math.max(1, i.quantity - 1))} className="w-10 h-10 text-mauve" aria-label="Decrease">−</button>
