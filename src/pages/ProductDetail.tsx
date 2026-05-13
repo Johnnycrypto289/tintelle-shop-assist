@@ -170,8 +170,34 @@ const ProductDetail = () => {
   const hasMultipleVariants = variants.length > 1;
   const activeImage = gallery[activeImageIndex] ?? gallery[0];
 
+  const productJsonLd = product
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        name: product.node.title,
+        description: product.node.description,
+        image: gallery.map((g) => g.url).filter(Boolean),
+        brand: { "@type": "Brand", name: "Tintelle" },
+        url: `https://tintellebeauty.com/product/${product.node.handle}`,
+        offers: variant
+          ? {
+              "@type": "Offer",
+              price: variant.price?.amount,
+              priceCurrency: variant.price?.currencyCode || "USD",
+              availability: variant.availableForSale
+                ? "https://schema.org/InStock"
+                : "https://schema.org/OutOfStock",
+              url: `https://tintellebeauty.com/product/${product.node.handle}`,
+            }
+          : undefined,
+      }
+    : null;
+
   return (
-    <PageShell title={product?.node.title} description={product?.node.description?.slice(0, 155)}>
+    <PageShell title={product?.node.title} description={product?.node.description?.slice(0, 155)} ogType="product">
+      {productJsonLd && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
+      )}
       <Breadcrumbs
         items={[
           { label: "Home", href: "/" },
