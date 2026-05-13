@@ -10,6 +10,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { useWishlistStore } from "@/stores/wishlistStore";
 import { formatPrice } from "@/lib/shopify";
 import { parseProductDescription } from "@/lib/parseProductDescription";
+import { resolveSubcategory } from "@/lib/categories";
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
@@ -18,7 +19,7 @@ const ProductDetail = () => {
   const backToShopHref = fromCategory ? `/shop?category=${encodeURIComponent(fromCategory)}` : "/shop";
   const fromQuery = fromCategory ? `?from=${encodeURIComponent(fromCategory)}` : "";
   const { data: product, isLoading } = useProduct(handle);
-  const { data: relatedProducts } = useProducts(undefined, 6);
+  const { data: relatedProducts } = useProducts(undefined, 100);
   const addItem = useCartStore((s) => s.addItem);
   const isAdding = useCartStore((s) => s.isLoading);
   const wishlistHas = useWishlistStore((s) => s.has);
@@ -101,10 +102,70 @@ const ProductDetail = () => {
     }
   };
 
-  const cross = useMemo(
-    () => (relatedProducts ?? []).filter((p) => p.node.handle !== handle).slice(0, 3),
-    [relatedProducts, handle]
-  );
+  // Smart pairing: pick products from complementary categories so a lipstick
+  // pairs with a lip liner / lip gloss, a foundation pairs with primer /
+  // concealer / highlighter, etc. Falls back to same-category, then random.
+  const cross = useMemo(() => {
+    if (!product || !relatedProducts) return [];
+    const all = relatedProducts.filter((p) => p.node.handle !== handle);
+    const ownCat = resolveSubcategory(product.node);
+
+    const PAIRINGS: Record<string, string[]> = {
+      Lipstick: ["Lip Liner", "Lip Gloss", "Lip Tint", "Primer"],
+      "Lip Gloss": ["Lipstick", "Lip Liner", "Lip Tint"],
+      "Lip Liner": ["Lipstick", "Lip Gloss", "Lip Tint"],
+      "Lip Tint": ["Lip Gloss", "Lipstick", "Lip Liner"],
+      Foundation: ["Primer", "Concealer", "Highlighter", "Bronzer"],
+      "BB Cream": ["Primer", "Concealer", "Highlighter"],
+      Concealer: ["Foundation", "Primer", "Highlighter"],
+      Primer: ["Foundation", "BB Cream", "Concealer"],
+      Highlighter: ["Foundation", "Bronzer", "Liquid Blush", "Blush Palette"],
+      Bronzer: ["Foundation", "Highlighter", "Liquid Blush"],
+      "Liquid Blush": ["Highlighter", "Foundation", "Bronzer"],
+      "Blush Palette": ["Highlighter", "Foundation", "Bronzer"],
+      "Eyeshadow Palette": ["Eye Makeup", "Hydro Pencil", "Eye Treatment"],
+      "Eye Makeup": ["Eyeshadow Palette", "Hydro Pencil", "Eye Treatment"],
+      "Hydro Pencil": ["Eye Makeup", "Eyeshadow Palette"],
+      "Eye Treatment": ["Moisturizer", "Serum", "Skincare"],
+      Moisturizer: ["Serum", "Skincare", "Eye Treatment"],
+      Serum: ["Moisturizer", "Skincare", "Eye Treatment"],
+      Skincare: ["Moisturizer", "Serum", "Eye Treatment"],
+      Tools: ["Foundation", "Highlighter", "Liquid Blush"],
+    };
+    const wanted = PAIRINGS[ownCat] ?? [];
+
+    const picked: typeof all = [];
+    const used = new Set<string>();
+    for (const cat of wanted) {
+      const match = all.find(
+        (p) => !used.has(p.node.id) && resolveSubcategory(p.node) === cat
+      );
+      if (match) {
+        picked.push(match);
+        used.add(match.node.id);
+      }
+      if (picked.length >= 3) break;
+    }
+    if (picked.length < 3) {
+      for (const p of all) {
+        if (used.has(p.node.id)) continue;
+        if (resolveSubcategory(p.node) === ownCat) {
+          picked.push(p);
+          used.add(p.node.id);
+          if (picked.length >= 3) break;
+        }
+      }
+    }
+    if (picked.length < 3) {
+      for (const p of all) {
+        if (used.has(p.node.id)) continue;
+        picked.push(p);
+        used.add(p.node.id);
+        if (picked.length >= 3) break;
+      }
+    }
+    return picked.slice(0, 3);
+  }, [product, relatedProducts, handle]);
 
   const hasMultipleVariants = variants.length > 1;
   const activeImage = gallery[activeImageIndex] ?? gallery[0];
