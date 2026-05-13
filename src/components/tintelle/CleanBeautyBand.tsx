@@ -16,7 +16,7 @@ const PILLARS = [
 ];
 
 export const CleanBeautyBand = () => (
-  <section className="bg-bone border-y border-border/60">
+  <section className="bg-petal/40 border-y border-border/60">
     <div className="container py-10 md:py-14">
       <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 md:mb-10">
         <div>
