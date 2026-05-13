@@ -7,7 +7,7 @@ import { dirname, resolve } from "node:path";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
 
-const SITE = "https://www.tintellebeauty.com";
+const SITE = "https://tintellebeauty.com";
 const SHOPIFY_DOMAIN = "41vquf-k2.myshopify.com";
 const SHOPIFY_TOKEN = "12433f2adca16e3775b7ff86f895a875";
 const SHOPIFY_API = "2025-07";
@@ -20,7 +20,11 @@ const STATIC_ROUTES = [
   { path: "/contact", priority: 0.5, changefreq: "monthly" },
   { path: "/faq", priority: 0.5, changefreq: "monthly" },
   { path: "/shipping", priority: 0.4, changefreq: "monthly" },
-  { path: "/subscribe", priority: 0.5, changefreq: "monthly" },
+  { path: "/search", priority: 0.4, changefreq: "monthly" },
+  { path: "/cart", priority: 0.2, changefreq: "monthly" },
+  { path: "/wishlist", priority: 0.2, changefreq: "monthly" },
+  { path: "/account", priority: 0.2, changefreq: "monthly" },
+  { path: "/track", priority: 0.3, changefreq: "monthly" },
   { path: "/privacy", priority: 0.3, changefreq: "yearly" },
   { path: "/terms", priority: 0.3, changefreq: "yearly" },
 ];
