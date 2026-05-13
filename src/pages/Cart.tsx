@@ -180,12 +180,14 @@ const Cart = () => {
                       </Link>
                       <Button
                         onClick={handleShopifyCheckout}
-                        disabled={isLoading || isSyncing}
+                        disabled={isLoading || isSyncing || hasUnavailable}
                         size="lg"
                         className="rounded-none h-12 px-7 text-xs tracking-[0.18em] uppercase w-full sm:w-auto"
                       >
                         {isLoading || isSyncing ? (
                           <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : hasUnavailable ? (
+                          "Sold Out — Remove items"
                         ) : (
                           <>
                             <ExternalLink className="h-4 w-4 mr-2" />
@@ -194,6 +196,11 @@ const Cart = () => {
                         )}
                       </Button>
                     </div>
+                    {hasUnavailable && (
+                      <p className="px-5 md:px-6 pb-2 text-xs text-destructive">
+                        {unavailableCount === 1 ? "1 item is" : `${unavailableCount} items are`} sold out. Remove to enable checkout.
+                      </p>
+                    )}
                     <p className="px-5 md:px-6 pb-5 text-xs text-taupe">
                       Secure checkout powered by Shopify. The shipping & payment steps preview the flow — actual
                       payment happens in the Shopify-hosted checkout.
