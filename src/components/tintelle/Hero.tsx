@@ -30,6 +30,8 @@ export const Hero = () => {
             key={s.src}
             src={s.src}
             alt={s.alt}
+            width={1920}
+            height={1280}
             loading={i === 0 ? "eager" : "lazy"}
             decoding="async"
             // @ts-expect-error fetchpriority is a valid HTML attribute
