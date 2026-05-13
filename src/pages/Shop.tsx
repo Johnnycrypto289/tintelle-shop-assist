@@ -11,7 +11,7 @@ const FILTERS = ["All", "Face", "Lips", "Eyes"] as const;
 const filterFor = (label: (typeof FILTERS)[number]) => {
   switch (label) {
     case "Face":
-      return "tag:face OR product_type:Face OR product_type:Cheek OR product_type:'Skin Tint' OR product_type:'Blush Palette'";
+      return "tag:face OR product_type:Face OR product_type:Cheek OR product_type:'Skin Tint' OR product_type:'Blush Palette' OR product_type:'Liquid Blush' OR title:highlighter OR title:primer OR title:serum OR title:moisturizer";
     case "Lips":
       return "tag:lips OR product_type:Lip OR product_type:'Lip Tint' OR product_type:'Lip Gloss' OR product_type:'Lip Liner'";
     case "Eyes":
