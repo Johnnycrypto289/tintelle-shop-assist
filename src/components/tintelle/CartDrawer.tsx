@@ -117,15 +117,23 @@ export const CartDrawer = () => {
                   <span className="text-sm tracking-wider uppercase text-taupe">Subtotal</span>
                   <span className="font-serif text-xl text-mauve">{formatPrice(totalPrice, currency)}</span>
                 </div>
-                <p className="text-xs text-taupe">Shipping and taxes calculated at checkout.</p>
+                {hasUnavailable ? (
+                  <p className="text-xs text-destructive">
+                    {unavailableCount === 1 ? "1 item is" : `${unavailableCount} items are`} sold out. Remove to continue.
+                  </p>
+                ) : (
+                  <p className="text-xs text-taupe">Shipping and taxes calculated at checkout.</p>
+                )}
                 <Button
                   onClick={handleCheckout}
-                  disabled={isLoading || isSyncing}
+                  disabled={isLoading || isSyncing || hasUnavailable}
                   size="lg"
                   className="w-full rounded-none text-sm tracking-wider uppercase h-12"
                 >
                   {isLoading || isSyncing ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : hasUnavailable ? (
+                    "Sold Out"
                   ) : (
                     <>
                       <ExternalLink className="h-4 w-4 mr-2" /> Checkout
