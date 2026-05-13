@@ -102,4 +102,4 @@ Disallow: /account
 Disallow: /wishlist
 Disallow: /track
 
-Sitemap: https://www.tintellebeauty.com/sitemap.xml
+Sitemap: https://tintellebeauty.com/sitemap.xml

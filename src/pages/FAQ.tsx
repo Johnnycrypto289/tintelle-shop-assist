@@ -48,8 +48,21 @@ const FAQ = () => {
     })).filter((c) => c.items.length > 0);
   }, [query]);
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ_DATA.flatMap((cat) =>
+      cat.items.map((i) => ({
+        "@type": "Question",
+        name: i.q,
+        acceptedAnswer: { "@type": "Answer", text: i.a },
+      }))
+    ),
+  };
+
   return (
     <PageShell title="FAQ" description="Frequently asked questions about Tintelle products, shipping, and returns.">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       <section className="container pt-14 pb-10">
         <p className="text-xs tracking-[0.3em] uppercase text-taupe">Help center</p>
         <h1 className="font-serif text-4xl md:text-6xl text-mauve mt-3 leading-[1.05]">

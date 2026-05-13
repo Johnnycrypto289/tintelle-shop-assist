@@ -1,0 +1,21 @@
+# Tintelle
+
+> Tintelle is a skincare-makeup hybrid brand. Clean, vegan, dermatologist-tested formulas that deliver skin-first color and care in one step.
+
+Tintelle products combine real skincare actives with sheer, buildable color — think tinted serums, lip + cheek tints, hydrating glosses, foundation primers, and luxury cream lipsticks. Every formula is cruelty-free, paraben-free, and made for daily, low-maintenance wear.
+
+## Pages
+
+- [Home](/): Brand overview, hero campaign, featured edits.
+- [Shop](/shop): Full product catalog by category — lips, face, eyes, skincare.
+- [About](/about): Brand story, ingredients philosophy, sustainability.
+- [Journal](/journal): Editorial guides on shade, application, and routines.
+- [FAQ](/faq): Orders, returns, ingredients, and product care.
+- [Shipping & Returns](/shipping): Delivery times, rates, and the 30-day shade match guarantee.
+- [Contact](/contact): Reach the Tintelle team.
+- [Track Order](/track): Look up an order by number and email.
+
+## Optional
+
+- [Privacy Policy](/privacy)
+- [Terms of Service](/terms)
