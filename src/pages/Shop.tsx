@@ -98,15 +98,19 @@ const Shop = () => {
   // grouped section on the main shop page exactly. For these we fetch a
   // broad result set and filter using resolveSubcategory.
   const CLIENT_RESOLVED_CATEGORIES = new Set([
+    "Primer",
     "Foundation",
     "BB Cream",
     "Concealer",
+    "Highlighter",
     "Bronzer",
     "Blush Palette",
     "Liquid Blush",
     "Lipstick",
     "Eyeshadow Palette",
     "Hydro Pencil",
+    "Serum",
+    "Moisturizer",
     "Skincare",
     "Eye Treatment",
     "Eye Makeup",
