@@ -5,18 +5,27 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { useCartStore } from "@/stores/cartStore";
 import { formatPrice } from "@/lib/shopify";
 
+const isItemAvailable = (item: { variantId: string; product: { node: { variants: { edges: Array<{ node: { id: string; availableForSale: boolean } }> } } } }) => {
+  const v = item.product.node.variants.edges.find((e) => e.node.id === item.variantId);
+  // If we can't find the variant (older cart payload), assume available rather than locking checkout.
+  return v ? v.node.availableForSale : true;
+};
+
 export const CartDrawer = () => {
   const [open, setOpen] = useState(false);
   const { items, isLoading, isSyncing, updateQuantity, removeItem, getCheckoutUrl, syncCart } = useCartStore();
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
   const totalPrice = items.reduce((sum, i) => sum + parseFloat(i.price.amount) * i.quantity, 0);
   const currency = items[0]?.price.currencyCode || "USD";
+  const unavailableCount = items.filter((i) => !isItemAvailable(i)).length;
+  const hasUnavailable = unavailableCount > 0;
 
   useEffect(() => {
     if (open) syncCart();
   }, [open, syncCart]);
 
   const handleCheckout = () => {
+    if (hasUnavailable) return;
     const url = getCheckoutUrl();
     if (url) {
       window.open(url, "_blank");
@@ -61,15 +70,19 @@ export const CartDrawer = () => {
               <div className="flex-1 overflow-y-auto pr-2 min-h-0 space-y-4">
                 {items.map((item) => {
                   const img = item.product.node.images.edges[0]?.node;
+                  const available = isItemAvailable(item);
                   return (
                     <div key={item.variantId} className="flex gap-4 py-3 border-b border-border">
-                      <div className="w-20 h-20 bg-cream overflow-hidden flex-shrink-0">
-                        {img && <img src={img.url} alt={item.product.node.title} className="w-full h-full object-cover" />}
+                      <div className="w-20 h-20 bg-cream overflow-hidden flex-shrink-0 relative">
+                        {img && <img src={item.product.node.images.edges[0]?.node.url} alt={item.product.node.title} className={`w-full h-full object-cover ${available ? "" : "opacity-50"}`} />}
                       </div>
                       <div className="flex-1 min-w-0 space-y-1">
                         <h4 className="font-serif text-mauve">{item.product.node.title}</h4>
                         <p className="text-xs text-taupe">{item.selectedOptions.map((o) => o.value).join(" · ")}</p>
                         <p className="text-sm text-mauve">{formatPrice(item.price.amount, item.price.currencyCode)}</p>
+                        {!available && (
+                          <p className="text-[10px] tracking-[0.22em] uppercase text-destructive pt-1">Sold Out — remove to checkout</p>
+                        )}
                         <div className="flex items-center gap-2 pt-2">
                           <button
                             onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
@@ -104,15 +117,23 @@ export const CartDrawer = () => {
                   <span className="text-sm tracking-wider uppercase text-taupe">Subtotal</span>
                   <span className="font-serif text-xl text-mauve">{formatPrice(totalPrice, currency)}</span>
                 </div>
-                <p className="text-xs text-taupe">Shipping and taxes calculated at checkout.</p>
+                {hasUnavailable ? (
+                  <p className="text-xs text-destructive">
+                    {unavailableCount === 1 ? "1 item is" : `${unavailableCount} items are`} sold out. Remove to continue.
+                  </p>
+                ) : (
+                  <p className="text-xs text-taupe">Shipping and taxes calculated at checkout.</p>
+                )}
                 <Button
                   onClick={handleCheckout}
-                  disabled={isLoading || isSyncing}
+                  disabled={isLoading || isSyncing || hasUnavailable}
                   size="lg"
                   className="w-full rounded-none text-sm tracking-wider uppercase h-12"
                 >
                   {isLoading || isSyncing ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : hasUnavailable ? (
+                    "Sold Out"
                   ) : (
                     <>
                       <ExternalLink className="h-4 w-4 mr-2" /> Checkout
