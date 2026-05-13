@@ -1,5 +1,6 @@
 import { Header } from "@/components/tintelle/Header";
 import { Hero } from "@/components/tintelle/Hero";
+import { CleanBeautyBand } from "@/components/tintelle/CleanBeautyBand";
 import { ShopByCategory } from "@/components/tintelle/ShopByCategory";
 import { CuratedFavorites } from "@/components/tintelle/CuratedFavorites";
 import { CampaignFoundation } from "@/components/tintelle/CampaignFoundation";
@@ -17,6 +18,7 @@ const Index = () => {
       <Header />
       <main>
         <Hero />
+        <CleanBeautyBand />
         <ShopByCategory />
         <CuratedFavorites />
         <CampaignFoundation />
