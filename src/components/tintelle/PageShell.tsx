@@ -8,29 +8,50 @@ interface PageShellProps {
   children: ReactNode;
   title?: string;
   description?: string;
+  ogType?: "website" | "article" | "product";
 }
 
-export const PageShell = ({ children, title, description }: PageShellProps) => {
+const SITE = "https://tintellebeauty.com";
+
+const setMeta = (selector: string, attr: "name" | "property", key: string, content: string) => {
+  let el = document.head.querySelector<HTMLMetaElement>(selector);
+  if (!el) {
+    el = document.createElement("meta");
+    el.setAttribute(attr, key);
+    document.head.appendChild(el);
+  }
+  el.setAttribute("content", content);
+};
+
+export const PageShell = ({ children, title, description, ogType = "website" }: PageShellProps) => {
   useEffect(() => {
-    if (title) document.title = `${title} — Tintelle`;
+    const fullTitle = title ? `${title} — Tintelle` : document.title;
+    if (title) document.title = fullTitle;
     if (description) {
-      let meta = document.querySelector('meta[name="description"]');
-      if (!meta) {
-        meta = document.createElement("meta");
-        meta.setAttribute("name", "description");
-        document.head.appendChild(meta);
-      }
-      meta.setAttribute("content", description);
+      setMeta('meta[name="description"]', "name", "description", description);
     }
-    // Canonical URL per route
-    const canonicalHref = `https://www.tintellebeauty.com${window.location.pathname}`;
+
+    const url = `${SITE}${window.location.pathname}`;
+
+    // Canonical
     let canonical = document.querySelector('link[rel="canonical"]');
     if (!canonical) {
       canonical = document.createElement("link");
       canonical.setAttribute("rel", "canonical");
       document.head.appendChild(canonical);
     }
-    canonical.setAttribute("href", canonicalHref);
+    canonical.setAttribute("href", url);
+
+    // Per-route Open Graph + Twitter
+    setMeta('meta[property="og:title"]', "property", "og:title", fullTitle);
+    setMeta('meta[name="twitter:title"]', "name", "twitter:title", fullTitle);
+    if (description) {
+      setMeta('meta[property="og:description"]', "property", "og:description", description);
+      setMeta('meta[name="twitter:description"]', "name", "twitter:description", description);
+    }
+    setMeta('meta[property="og:url"]', "property", "og:url", url);
+    setMeta('meta[property="og:type"]', "property", "og:type", ogType);
+
     // Honor hash anchors (e.g. /about#ingredients) instead of always jumping to top
     if (window.location.hash) {
       const id = window.location.hash.slice(1);
@@ -43,7 +64,7 @@ export const PageShell = ({ children, title, description }: PageShellProps) => {
     } else {
       window.scrollTo(0, 0);
     }
-  }, [title, description]);
+  }, [title, description, ogType]);
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
