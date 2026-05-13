@@ -11,7 +11,7 @@ const FILTERS = ["All", "Face", "Lips", "Eyes"] as const;
 const filterFor = (label: (typeof FILTERS)[number]) => {
   switch (label) {
     case "Face":
-      return "tag:face OR product_type:Face OR product_type:Cheek OR product_type:'Skin Tint' OR product_type:'Blush Palette'";
+      return "tag:face OR product_type:Face OR product_type:Cheek OR product_type:'Skin Tint' OR product_type:'Blush Palette' OR product_type:'Liquid Blush' OR title:highlighter OR title:primer OR title:serum OR title:moisturizer";
     case "Lips":
       return "tag:lips OR product_type:Lip OR product_type:'Lip Tint' OR product_type:'Lip Gloss' OR product_type:'Lip Liner'";
     case "Eyes":
@@ -29,20 +29,26 @@ const GROUP_ORDER = [
   "Lipstick",
   "Lip Liner",
   // Face — granular subcategories
+  "Primer",
   "Foundation",
   "BB Cream",
   "Concealer",
+  "Highlighter",
   "Bronzer",
   "Blush Palette",
   "Liquid Blush",
-  "Skincare",
-  "Tools",
   "Face",
+  // Skincare
+  "Serum",
+  "Moisturizer",
+  "Skincare",
   // Eyes
   "Eyeshadow Palette",
   "Eye Makeup",
   "Eye Treatment",
   "Hydro Pencil",
+  // Tools
+  "Tools",
 ];
 
 const sortGroups = (a: string, b: string) => {
@@ -92,15 +98,19 @@ const Shop = () => {
   // grouped section on the main shop page exactly. For these we fetch a
   // broad result set and filter using resolveSubcategory.
   const CLIENT_RESOLVED_CATEGORIES = new Set([
+    "Primer",
     "Foundation",
     "BB Cream",
     "Concealer",
+    "Highlighter",
     "Bronzer",
     "Blush Palette",
     "Liquid Blush",
     "Lipstick",
     "Eyeshadow Palette",
     "Hydro Pencil",
+    "Serum",
+    "Moisturizer",
     "Skincare",
     "Eye Treatment",
     "Eye Makeup",
