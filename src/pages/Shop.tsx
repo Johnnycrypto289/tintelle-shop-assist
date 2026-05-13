@@ -97,6 +97,8 @@ const Shop = () => {
     "Concealer",
     "Bronzer",
     "Blush Palette",
+    "Liquid Blush",
+    "Lipstick",
     "Eyeshadow Palette",
     "Hydro Pencil",
     "Skincare",
