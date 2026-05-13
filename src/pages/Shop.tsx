@@ -26,6 +26,7 @@ const GROUP_ORDER = [
   // Lips
   "Lip Tint",
   "Lip Gloss",
+  "Lipstick",
   "Lip Liner",
   // Face — granular subcategories
   "Foundation",
