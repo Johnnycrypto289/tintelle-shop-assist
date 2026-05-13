@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { PageShell } from "@/components/tintelle/PageShell";
-import { Breadcrumbs } from "@/components/tintelle/Breadcrumbs";
+
 import {
   CLEAN_BEAUTY_BRANDS,
   BRAND_FAQS,
@@ -76,7 +76,11 @@ const CleanBeautyBrands = () => {
         {/* Hero */}
         <header className="bg-bone border-b border-border/60">
           <div className="container py-10 md:py-16 max-w-4xl">
-            <Breadcrumbs items={[{ label: "Clean Beauty Brands" }]} />
+            <nav className="text-[11px] tracking-[0.2em] uppercase text-taupe">
+              <Link to="/" className="hover:text-mauve transition-colors">Home</Link>
+              <span className="mx-2">/</span>
+              <span className="text-mauve">Clean Beauty Brands</span>
+            </nav>
             <p className="mt-6 text-[11px] tracking-[0.4em] uppercase text-taupe">
               The Tintelle Guide · Updated 2026
             </p>
