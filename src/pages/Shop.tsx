@@ -29,20 +29,26 @@ const GROUP_ORDER = [
   "Lipstick",
   "Lip Liner",
   // Face — granular subcategories
+  "Primer",
   "Foundation",
   "BB Cream",
   "Concealer",
+  "Highlighter",
   "Bronzer",
   "Blush Palette",
   "Liquid Blush",
-  "Skincare",
-  "Tools",
   "Face",
+  // Skincare
+  "Serum",
+  "Moisturizer",
+  "Skincare",
   // Eyes
   "Eyeshadow Palette",
   "Eye Makeup",
   "Eye Treatment",
   "Hydro Pencil",
+  // Tools
+  "Tools",
 ];
 
 const sortGroups = (a: string, b: string) => {
