@@ -18,7 +18,7 @@ const ProductDetail = () => {
   const backToShopHref = fromCategory ? `/shop?category=${encodeURIComponent(fromCategory)}` : "/shop";
   const fromQuery = fromCategory ? `?from=${encodeURIComponent(fromCategory)}` : "";
   const { data: product, isLoading } = useProduct(handle);
-  const { data: relatedProducts } = useProducts(undefined, 6);
+  const { data: relatedProducts } = useProducts(undefined, 100);
   const addItem = useCartStore((s) => s.addItem);
   const isAdding = useCartStore((s) => s.isLoading);
   const wishlistHas = useWishlistStore((s) => s.has);
