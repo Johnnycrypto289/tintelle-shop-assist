@@ -26,6 +26,7 @@ const GROUP_ORDER = [
   // Lips
   "Lip Tint",
   "Lip Gloss",
+  "Lipstick",
   "Lip Liner",
   // Face — granular subcategories
   "Foundation",
@@ -33,6 +34,7 @@ const GROUP_ORDER = [
   "Concealer",
   "Bronzer",
   "Blush Palette",
+  "Liquid Blush",
   "Skincare",
   "Tools",
   "Face",
@@ -95,6 +97,8 @@ const Shop = () => {
     "Concealer",
     "Bronzer",
     "Blush Palette",
+    "Liquid Blush",
+    "Lipstick",
     "Eyeshadow Palette",
     "Hydro Pencil",
     "Skincare",

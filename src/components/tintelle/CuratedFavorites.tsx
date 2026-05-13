@@ -17,6 +17,8 @@ const TABS: Tab[] = [
   { key: "foundation", label: "Foundation", match: (p) => resolveSubcategory(p.node) === "Foundation" },
   { key: "bb-cream", label: "BB Cream", match: (p) => resolveSubcategory(p.node) === "BB Cream" },
   { key: "lip-gloss", label: "Lip Gloss", match: (p) => resolveSubcategory(p.node) === "Lip Gloss" },
+  { key: "liquid-blush", label: "Liquid Blush", match: (p) => resolveSubcategory(p.node) === "Liquid Blush" },
+  { key: "lipstick", label: "Lipstick", match: (p) => resolveSubcategory(p.node) === "Lipstick" },
   { key: "lip-liner", label: "Lip Liner", match: (p) => resolveSubcategory(p.node) === "Lip Liner" },
   { key: "eye-treatment", label: "Eye Treatment", match: (p) => resolveSubcategory(p.node) === "Eye Treatment" },
   { key: "eye-makeup", label: "Eye Makeup", match: (p) => {
