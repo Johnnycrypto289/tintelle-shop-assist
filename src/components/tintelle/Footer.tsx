@@ -21,6 +21,15 @@ const cols: { title: string; links: FooterLink[] }[] = [
     ],
   },
   {
+    title: "Clean Beauty",
+    links: [
+      { label: "Clean Beauty Brands", href: "/clean-beauty-brands" },
+      { label: "What is clean beauty", href: "/clean-beauty-brands" },
+      { label: "Ingredient standards", href: "/about#ingredients" },
+      { label: "Sustainability", href: "/about#sustainability" },
+    ],
+  },
+  {
     title: "About",
     links: [
       { label: "Our Story", href: "/about" },
@@ -113,8 +122,8 @@ export const Footer = () => {
     <footer className="bg-cream pt-12 md:pt-16 pb-8 mt-8">
       <div className="container">
         {/* Newsletter (always on top) */}
-        <div className="space-y-4 mb-10 md:mb-0 md:grid md:grid-cols-4 md:gap-12 md:space-y-0">
-          <div className="space-y-3 md:space-y-4 md:col-span-1">
+        <div className="space-y-4 mb-10 md:mb-0 md:grid md:grid-cols-5 md:gap-10 md:space-y-0">
+          <div className="space-y-3 md:space-y-4 md:col-span-2">
             <p className="font-serif text-2xl font-medium tracking-[0.25em] text-mauve">TINTELLE</p>
             <p className="text-sm text-taupe leading-relaxed max-w-xs">
               Join the Tintelle Community. Get early access to drops, shade guides, and skin-first rituals.

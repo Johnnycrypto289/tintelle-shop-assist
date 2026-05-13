@@ -11,6 +11,7 @@ import tintelleLogo from "@/assets/tintelle-logo.webp";
 const NAV = [
   { to: "/", label: "Home" },
   { to: "/shop", label: "Shop" },
+  { to: "/clean-beauty-brands", label: "Clean Beauty" },
   { to: "/about", label: "About" },
   { to: "/journal", label: "Journal" },
 ];
