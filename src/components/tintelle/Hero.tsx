@@ -92,7 +92,7 @@ export const Hero = () => {
               onClick={() => setIndex(i)}
               aria-label={`View slide ${i + 1}`}
               className={`h-px transition-all duration-500 ${
-                i === index ? "w-10 bg-white" : "w-5 bg-white/40 hover:bg-white/70"
+                i === index ? "w-10 bg-white" : "w-5 bg-white/70 hover:bg-white"
               }`}
             />
           ))}
@@ -100,10 +100,10 @@ export const Hero = () => {
 
         {/* Tiny corner mark — Celine-style */}
         <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10 text-right">
-          <p className="text-[9px] md:text-[10px] tracking-[0.4em] uppercase text-white/70">
+          <p className="text-[9px] md:text-[10px] tracking-[0.4em] uppercase text-white/90">
             Tinted Skincare
           </p>
-          <p className="text-[9px] md:text-[10px] tracking-[0.4em] uppercase text-white/50 mt-1">
+          <p className="text-[9px] md:text-[10px] tracking-[0.4em] uppercase text-white/80 mt-1">
             Redefined
           </p>
         </div>
