@@ -248,11 +248,12 @@ const Cart = () => {
                     </p>
                     <Button
                       onClick={handleShopifyCheckout}
+                      disabled={hasUnavailable}
                       size="lg"
                       className="w-full rounded-none h-12 text-xs tracking-[0.18em] uppercase"
                     >
                       <ExternalLink className="h-4 w-4 mr-2" />
-                      Pay securely with Shopify
+                      {hasUnavailable ? "Sold Out — Remove items to pay" : "Pay securely with Shopify"}
                     </Button>
                     <button
                       type="button"
