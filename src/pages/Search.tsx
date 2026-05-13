@@ -29,10 +29,28 @@ const Search = () => {
     else setParams({}, { replace: true });
   }, [debounced, setParams]);
 
-  const { data: products, isLoading } = useProducts(debounced ? `title:*${debounced}*` : undefined, 12);
-  const productHits = (products ?? []).filter((p) =>
-    debounced ? p.node.title.toLowerCase().includes(debounced.toLowerCase()) : true
-  );
+  // Fetch a broad catalog and filter client-side so partial keywords match
+  // across title, product type, tags, and variant names (e.g. "liner" → both
+  // "Lip Liner" and "Automatic Lip Liner").
+  const { data: products, isLoading } = useProducts(undefined, 250);
+  const productHits = useMemo(() => {
+    if (!debounced) return [];
+    const q = debounced.toLowerCase().trim();
+    const tokens = q.split(/\s+/).filter(Boolean);
+    return (products ?? []).filter((p) => {
+      const n = p.node;
+      const haystack = [
+        n.title,
+        n.productType ?? "",
+        (n.tags ?? []).join(" "),
+        n.description ?? "",
+        ...n.variants.edges.map((v) => v.node.title),
+      ]
+        .join(" ")
+        .toLowerCase();
+      return tokens.every((t) => haystack.includes(t));
+    });
+  }, [products, debounced]);
   const journalHits = useMemo(
     () =>
       JOURNAL_POSTS.filter(
