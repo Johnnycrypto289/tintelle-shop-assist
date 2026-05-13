@@ -25,7 +25,13 @@ const setMeta = (selector: string, attr: "name" | "property", key: string, conte
 
 export const PageShell = ({ children, title, description, ogType = "website" }: PageShellProps) => {
   useEffect(() => {
-    const fullTitle = title ? `${title} — Tintelle` : document.title;
+    // Keep titles ≤60 chars: skip the " — Tintelle" suffix when the base title is already long.
+    const SUFFIX = " — Tintelle";
+    const fullTitle = title
+      ? title.length + SUFFIX.length > 60
+        ? title
+        : `${title}${SUFFIX}`
+      : document.title;
     if (title) document.title = fullTitle;
     if (description) {
       setMeta('meta[name="description"]', "name", "description", description);
