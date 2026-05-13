@@ -13,11 +13,12 @@ export const AddToBagPill = ({ product, className = "", label = "Add to Bag" }: 
   const addItem = useCartStore((s) => s.addItem);
   const isLoading = useCartStore((s) => s.isLoading);
   const variant = product.node.variants.edges[0]?.node;
+  const soldOut = product.node.variants.edges.length > 0 && !product.node.variants.edges.some((v) => v.node.availableForSale);
 
   const handleAdd = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!variant) return;
+    if (!variant || soldOut) return;
     await addItem({
       product,
       variantId: variant.id,
@@ -32,10 +33,10 @@ export const AddToBagPill = ({ product, className = "", label = "Add to Bag" }: 
     <button
       type="button"
       onClick={handleAdd}
-      disabled={isLoading || !variant}
-      className={`inline-flex items-center justify-center gap-2 text-[10px] md:text-[11px] tracking-[0.22em] uppercase border border-mauve text-mauve px-3.5 md:px-4 py-2 md:py-2.5 rounded-full bg-background/85 backdrop-blur-sm hover:bg-mauve hover:text-background transition-colors disabled:opacity-50 ${className}`}
+      disabled={isLoading || !variant || soldOut}
+      className={`inline-flex items-center justify-center gap-2 text-[10px] md:text-[11px] tracking-[0.22em] uppercase border border-mauve text-mauve px-3.5 md:px-4 py-2 md:py-2.5 rounded-full bg-background/85 backdrop-blur-sm hover:bg-mauve hover:text-background transition-colors disabled:opacity-50 disabled:hover:bg-background/85 disabled:hover:text-mauve ${className}`}
     >
-      {isLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : label}
+      {isLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : soldOut ? "Sold Out" : label}
     </button>
   );
 };

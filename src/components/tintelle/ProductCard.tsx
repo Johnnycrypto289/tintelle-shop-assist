@@ -22,6 +22,7 @@ export const ProductCard = ({ product, fromCategory }: ProductCardProps) => {
   const images = node.images.edges.map((e) => e.node);
   const firstImage = images[0];
   const saved = wishlistHas(node.handle);
+  const soldOut = node.variants.edges.length > 0 && !node.variants.edges.some((v) => v.node.availableForSale);
 
   // Image carousel: auto-cycles on desktop hover; swipeable on mobile.
   const [activeIdx, setActiveIdx] = useState(0);
@@ -64,7 +65,7 @@ export const ProductCard = ({ product, fromCategory }: ProductCardProps) => {
 
   const handleAdd = async (e: React.MouseEvent) => {
     e.preventDefault();
-    if (!firstVariant) return;
+    if (!firstVariant || soldOut) return;
     await addItem({
       product,
       variantId: firstVariant.id,
@@ -145,6 +146,11 @@ export const ProductCard = ({ product, fromCategory }: ProductCardProps) => {
           </>
         )}
 
+        {soldOut && (
+          <div className="absolute top-2 left-2 z-10 px-2.5 py-1 text-[9px] sm:text-[10px] tracking-[0.22em] uppercase bg-background/95 text-mauve border border-mauve/40">
+            Sold Out
+          </div>
+        )}
         <button
           type="button"
           onClick={handleWishlist}
@@ -167,11 +173,11 @@ export const ProductCard = ({ product, fromCategory }: ProductCardProps) => {
         </p>
         <Button
           onClick={handleAdd}
-          disabled={isLoading || !firstVariant}
+          disabled={isLoading || !firstVariant || soldOut}
           variant="outline"
           className="w-full rounded-none border-mauve text-mauve hover:bg-mauve hover:text-background mt-2 sm:mt-3 text-[10px] sm:text-xs tracking-wider uppercase h-10 sm:h-11 px-2"
         >
-          {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Add to Bag"}
+          {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : soldOut ? "Sold Out" : "Add to Bag"}
         </Button>
       </div>
     </Link>
