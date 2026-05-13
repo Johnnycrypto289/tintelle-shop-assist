@@ -71,8 +71,24 @@ const Post = () => {
 
   const author = JOURNAL_AUTHORS[post.author];
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.publishedAt,
+    author: author ? { "@type": "Person", name: author.name } : undefined,
+    publisher: {
+      "@type": "Organization",
+      name: "Tintelle",
+      logo: { "@type": "ImageObject", url: "https://tintellebeauty.com/favicon.ico" },
+    },
+    mainEntityOfPage: `https://tintellebeauty.com/journal/${post.slug}`,
+  };
+
   return (
-    <PageShell title={post.title} description={post.excerpt.slice(0, 155)}>
+    <PageShell title={post.title} description={post.excerpt.slice(0, 155)} ogType="article">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Journal", href: "/journal" }, { label: post.category }]} />
 
       <article className="max-w-3xl mx-auto px-6 pb-16">
