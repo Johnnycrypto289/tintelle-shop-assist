@@ -466,6 +466,8 @@ const ProductDetail = () => {
               >
                 {isAdding ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
+                ) : !variant?.availableForSale ? (
+                  "Sold Out"
                 ) : (
                   <>
                     Add to Bag
