@@ -10,6 +10,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { useWishlistStore } from "@/stores/wishlistStore";
 import { formatPrice } from "@/lib/shopify";
 import { parseProductDescription } from "@/lib/parseProductDescription";
+import { resolveSubcategory } from "@/lib/categories";
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
