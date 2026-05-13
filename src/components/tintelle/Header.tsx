@@ -82,7 +82,7 @@ export const Header = () => {
         </div>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-5 lg:gap-10 flex-1">
+        <nav className="hidden md:flex items-center gap-3 lg:gap-8 flex-1 whitespace-nowrap">
           {NAV.map((n) => (
             <Link key={n.to} to={n.to} className={linkCls}>
               {n.label}
@@ -99,7 +99,7 @@ export const Header = () => {
           <img
             src={tintelleLogo}
             alt="Tintelle Beauty"
-            className="h-12 md:h-28 lg:h-28 w-auto object-contain md:scale-110 lg:scale-100 origin-center"
+            className="h-12 md:h-20 lg:h-28 w-auto object-contain md:scale-100 lg:scale-100 origin-center"
             loading="eager"
             decoding="sync"
             // @ts-ignore
