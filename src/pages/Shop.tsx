@@ -34,6 +34,7 @@ const GROUP_ORDER = [
   "Concealer",
   "Bronzer",
   "Blush Palette",
+  "Liquid Blush",
   "Skincare",
   "Tools",
   "Face",
