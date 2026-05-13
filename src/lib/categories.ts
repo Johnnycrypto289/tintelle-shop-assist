@@ -14,8 +14,10 @@ export const resolveSubcategory = (node: ProdNode): string => {
   if (/concealer/i.test(title) || has("concealer")) return "Concealer";
   if (/bronzer/i.test(title)) return "Bronzer";
   if (/blush\s*palette/i.test(title)) return "Blush Palette";
+  if (/liquid\s*blush/i.test(title) || has("liquid-blush")) return "Liquid Blush";
   if (/eyeshadow\s*palette/i.test(title)) return "Eyeshadow Palette";
   if (/eyebrow\s*pencil/i.test(title)) return "Hydro Pencil";
+  if (/lip\s*stick|lipstick/i.test(title) || has("lipstick")) return "Lipstick";
   if (/lip\s*gloss/i.test(title)) return "Lip Gloss";
   if (/lip\s*liner/i.test(title)) return "Lip Liner";
   if (/lip\s*tint/i.test(title)) return "Lip Tint";
