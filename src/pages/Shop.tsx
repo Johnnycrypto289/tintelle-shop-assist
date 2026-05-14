@@ -5,11 +5,17 @@ import { PageShell } from "@/components/tintelle/PageShell";
 import { ProductCard } from "@/components/tintelle/ProductCard";
 import { useProducts } from "@/hooks/useProducts";
 import { resolveSubcategory, resolveExtraSubcategories, type ProdNode } from "@/lib/categories";
+import { BESTSELLER_TITLES } from "@/data/bestsellers";
 
-const FILTERS = ["All", "Face", "Lips", "Eyes"] as const;
+const FILTERS = ["All", "Best Sellers", "Face", "Lips", "Eyes"] as const;
+
+const bestSellersQuery = () =>
+  BESTSELLER_TITLES.map((t) => `title:"${t.replace(/"/g, '\\"')}"`).join(" OR ");
 
 const filterFor = (label: (typeof FILTERS)[number]) => {
   switch (label) {
+    case "Best Sellers":
+      return bestSellersQuery();
     case "Face":
       return "tag:face OR product_type:Face OR product_type:Cheek OR product_type:'Skin Tint' OR product_type:'Blush Palette' OR product_type:'Liquid Blush' OR title:highlighter OR title:primer OR title:serum OR title:moisturizer";
     case "Lips":
@@ -117,8 +123,13 @@ const Shop = () => {
     "Tools",
   ]);
 
+  // Treat ?category=Best Sellers (linked from home) as the Best Sellers filter.
+  const isBestSellers = filter === "Best Sellers" || category === "Best Sellers";
+
   const query = edit
     ? edit.titles.map((t) => `title:"${t.replace(/"/g, '\\"')}"`).join(" OR ")
+    : isBestSellers
+    ? bestSellersQuery()
     : category
     ? CLIENT_RESOLVED_CATEGORIES.has(category)
       ? undefined
@@ -141,6 +152,18 @@ const Shop = () => {
 
   const list = useMemo(() => {
     const all = products ?? [];
+    if (isBestSellers) {
+      const order = new Map(
+        BESTSELLER_TITLES.map((t, i) => [t.toLowerCase(), i] as const),
+      );
+      return [...all]
+        .filter((p) => order.has(p.node.title.toLowerCase()))
+        .sort(
+          (a, b) =>
+            (order.get(a.node.title.toLowerCase()) ?? 99) -
+            (order.get(b.node.title.toLowerCase()) ?? 99),
+        );
+    }
     if (edit) {
       // Sort by curated order from EDITS config
       const order = new Map(edit.titles.map((t, i) => [t.toLowerCase(), i]));
@@ -160,10 +183,10 @@ const Shop = () => {
     }
     if (filter === "Face") return all.filter((p) => !isEyeProduct(p.node as ProdNode));
     return all;
-  }, [products, filter, category, edit]);
+  }, [products, filter, category, edit, isBestSellers]);
 
   const grouped = useMemo(() => {
-    if (category || edit) return null;
+    if (category || edit || isBestSellers) return null;
     const map = new Map<string, typeof list>();
     list.forEach((p) => {
       const node = p.node as ProdNode;
@@ -176,9 +199,11 @@ const Shop = () => {
     return Array.from(map.entries()).sort(([a], [b]) => sortGroups(a, b));
   }, [list, category, edit]);
 
-  // Reset tab highlight when category param is active
+  // Reset tab highlight when category param is active.
+  // Special-case ?category=Best Sellers so the Best Sellers tab stays highlighted.
   useEffect(() => {
-    if (category) setFilter("All");
+    if (category === "Best Sellers") setFilter("Best Sellers");
+    else if (category) setFilter("All");
   }, [category]);
 
   // Slug helper for section ids
@@ -209,16 +234,28 @@ const Shop = () => {
     setActiveGroup(groupName);
   };
 
-  const heading = edit ? edit.title : (category ?? "Shop everything.");
-  const eyebrow = edit ? edit.eyebrow : category ? "Category" : "The Collection";
+  const heading = edit
+    ? edit.title
+    : isBestSellers
+    ? "Best Sellers."
+    : (category ?? "Shop everything.");
+  const eyebrow = edit
+    ? edit.eyebrow
+    : isBestSellers
+    ? "Shop the Edit"
+    : category
+    ? "Category"
+    : "The Collection";
   const subtitle = edit
     ? edit.subtitle
+    : isBestSellers
+    ? "The pieces our community keeps coming back for — a hand-picked mix across complexion, lips, cheeks and skincare."
     : category
     ? `Browse all ${category.toLowerCase()}.`
     : "Every formula is a skincare-makeup hybrid. Build your routine one tint at a time.";
 
   return (
-    <PageShell title={edit?.title ?? category ?? "Shop"} description="The full Tintelle collection — tinted skincare hybrids.">
+    <PageShell title={edit?.title ?? (isBestSellers ? "Best Sellers" : category) ?? "Shop"} description="The full Tintelle collection — tinted skincare hybrids.">
       <section className="container pt-10 md:pt-16 pb-4 md:pb-6">
         <p className="text-[11px] md:text-xs tracking-[0.3em] uppercase text-taupe">{eyebrow}</p>
         <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl text-mauve mt-3 leading-[1.05]">{heading}</h1>
@@ -228,7 +265,7 @@ const Shop = () => {
       </section>
 
       <section className="container pb-16 md:pb-24">
-        {!category && !edit && (
+        {(!category || category === "Best Sellers") && !edit && (
           <div className="flex gap-5 md:gap-8 mb-6 md:mb-8 border-b border-border pb-3 md:pb-4 overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
             {FILTERS.map((f) => (
               <button
