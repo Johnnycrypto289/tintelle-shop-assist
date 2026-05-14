@@ -89,7 +89,7 @@ export const LipstickWardrobe = () => {
         ) : !feature ? (
           <p className="text-center text-taupe py-12">Coming soon.</p>
         ) : (
-          <div className="grid grid-cols-12 gap-3 md:gap-5">
+          <div className="grid grid-cols-12 gap-3 md:gap-5 md:items-stretch">
             {/* Left feature */}
             <div className="col-span-12 md:col-span-7">
               <FeatureCard product={feature} />
@@ -116,7 +116,7 @@ const FeatureCard = ({ product }: { product: ShopifyProduct }) => {
   return (
     <Link
       to={`/product/${node.handle}`}
-      className="group relative block overflow-hidden bg-cream aspect-[4/5] md:aspect-[4/5]"
+      className="group relative block overflow-hidden bg-cream aspect-[4/5] md:aspect-auto md:h-full md:min-h-[420px]"
     >
       {img ? (
         <img
