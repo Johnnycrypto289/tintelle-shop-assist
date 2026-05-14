@@ -13,7 +13,7 @@ const LIP_SWATCHES = [
   { src: lipsMauve, shade: "Magical Mauve" },
   { src: lipsParisianPink, shade: "Parisian Pink" },
   { src: lipsNaughtyNude, shade: "Naughty Nude" },
-  { src: lipsRosewood, shade: "Rosewood" },
+  { src: lipsRosewood, shade: "Rambling Rose" },
 ];
 
 /**
