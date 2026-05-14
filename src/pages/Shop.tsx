@@ -5,8 +5,9 @@ import { PageShell } from "@/components/tintelle/PageShell";
 import { ProductCard } from "@/components/tintelle/ProductCard";
 import { useProducts } from "@/hooks/useProducts";
 import { resolveSubcategory, resolveExtraSubcategories, type ProdNode } from "@/lib/categories";
+import { BESTSELLER_TITLES } from "@/data/bestsellers";
 
-const FILTERS = ["All", "Face", "Lips", "Eyes"] as const;
+const FILTERS = ["All", "Best Sellers", "Face", "Lips", "Eyes"] as const;
 
 const filterFor = (label: (typeof FILTERS)[number]) => {
   switch (label) {
