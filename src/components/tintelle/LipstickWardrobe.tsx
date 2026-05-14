@@ -116,14 +116,14 @@ const FeatureCard = ({ product }: { product: ShopifyProduct }) => {
   return (
     <Link
       to={`/product/${node.handle}`}
-      className="group relative block overflow-hidden bg-cream aspect-[4/5] md:aspect-auto md:h-full md:min-h-[420px]"
+      className="group relative block overflow-hidden bg-cream aspect-[4/5] md:aspect-auto md:h-full md:min-h-[640px]"
     >
       {img ? (
         <img
           src={img.url}
           alt={img.altText || node.title}
           loading="lazy"
-          className="absolute inset-0 w-full h-full object-contain p-6 md:p-10 transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]"
+          className="absolute inset-0 w-full h-full object-contain transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]"
         />
       ) : (
         <div className="absolute inset-0 bg-petal/40" />
@@ -160,7 +160,7 @@ const ShadeCard = ({ product }: { product: ShopifyProduct }) => {
   return (
     <Link
       to={`/product/${node.handle}`}
-      className="group relative block overflow-hidden bg-cream aspect-square"
+      className="group relative block overflow-hidden bg-cream aspect-square md:aspect-auto md:h-full"
     >
       {img ? (
         <img
