@@ -68,8 +68,8 @@ const CleanBeautyBrands = () => {
 
   return (
     <PageShell
-      title="Clean Beauty Brands in 2026: The Honest Guide"
-      description="A no-fluff comparison of clean beauty brands — what 'clean' actually means, who's doing it well, and how Tintelle fits in. Updated 2026."
+      title="Clean Beauty Brands in 2026: The Honest Guide to Sustainable Makeup"
+      description="A no-fluff comparison of clean beauty brands and sustainable makeup labels — what 'clean' actually means, who's doing it well, and how Tintelle fits in. Updated 2026."
       ogType="article"
     >
       <article className="bg-background">
