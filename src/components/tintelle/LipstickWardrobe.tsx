@@ -3,6 +3,7 @@ import { Loader2 } from "lucide-react";
 import { useProducts } from "@/hooks/useProducts";
 import { formatPrice, type ShopifyProduct } from "@/lib/shopify";
 import { AddToBagPill } from "./AddToBagPill";
+import lipsMauve from "@/assets/lipstick-lips-mauve.jpg";
 
 /**
  * Lipstick wardrobe — luxury cream lipsticks shown as a magazine "wardrobe":
