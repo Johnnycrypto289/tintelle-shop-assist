@@ -4,6 +4,17 @@ import { useProducts } from "@/hooks/useProducts";
 import { formatPrice, type ShopifyProduct } from "@/lib/shopify";
 import { AddToBagPill } from "./AddToBagPill";
 import lipsMauve from "@/assets/lipstick-lips-mauve.jpg";
+import lipsParisianPink from "@/assets/lips-parisian-pink.jpg";
+import lipsNaughtyNude from "@/assets/lips-naughty-nude.jpg";
+import lipsRosewood from "@/assets/lips-rosewood.jpg";
+import lipsBrownNude from "@/assets/lips-brown-nude.jpg";
+
+const LIP_SWATCHES = [
+  { src: lipsMauve, shade: "Magical Mauve" },
+  { src: lipsParisianPink, shade: "Parisian Pink" },
+  { src: lipsNaughtyNude, shade: "Naughty Nude" },
+  { src: lipsRosewood, shade: "Rosewood" },
+];
 
 /**
  * Lipstick wardrobe — luxury cream lipsticks shown as a magazine "wardrobe":
@@ -40,24 +51,34 @@ export const LipstickWardrobe = () => {
           </Link>
         </div>
 
-        {/* Editorial lip swatch banner */}
-        <div className="relative mb-6 md:mb-10 overflow-hidden aspect-[16/7] md:aspect-[21/8]">
-          <img
-            src={lipsMauve}
-            alt="Close-up of lips wearing Tintelle luxury cream lipstick in a mauve shade"
-            loading="lazy"
-            width={1376}
-            height={768}
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-cream/70 via-transparent to-transparent md:from-cream/60" />
-          <div className="absolute inset-y-0 left-0 flex flex-col justify-end md:justify-center p-5 md:p-10 max-w-[60%] md:max-w-[42%]">
-            <p className="text-[10px] md:text-[11px] tracking-[0.42em] uppercase text-mauve">
-              Worn here — Magical Mauve
+        {/* Editorial lip swatch row — 4 shades worn */}
+        <div className="mb-6 md:mb-10">
+          <div className="flex items-end justify-between gap-4 mb-4 md:mb-5">
+            <p className="text-[10px] md:text-[11px] tracking-[0.42em] uppercase text-taupe">
+              Worn on lips — the four shades
             </p>
-            <p className="font-serif text-mauve text-lg md:text-2xl lg:text-3xl mt-2 md:mt-3 leading-snug italic font-light">
-              "A second-skin finish that wears like your lips, only better."
-            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
+            {LIP_SWATCHES.map((s) => (
+              <div
+                key={s.shade}
+                className="group relative overflow-hidden aspect-square bg-cream"
+              >
+                <img
+                  src={s.src}
+                  alt={`Lips wearing Tintelle luxury cream lipstick in ${s.shade}`}
+                  loading="lazy"
+                  width={1024}
+                  height={1024}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
+                />
+                <div className="absolute inset-x-0 bottom-0 p-2.5 md:p-3 bg-gradient-to-t from-black/55 via-black/10 to-transparent">
+                  <p className="text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-white/95">
+                    {s.shade}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
