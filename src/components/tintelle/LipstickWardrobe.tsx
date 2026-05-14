@@ -126,7 +126,7 @@ const FeatureCard = ({ product }: { product: ShopifyProduct }) => {
   return (
     <Link
       to={`/product/${node.handle}`}
-      className="group relative block overflow-hidden bg-cream aspect-[4/5] md:aspect-auto md:h-full md:min-h-[640px]"
+      className="group relative block overflow-hidden bg-cream h-full min-h-[360px] md:min-h-[640px]"
     >
       {img ? (
         <img
