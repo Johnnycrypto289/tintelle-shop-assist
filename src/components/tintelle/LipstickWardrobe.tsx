@@ -4,6 +4,17 @@ import { useProducts } from "@/hooks/useProducts";
 import { formatPrice, type ShopifyProduct } from "@/lib/shopify";
 import { AddToBagPill } from "./AddToBagPill";
 import lipsMauve from "@/assets/lipstick-lips-mauve.jpg";
+import lipsParisianPink from "@/assets/lips-parisian-pink.jpg";
+import lipsNaughtyNude from "@/assets/lips-naughty-nude.jpg";
+import lipsRosewood from "@/assets/lips-rosewood.jpg";
+import lipsBrownNude from "@/assets/lips-brown-nude.jpg";
+
+const LIP_SWATCHES = [
+  { src: lipsMauve, shade: "Magical Mauve" },
+  { src: lipsParisianPink, shade: "Parisian Pink" },
+  { src: lipsNaughtyNude, shade: "Naughty Nude" },
+  { src: lipsRosewood, shade: "Rosewood" },
+];
 
 /**
  * Lipstick wardrobe — luxury cream lipsticks shown as a magazine "wardrobe":
