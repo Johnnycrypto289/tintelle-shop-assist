@@ -9,8 +9,13 @@ import { BESTSELLER_TITLES } from "@/data/bestsellers";
 
 const FILTERS = ["All", "Best Sellers", "Face", "Lips", "Eyes"] as const;
 
+const bestSellersQuery = () =>
+  BESTSELLER_TITLES.map((t) => `title:"${t.replace(/"/g, '\\"')}"`).join(" OR ");
+
 const filterFor = (label: (typeof FILTERS)[number]) => {
   switch (label) {
+    case "Best Sellers":
+      return bestSellersQuery();
     case "Face":
       return "tag:face OR product_type:Face OR product_type:Cheek OR product_type:'Skin Tint' OR product_type:'Blush Palette' OR product_type:'Liquid Blush' OR title:highlighter OR title:primer OR title:serum OR title:moisturizer";
     case "Lips":
