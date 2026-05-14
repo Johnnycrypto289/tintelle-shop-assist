@@ -199,9 +199,11 @@ const Shop = () => {
     return Array.from(map.entries()).sort(([a], [b]) => sortGroups(a, b));
   }, [list, category, edit]);
 
-  // Reset tab highlight when category param is active
+  // Reset tab highlight when category param is active.
+  // Special-case ?category=Best Sellers so the Best Sellers tab stays highlighted.
   useEffect(() => {
-    if (category) setFilter("All");
+    if (category === "Best Sellers") setFilter("Best Sellers");
+    else if (category) setFilter("All");
   }, [category]);
 
   // Slug helper for section ids
