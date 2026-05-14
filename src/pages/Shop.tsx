@@ -123,8 +123,13 @@ const Shop = () => {
     "Tools",
   ]);
 
+  // Treat ?category=Best Sellers (linked from home) as the Best Sellers filter.
+  const isBestSellers = filter === "Best Sellers" || category === "Best Sellers";
+
   const query = edit
     ? edit.titles.map((t) => `title:"${t.replace(/"/g, '\\"')}"`).join(" OR ")
+    : isBestSellers
+    ? bestSellersQuery()
     : category
     ? CLIENT_RESOLVED_CATEGORIES.has(category)
       ? undefined
@@ -147,6 +152,18 @@ const Shop = () => {
 
   const list = useMemo(() => {
     const all = products ?? [];
+    if (isBestSellers) {
+      const order = new Map(
+        BESTSELLER_TITLES.map((t, i) => [t.toLowerCase(), i] as const),
+      );
+      return [...all]
+        .filter((p) => order.has(p.node.title.toLowerCase()))
+        .sort(
+          (a, b) =>
+            (order.get(a.node.title.toLowerCase()) ?? 99) -
+            (order.get(b.node.title.toLowerCase()) ?? 99),
+        );
+    }
     if (edit) {
       // Sort by curated order from EDITS config
       const order = new Map(edit.titles.map((t, i) => [t.toLowerCase(), i]));
@@ -166,10 +183,10 @@ const Shop = () => {
     }
     if (filter === "Face") return all.filter((p) => !isEyeProduct(p.node as ProdNode));
     return all;
-  }, [products, filter, category, edit]);
+  }, [products, filter, category, edit, isBestSellers]);
 
   const grouped = useMemo(() => {
-    if (category || edit) return null;
+    if (category || edit || isBestSellers) return null;
     const map = new Map<string, typeof list>();
     list.forEach((p) => {
       const node = p.node as ProdNode;
