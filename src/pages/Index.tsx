@@ -18,11 +18,11 @@ const Index = () => {
       <Header />
       <main>
         <Hero />
-        <CleanBeautyBand />
+        <LipstickWardrobe />
         <ShopByCategory />
         <CuratedFavorites />
         <CampaignFoundation />
-        <LipstickWardrobe />
+        <CleanBeautyBand />
         <HighlighterStrip />
         <SkincareRitual />
         <SerumApothecary />
