@@ -123,7 +123,7 @@ const FeatureCard = ({ product }: { product: ShopifyProduct }) => {
           src={img.url}
           alt={img.altText || node.title}
           loading="lazy"
-          className="absolute inset-0 w-full h-full object-contain p-6 md:p-10 transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]"
+          className="absolute inset-0 w-full h-full object-contain transition-transform duration-[1400ms] ease-out group-hover:scale-[1.04]"
         />
       ) : (
         <div className="absolute inset-0 bg-petal/40" />
