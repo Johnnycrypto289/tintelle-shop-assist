@@ -59,26 +59,36 @@ export const LipstickWardrobe = () => {
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
-            {LIP_SWATCHES.map((s) => (
-              <div
-                key={s.shade}
-                className="group relative overflow-hidden aspect-square bg-cream"
-              >
-                <img
-                  src={s.src}
-                  alt={`Lips wearing Tintelle luxury cream lipstick in ${s.shade}`}
-                  loading="lazy"
-                  width={1024}
-                  height={1024}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
-                />
-                <div className="absolute inset-x-0 bottom-0 p-2.5 md:p-3 bg-gradient-to-t from-black/55 via-black/10 to-transparent">
-                  <p className="text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-white/95">
-                    {s.shade}
-                  </p>
-                </div>
-              </div>
-            ))}
+            {LIP_SWATCHES.map((s) => {
+              const match = lipsticks.find((p) =>
+                p.node.title.toLowerCase().includes(s.shade.toLowerCase())
+              );
+              const Wrapper: any = match ? Link : "div";
+              const wrapperProps = match
+                ? { to: `/product/${match.node.handle}` }
+                : {};
+              return (
+                <Wrapper
+                  key={s.shade}
+                  {...wrapperProps}
+                  className="group relative block overflow-hidden aspect-square bg-cream"
+                >
+                  <img
+                    src={s.src}
+                    alt={`Lips wearing Tintelle luxury cream lipstick in ${s.shade}`}
+                    loading="lazy"
+                    width={1024}
+                    height={1024}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 p-2.5 md:p-3 bg-gradient-to-t from-black/55 via-black/10 to-transparent">
+                    <p className="text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-white/95">
+                      {s.shade}
+                    </p>
+                  </div>
+                </Wrapper>
+              );
+            })}
           </div>
         </div>
 
