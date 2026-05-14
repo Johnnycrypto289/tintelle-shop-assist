@@ -215,6 +215,38 @@ const CleanBeautyBrands = () => {
             </div>
           </section>
 
+          {/* Section 5b: Sustainable makeup */}
+          <section className="space-y-4">
+            <h2 className="font-serif text-3xl md:text-4xl font-light">Clean beauty vs sustainable makeup</h2>
+            <p className="text-taupe leading-relaxed">
+              "Clean" and "sustainable" are often used interchangeably, but they answer different
+              questions. <strong className="text-mauve">Clean beauty</strong> is about the formula —
+              what's left out, what's disclosed, and what an independent body like the EWG or the EU
+              would flag. <strong className="text-mauve">Sustainable makeup</strong> is about
+              everything around the formula: the packaging, the supply chain, the carbon footprint,
+              and what happens to the tube once it's empty.
+            </p>
+            <p className="text-taupe leading-relaxed">
+              The most credible sustainable makeup brands publish a packaging breakdown the same way
+              clean brands publish an INCI deck. Look for FSC-certified outer cartons, post-consumer
+              recycled (PCR) plastic components, refillable bullets and compacts, mono-material design
+              that's actually recyclable, and a take-back program for empties. Aluminum and glass are
+              easier to recycle than mixed plastics; refills cut packaging by roughly 70% over a
+              product's lifetime.
+            </p>
+            <ul className="text-taupe leading-relaxed space-y-2 list-disc pl-5">
+              <li><strong className="text-mauve">Refillable systems</strong> — Kjaer Weis, Hourglass, and Tintelle's lipstick bullets.</li>
+              <li><strong className="text-mauve">PCR &amp; recycled aluminum</strong> — Ilia, Axiology, and Tintelle's complexion line.</li>
+              <li><strong className="text-mauve">Plastic-free formats</strong> — Axiology Balmies, Ethique, solid-format lip and cheek.</li>
+              <li><strong className="text-mauve">Carbon-neutral shipping</strong> — Tintelle, Saie, and Credo Beauty.</li>
+            </ul>
+            <p className="text-taupe leading-relaxed">
+              Tintelle's standard requires both: an EU-aligned, EWG-referenced ingredient list and a
+              measurable packaging commitment. Clean formula, sustainable shell — neither alone is
+              enough.
+            </p>
+          </section>
+
           {/* Section 6: Routine */}
           <section className="space-y-4">
             <h2 className="font-serif text-3xl md:text-4xl font-light">How to start a clean beauty routine</h2>
