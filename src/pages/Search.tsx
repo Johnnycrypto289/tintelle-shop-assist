@@ -37,6 +37,7 @@ const Search = () => {
     if (!debounced) return [];
     const q = debounced.toLowerCase().trim();
     const tokens = q.split(/\s+/).filter(Boolean);
+    const phrase = q.replace(/\s+/g, ""); // "lip stick" -> "lipstick"
     return (products ?? []).filter((p) => {
       const n = p.node;
       const haystack = [
@@ -48,7 +49,13 @@ const Search = () => {
       ]
         .join(" ")
         .toLowerCase();
-      return tokens.every((t) => haystack.includes(t));
+      const collapsed = haystack.replace(/\s+/g, "");
+      // Match if the collapsed phrase appears (handles "lip stick" -> "lipstick"
+      // so we don't pull in unrelated "lip liner" results), OR if every token
+      // appears as a strong title/type match.
+      if (collapsed.includes(phrase)) return true;
+      const titleHay = `${n.title} ${n.productType ?? ""}`.toLowerCase();
+      return tokens.every((t) => titleHay.includes(t));
     });
   }, [products, debounced]);
   const journalHits = useMemo(
