@@ -195,6 +195,16 @@ export const PILLAR_FAQS: { question: string; answer: string }[] = [
       "Often, but not always. Beeswax, lanolin, carmine, and silk are common in clean formulas. Always check the brand's vegan and Leaping Bunny certifications individually.",
   },
   {
+    question: "What's the difference between clean beauty and sustainable makeup?",
+    answer:
+      "Clean beauty is about what's inside the formula — the free-from list and ingredient transparency. Sustainable makeup is about everything around it: recyclable or refillable packaging, responsibly sourced raw materials, lower-carbon manufacturing, and end-of-life take-back programs. The most rigorous brands do both. Tintelle's standard covers ingredient cleanliness (EU-aligned, EWG-referenced) and sustainability (FSC-certified outer cartons, PCR plastic components, refillable lipstick bullets, and carbon-neutral shipping).",
+  },
+  {
+    question: "Which clean beauty brands are also the most sustainable?",
+    answer:
+      "On packaging and sourcing, Ilia (post-consumer recycled aluminum), Kjaer Weis (refillable metal compacts), Axiology (plastic-free 'Balmies'), and Tintelle (FSC cartons, PCR components, refillable bullets) lead the sustainable makeup conversation. Tower 28 and Saie are clean but use more virgin plastic; Westman Atelier is moving toward refills across the line.",
+  },
+  {
     question: "How does Tintelle compare to Ilia and Merit?",
     answer:
       "Tintelle sits in the same skincare-makeup hybrid space as Ilia, with Merit's minimalist routine philosophy. We publish full ingredient decks, dermatologist-test every formula, and price between Tower 28 and Westman Atelier.",
