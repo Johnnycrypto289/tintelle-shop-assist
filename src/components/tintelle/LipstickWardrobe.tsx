@@ -170,7 +170,7 @@ const ShadeCard = ({ product }: { product: ShopifyProduct }) => {
   return (
     <Link
       to={`/product/${node.handle}`}
-      className="group relative block overflow-hidden bg-cream aspect-square md:aspect-auto md:h-full"
+      className="group relative block overflow-hidden bg-cream h-full"
     >
       {img ? (
         <img
