@@ -99,13 +99,13 @@ export const LipstickWardrobe = () => {
         ) : !feature ? (
           <p className="text-center text-taupe py-12">Coming soon.</p>
         ) : (
-          <div className="grid grid-cols-12 gap-2 md:gap-5 items-stretch">
+          <div className="grid grid-cols-12 gap-3 md:gap-5 md:items-stretch">
             {/* Left feature */}
-            <div className="col-span-7">
+            <div className="col-span-12 md:col-span-7">
               <FeatureCard product={feature} />
             </div>
             {/* Right grid */}
-            <div className="col-span-5 grid grid-cols-2 gap-2 md:gap-4 grid-rows-2">
+            <div className="col-span-12 md:col-span-5 grid grid-cols-2 gap-3 md:gap-4 md:grid-rows-2">
               {grid.map((p) => (
                 <ShadeCard key={p.node.id} product={p} />
               ))}
@@ -126,7 +126,7 @@ const FeatureCard = ({ product }: { product: ShopifyProduct }) => {
   return (
     <Link
       to={`/product/${node.handle}`}
-      className="group relative block overflow-hidden bg-cream h-full min-h-[360px] md:min-h-[640px]"
+      className="group relative block overflow-hidden bg-cream aspect-[4/5] md:aspect-auto md:h-full md:min-h-[640px]"
     >
       {img ? (
         <img
@@ -170,7 +170,7 @@ const ShadeCard = ({ product }: { product: ShopifyProduct }) => {
   return (
     <Link
       to={`/product/${node.handle}`}
-      className="group relative block overflow-hidden bg-cream h-full"
+      className="group relative block overflow-hidden bg-cream aspect-square md:aspect-auto md:h-full"
     >
       {img ? (
         <img
