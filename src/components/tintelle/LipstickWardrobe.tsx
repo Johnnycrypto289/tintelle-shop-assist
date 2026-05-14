@@ -99,13 +99,13 @@ export const LipstickWardrobe = () => {
         ) : !feature ? (
           <p className="text-center text-taupe py-12">Coming soon.</p>
         ) : (
-          <div className="grid grid-cols-12 gap-3 md:gap-5 md:items-stretch">
+          <div className="grid grid-cols-12 gap-2 md:gap-5 items-stretch">
             {/* Left feature */}
-            <div className="col-span-12 md:col-span-7">
+            <div className="col-span-7">
               <FeatureCard product={feature} />
             </div>
             {/* Right grid */}
-            <div className="col-span-12 md:col-span-5 grid grid-cols-2 gap-3 md:gap-4 md:grid-rows-2">
+            <div className="col-span-5 grid grid-cols-2 gap-2 md:gap-4 grid-rows-2">
               {grid.map((p) => (
                 <ShadeCard key={p.node.id} product={p} />
               ))}
