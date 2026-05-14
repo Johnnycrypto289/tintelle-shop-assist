@@ -51,15 +51,18 @@ export const LipstickWardrobe = () => {
           </Link>
         </div>
 
-        {/* Editorial lip swatch row — 4 shades worn */}
-        <div className="mb-6 md:mb-10">
-          <div className="flex items-end justify-between gap-4 mb-4 md:mb-5">
-            <p className="text-[10px] md:text-[11px] tracking-[0.42em] uppercase text-taupe">
+        {/* Editorial lip swatch row — 4 shades worn, magazine layout */}
+        <div className="mb-8 md:mb-14">
+          <div className="flex items-end justify-between gap-4 mb-4 md:mb-6 border-b border-mauve/20 pb-3">
+            <p className="text-[9px] md:text-[11px] tracking-[0.42em] uppercase text-taupe">
               Worn on lips — the four shades
             </p>
+            <p className="hidden md:block text-[10px] tracking-[0.32em] uppercase text-taupe/70 font-serif italic">
+              Plate I — IV
+            </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
-            {LIP_SWATCHES.map((s) => {
+          <div className="grid grid-cols-4 gap-1.5 sm:gap-3 md:gap-5">
+            {LIP_SWATCHES.map((s, i) => {
               const match = lipsticks.find((p) =>
                 p.node.title.toLowerCase().includes(s.shade.toLowerCase())
               );
@@ -67,26 +70,35 @@ export const LipstickWardrobe = () => {
               const wrapperProps = match
                 ? { to: `/product/${match.node.handle}` }
                 : {};
+              // Editorial offset: lift 2nd & 4th plates slightly on md+
+              const offset = i % 2 === 1 ? "md:translate-y-6 lg:translate-y-10" : "";
               return (
-                <Wrapper
-                  key={s.shade}
-                  {...wrapperProps}
-                  className="group relative block overflow-hidden aspect-square bg-cream"
-                >
-                  <img
-                    src={s.src}
-                    alt={`Lips wearing Tintelle luxury cream lipstick in ${s.shade}`}
-                    loading="lazy"
-                    width={1024}
-                    height={1024}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
-                  />
-                  <div className="absolute inset-x-0 bottom-0 p-2.5 md:p-3 bg-gradient-to-t from-black/55 via-black/10 to-transparent">
-                    <p className="text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-white/95">
+                <div key={s.shade} className={`flex flex-col ${offset}`}>
+                  <Wrapper
+                    {...wrapperProps}
+                    className="group relative block overflow-hidden aspect-[3/4] bg-cream"
+                  >
+                    <span className="absolute top-1.5 left-1.5 md:top-3 md:left-3 z-10 text-[8px] md:text-[10px] tracking-[0.28em] uppercase text-white/90 font-serif italic">
+                      № 0{i + 1}
+                    </span>
+                    <img
+                      src={s.src}
+                      alt={`Lips wearing Tintelle luxury cream lipstick in ${s.shade}`}
+                      loading="lazy"
+                      width={1024}
+                      height={1024}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]"
+                    />
+                  </Wrapper>
+                  <div className="mt-2 md:mt-3 flex items-baseline justify-between gap-1">
+                    <p className="text-[8px] sm:text-[9px] md:text-[11px] tracking-[0.22em] md:tracking-[0.32em] uppercase text-mauve leading-tight truncate">
                       {s.shade}
                     </p>
+                    <span className="hidden md:inline text-[10px] text-taupe/60 font-serif italic">
+                      shop →
+                    </span>
                   </div>
-                </Wrapper>
+                </div>
               );
             })}
           </div>
