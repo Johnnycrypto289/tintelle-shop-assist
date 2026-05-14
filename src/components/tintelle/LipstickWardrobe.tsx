@@ -40,6 +40,27 @@ export const LipstickWardrobe = () => {
           </Link>
         </div>
 
+        {/* Editorial lip swatch banner */}
+        <div className="relative mb-6 md:mb-10 overflow-hidden aspect-[16/7] md:aspect-[21/8]">
+          <img
+            src={lipsMauve}
+            alt="Close-up of lips wearing Tintelle luxury cream lipstick in a mauve shade"
+            loading="lazy"
+            width={1376}
+            height={768}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-cream/70 via-transparent to-transparent md:from-cream/60" />
+          <div className="absolute inset-y-0 left-0 flex flex-col justify-end md:justify-center p-5 md:p-10 max-w-[60%] md:max-w-[42%]">
+            <p className="text-[10px] md:text-[11px] tracking-[0.42em] uppercase text-mauve">
+              Worn here — Magical Mauve
+            </p>
+            <p className="font-serif text-mauve text-lg md:text-2xl lg:text-3xl mt-2 md:mt-3 leading-snug italic font-light">
+              "A second-skin finish that wears like your lips, only better."
+            </p>
+          </div>
+        </div>
+
         {isLoading ? (
           <div className="flex justify-center py-12">
             <Loader2 className="h-6 w-6 animate-spin text-mauve" />
