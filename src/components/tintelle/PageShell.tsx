@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 import { Header } from "./Header";
 import { Footer } from "./Footer";
@@ -9,59 +9,36 @@ interface PageShellProps {
   title?: string;
   description?: string;
   ogType?: "website" | "article" | "product";
+  /** Optional override; defaults to current pathname under tintellebeauty.com */
+  canonicalPath?: string;
+  /** Optional og:image url override */
+  ogImage?: string;
 }
 
 const SITE = "https://tintellebeauty.com";
+const SUFFIX = " — Tintelle";
 
-const setMeta = (selector: string, attr: "name" | "property", key: string, content: string) => {
-  let el = document.head.querySelector<HTMLMetaElement>(selector);
-  if (!el) {
-    el = document.createElement("meta");
-    el.setAttribute(attr, key);
-    document.head.appendChild(el);
-  }
-  el.setAttribute("content", content);
-};
+export const PageShell = ({
+  children,
+  title,
+  description,
+  ogType = "website",
+  canonicalPath,
+  ogImage,
+}: PageShellProps) => {
+  const path = canonicalPath ?? (typeof window !== "undefined" ? window.location.pathname : "/");
+  const url = `${SITE}${path}`;
+  const fullTitle = title
+    ? title.length + SUFFIX.length > 60
+      ? title
+      : `${title}${SUFFIX}`
+    : undefined;
 
-export const PageShell = ({ children, title, description, ogType = "website" }: PageShellProps) => {
+  // Honor hash anchors (e.g. /about#ingredients) instead of always jumping to top
   useEffect(() => {
-    // Keep titles ≤60 chars: skip the " — Tintelle" suffix when the base title is already long.
-    const SUFFIX = " — Tintelle";
-    const fullTitle = title
-      ? title.length + SUFFIX.length > 60
-        ? title
-        : `${title}${SUFFIX}`
-      : document.title;
-    if (title) document.title = fullTitle;
-    if (description) {
-      setMeta('meta[name="description"]', "name", "description", description);
-    }
-
-    const url = `${SITE}${window.location.pathname}`;
-
-    // Canonical
-    let canonical = document.querySelector('link[rel="canonical"]');
-    if (!canonical) {
-      canonical = document.createElement("link");
-      canonical.setAttribute("rel", "canonical");
-      document.head.appendChild(canonical);
-    }
-    canonical.setAttribute("href", url);
-
-    // Per-route Open Graph + Twitter
-    setMeta('meta[property="og:title"]', "property", "og:title", fullTitle);
-    setMeta('meta[name="twitter:title"]', "name", "twitter:title", fullTitle);
-    if (description) {
-      setMeta('meta[property="og:description"]', "property", "og:description", description);
-      setMeta('meta[name="twitter:description"]', "name", "twitter:description", description);
-    }
-    setMeta('meta[property="og:url"]', "property", "og:url", url);
-    setMeta('meta[property="og:type"]', "property", "og:type", ogType);
-
-    // Honor hash anchors (e.g. /about#ingredients) instead of always jumping to top
+    if (typeof window === "undefined") return;
     if (window.location.hash) {
       const id = window.location.hash.slice(1);
-      // Wait a tick for the section to render
       setTimeout(() => {
         const el = document.getElementById(id);
         if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -70,11 +47,23 @@ export const PageShell = ({ children, title, description, ogType = "website" }: 
     } else {
       window.scrollTo(0, 0);
     }
-  }, [title, description, ogType]);
+  }, [path]);
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      
+      <Helmet>
+        {fullTitle && <title>{fullTitle}</title>}
+        {description && <meta name="description" content={description} />}
+        <link rel="canonical" href={url} />
+        {fullTitle && <meta property="og:title" content={fullTitle} />}
+        {fullTitle && <meta name="twitter:title" content={fullTitle} />}
+        {description && <meta property="og:description" content={description} />}
+        {description && <meta name="twitter:description" content={description} />}
+        <meta property="og:url" content={url} />
+        <meta property="og:type" content={ogType} />
+        {ogImage && <meta property="og:image" content={ogImage} />}
+        {ogImage && <meta name="twitter:image" content={ogImage} />}
+      </Helmet>
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
