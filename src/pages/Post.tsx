@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { PageShell } from "@/components/tintelle/PageShell";
 import { Breadcrumbs } from "@/components/tintelle/Breadcrumbs";
 import { JournalHeroImage } from "@/components/tintelle/JournalHeroImage";
@@ -88,7 +89,9 @@ const Post = () => {
 
   return (
     <PageShell title={post.title} description={post.excerpt.slice(0, 155)} ogType="article">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(articleJsonLd)}</script>
+      </Helmet>
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Journal", href: "/journal" }, { label: post.category }]} />
 
       <article className="max-w-3xl mx-auto px-6 pb-16">

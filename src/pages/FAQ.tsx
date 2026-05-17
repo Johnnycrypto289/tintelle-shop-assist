@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { PageShell } from "@/components/tintelle/PageShell";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
@@ -62,7 +63,9 @@ const FAQ = () => {
 
   return (
     <PageShell title="FAQ" description="Frequently asked questions about Tintelle products, shipping, and returns.">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(faqJsonLd)}</script>
+      </Helmet>
       <section className="container pt-14 pb-10">
         <p className="text-xs tracking-[0.3em] uppercase text-taupe">Help center</p>
         <h1 className="font-serif text-4xl md:text-6xl text-mauve mt-3 leading-[1.05]">

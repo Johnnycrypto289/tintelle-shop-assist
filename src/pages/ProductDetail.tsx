@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { ArrowLeft, Heart, Loader2 } from "lucide-react";
 import { PageShell } from "@/components/tintelle/PageShell";
 import { Breadcrumbs } from "@/components/tintelle/Breadcrumbs";
@@ -196,7 +197,9 @@ const ProductDetail = () => {
   return (
     <PageShell title={product?.node.title} description={product?.node.description?.slice(0, 155)} ogType="product">
       {productJsonLd && (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
+        <Helmet>
+          <script type="application/ld+json">{JSON.stringify(productJsonLd)}</script>
+        </Helmet>
       )}
       <Breadcrumbs
         items={[
