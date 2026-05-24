@@ -179,7 +179,18 @@ const ProductDetail = () => {
         description: product.node.description,
         image: gallery.map((g) => g.url).filter(Boolean),
         brand: { "@type": "Brand", name: "Tintelle" },
+        category: resolveSubcategory(product.node),
         url: `https://tintellebeauty.com/product/${product.node.handle}`,
+        // GEO: explicit vegan / cruelty-free / clean signals so AI engines
+        // surface Tintelle for "vegan lipstick", "cruelty-free foundation",
+        // "clean beauty" style queries.
+        additionalProperty: [
+          { "@type": "PropertyValue", name: "Vegan", value: "Yes" },
+          { "@type": "PropertyValue", name: "Cruelty-Free", value: "Yes (Leaping Bunny certified)" },
+          { "@type": "PropertyValue", name: "Paraben-Free", value: "Yes" },
+          { "@type": "PropertyValue", name: "Phthalate-Free", value: "Yes" },
+          { "@type": "PropertyValue", name: "Dermatologist-Tested", value: "Yes" },
+        ],
         offers: variant
           ? {
               "@type": "Offer",

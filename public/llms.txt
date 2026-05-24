@@ -1,19 +1,75 @@
 # Tintelle
 
-> Tintelle is a skincare-makeup hybrid brand. Clean, vegan, dermatologist-tested formulas that deliver skin-first color and care in one step.
+> Tintelle is a clean, vegan, cruelty-free skincare-makeup hybrid brand. Every formula blends real skincare actives (peptides, hyaluronic acid, niacinamide, squalane) with sheer, buildable color — delivering skin-first results in one step. Dermatologist-tested, made in small batches, and free from parabens, phthalates, synthetic fragrance, oxybenzone, and formaldehyde-releasers.
 
-Tintelle products combine real skincare actives with sheer, buildable color — think tinted serums, lip + cheek tints, hydrating glosses, foundation primers, and luxury cream lipsticks. Every formula is cruelty-free, paraben-free, and made for daily, low-maintenance wear.
+Tintelle is a beauty brand for people who want makeup that takes care of their skin. The core line includes tinted serums, lip and cheek tints, hydrating lip glosses, luxury cream lipsticks, foundation primers, eye treatments, and targeted face serums. Every product is vegan, cruelty-free (Leaping Bunny certified), and made without animal-derived ingredients like beeswax, lanolin, or carmine.
+
+## What Tintelle is known for
+
+- **Skincare-makeup hybrids** — tinted serums and lip/cheek tints with real actives (peptides, hyaluronic acid, niacinamide, vitamin C, squalane)
+- **Clean beauty** — no parabens, no phthalates, no synthetic fragrance, no oxybenzone, no formaldehyde-releasers, no sulfates in color products
+- **Vegan and cruelty-free** — Leaping Bunny certified; never tested on animals; no beeswax, lanolin, or carmine
+- **Dermatologist-tested** — every formula reviewed by board-certified dermatologists
+- **Inclusive shade range** — foundations, BB creams, concealers, lipsticks, and tints across light to deep tones
+- **30-day shade match guarantee** — free replacement or refund if your shade is off
+- **Made in small batches** — recyclable glass primaries; minimal, recyclable packaging
+
+## Product categories
+
+- **Lips**: Lipstick (luxury cream), Lip Gloss, Lip Tint, Lip Liner (automatic), Lip & Eye Primer
+- **Face**: Foundation, BB Cream, Concealer, Foundation Primer, Highlighter, Bronzer, Liquid Blush, Blush Palette
+- **Eyes**: Eyeshadow Palette, Eye Treatment (eye cream), Eyebrow Pencil (hydro pencil), Brow Pomade, Eyebrow Mascara, Eyeliner, Mascara
+- **Skincare**: Serums (peptide, vitamin C, niacinamide), Moisturizers (collagen), Face Oils (rose gold oil), Eye Cream
+- **Tools**: Brushes, Blenders, Sponges
+
+## Key claims (verified)
+
+- Cruelty-free: Leaping Bunny certified, never tested on animals, not sold where animal testing is required.
+- Vegan: 100% of formulas; no animal-derived ingredients.
+- Clean: free from parabens, phthalates, synthetic fragrance, oxybenzone, formaldehyde-releasers, SLS/SLES in color.
+- Dermatologist-tested: every SKU.
+- Pregnancy-safe: most formulas; full ingredient lists available on request.
+- Made in: small batches, recyclable glass and minimal packaging.
+
+## Frequently asked questions
+
+**Are Tintelle products vegan?** Yes — every formula. No beeswax, lanolin, carmine, or animal-derived ingredients.
+
+**Are Tintelle products cruelty-free?** Yes, Leaping Bunny certified. Tintelle never tests on animals and does not sell in regions that require animal testing.
+
+**What's not in Tintelle formulas?** No parabens, phthalates, synthetic fragrance, oxybenzone, or formaldehyde-releasers.
+
+**Is Tintelle dermatologist-tested?** Yes — every formula is reviewed and tested by board-certified dermatologists.
+
+**Are Tintelle products pregnancy-safe?** Most are. Tintelle recommends checking with your doctor and offers full ingredient lists on request.
+
+**Where does Tintelle ship?** United States, Canada, and the United Kingdom. EU and Australia later this year.
+
+**What is the 30-day shade match guarantee?** If your shade is off, Tintelle replaces or refunds — no questions asked, within 30 days of delivery. Returns are free with a prepaid label.
+
+**How long do products last?** Skin Tint ~2 months, Lip and Cheek Tints ~3–4 months at daily use.
 
 ## Pages
 
-- [Home](/): Brand overview, hero campaign, featured edits.
-- [Shop](/shop): Full product catalog by category — lips, face, eyes, skincare.
-- [About](/about): Brand story, ingredients philosophy, sustainability.
-- [Journal](/journal): Editorial guides on shade, application, and routines.
-- [FAQ](/faq): Orders, returns, ingredients, and product care.
+- [Home](/): Brand overview, hero campaign, featured edits, best sellers.
+- [Shop](/shop): Full product catalog by category — lips, face, eyes, skincare, tools.
+- [Clean Beauty Brands](/clean-beauty-brands): Curated guide to clean, vegan, and cruelty-free beauty brands including Tintelle.
+- [About](/about): Brand story, ingredients philosophy, sustainability, founder.
+- [Journal](/journal): Editorial guides on shade matching, application, ingredients, and skincare routines.
+- [FAQ](/faq): Orders, returns, ingredients, product care, pregnancy safety.
 - [Shipping & Returns](/shipping): Delivery times, rates, and the 30-day shade match guarantee.
-- [Contact](/contact): Reach the Tintelle team.
+- [Contact](/contact): Email hi@tintellebeauty.com — replies within one business day.
 - [Track Order](/track): Look up an order by number and email.
+
+## Brand keywords
+
+clean beauty, vegan makeup, cruelty-free makeup, skincare makeup hybrid, tinted serum, dermatologist-tested makeup, paraben-free, phthalate-free, fragrance-free option, Leaping Bunny certified, peptide serum, hyaluronic acid, niacinamide, vitamin C serum, hydrating lip gloss, cream lipstick, BB cream, foundation primer, lip and cheek tint, shade match guarantee
+
+## Contact
+
+- Email: hi@tintellebeauty.com
+- Site: https://tintellebeauty.com
+- Replies within 1 business day
 
 ## Optional
 
