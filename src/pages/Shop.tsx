@@ -327,7 +327,7 @@ const Shop = () => {
                   if (el) sectionRefs.current.set(groupName, el);
                   else sectionRefs.current.delete(groupName);
                 }}
-                className="scroll-mt-32 md:scroll-mt-40"
+                className="scroll-mt-44 md:scroll-mt-52"
               >
                 <div className="flex items-baseline justify-between mb-5 md:mb-8 pb-2 md:pb-3 border-b border-border">
                   <h2 className="font-serif text-2xl md:text-3xl text-mauve">{groupName}</h2>
