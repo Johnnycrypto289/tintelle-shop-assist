@@ -285,7 +285,7 @@ const Shop = () => {
 
         {/* Subcategory quick-jump chips: appears when there are 2+ groups */}
         {!isLoading && grouped && grouped.length >= 2 && (
-          <div className="sticky top-[64px] md:top-[80px] z-20 -mx-4 px-4 md:mx-0 md:px-0 bg-background/95 backdrop-blur-sm py-2 md:py-3 mb-6 md:mb-8 border-b border-border/60">
+          <div className="sticky top-[100px] md:top-[124px] z-20 -mx-4 px-4 md:mx-0 md:px-0 bg-background/95 backdrop-blur-sm py-2 md:py-3 mb-6 md:mb-8 border-b border-border/60">
             <div className="flex gap-2 md:gap-2.5 overflow-x-auto" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
               {grouped.map(([groupName, items]) => {
                 const isActive = activeGroup === groupName;

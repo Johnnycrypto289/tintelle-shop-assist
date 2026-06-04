@@ -132,6 +132,30 @@ export function formatPrice(amount: string | number, currency = "USD") {
   return new Intl.NumberFormat("en-US", { style: "currency", currency, minimumFractionDigits: 0 }).format(value);
 }
 
+/**
+ * Returns a resized Shopify CDN image URL. Shopify CDN supports `width`/`height`
+ * query params on `cdn.shopify.com` URLs and returns a smaller, faster image.
+ * Falls back to the original URL for non-Shopify sources.
+ */
+export function shopifyImg(url: string | undefined, width: number, height?: number): string {
+  if (!url) return "";
+  if (!/cdn\.shopify\.com|myshopify\.com/.test(url)) return url;
+  try {
+    const u = new URL(url);
+    u.searchParams.set("width", String(width));
+    if (height) u.searchParams.set("height", String(height));
+    u.searchParams.set("crop", "center");
+    return u.toString();
+  } catch {
+    return url;
+  }
+}
+
+export function shopifySrcSet(url: string | undefined, widths: number[] = [300, 480, 720, 960]): string {
+  if (!url) return "";
+  return widths.map((w) => `${shopifyImg(url, w)} ${w}w`).join(", ");
+}
+
 // ===== Shopify Customer Accounts (Storefront API) =====
 
 export interface ShopifyCustomer {

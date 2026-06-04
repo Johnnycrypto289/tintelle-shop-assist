@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/stores/cartStore";
 import { useWishlistStore } from "@/stores/wishlistStore";
-import { formatPrice, type ShopifyProduct } from "@/lib/shopify";
+import { formatPrice, shopifyImg, shopifySrcSet, type ShopifyProduct } from "@/lib/shopify";
 import { toast } from "sonner";
 
 interface ProductCardProps {
@@ -102,9 +102,14 @@ export const ProductCard = ({ product, fromCategory }: ProductCardProps) => {
               {images.map((img, i) => (
                 <img
                   key={img.url}
-                  src={img.url}
+                  src={shopifyImg(img.url, 600, 600)}
+                  srcSet={shopifySrcSet(img.url, [300, 480, 720, 960])}
+                  sizes="(min-width: 768px) 33vw, 50vw"
                   alt={img.altText || node.title}
+                  width={600}
+                  height={600}
                   loading={i === 0 ? "eager" : "lazy"}
+                  decoding="async"
                   className={`absolute inset-0 w-full h-full object-cover transition-all duration-500 ${
                     i === activeIdx ? "opacity-100" : "opacity-0"
                   } ${i === activeIdx && isHovering ? "scale-[1.03]" : ""}`}
@@ -119,12 +124,17 @@ export const ProductCard = ({ product, fromCategory }: ProductCardProps) => {
               className="md:hidden flex w-full h-full overflow-x-auto snap-x snap-mandatory"
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
-              {images.map((img) => (
+              {images.map((img, i) => (
                 <img
                   key={img.url}
-                  src={img.url}
+                  src={shopifyImg(img.url, 480, 480)}
+                  srcSet={shopifySrcSet(img.url, [240, 360, 480, 600])}
+                  sizes="50vw"
                   alt={img.altText || node.title}
-                  loading="lazy"
+                  width={480}
+                  height={480}
+                  loading={i === 0 ? "eager" : "lazy"}
+                  decoding="async"
                   className="w-full h-full flex-shrink-0 snap-center object-cover"
                 />
               ))}
