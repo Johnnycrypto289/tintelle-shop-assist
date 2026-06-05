@@ -171,6 +171,31 @@ export const BRAND_FAQS: BrandQA[] = [
     answer:
       "Drunk Elephant uses its own 'Suspicious 6' free-from list (essential oils, drying alcohols, silicones, fragrance, SLS, chemical sunscreens). It is not vegan across the line.",
   },
+  {
+    brand: "Charlotte Tilbury",
+    question: "Is Charlotte Tilbury clean or vegan?",
+    answer:
+      "Charlotte Tilbury is cruelty-free (since 2018) but not fully vegan — several lipstick shades, including Pillow Talk, contain carmine. The brand is not certified by EWG or Credo.",
+  },
+  {
+    brand: "Rare Beauty",
+    question: "Is Rare Beauty vegan and cruelty-free?",
+    answer:
+      "Rare Beauty is fully vegan and cruelty-free. It meets Sephora's Clean standard but is not Credo or EWG certified.",
+  },
+  {
+    brand: "Fenty Beauty",
+    question: "Is Fenty Beauty clean and vegan?",
+    answer:
+      "Fenty Beauty is cruelty-free. The line is mostly vegan but a small number of products contain beeswax or carmine — check individual product pages. Fenty is not Credo or EWG certified.",
+  },
+  {
+    brand: "Tintelle",
+    question: "Is Tintelle clean, vegan, and cruelty-free?",
+    answer:
+      "Yes — Tintelle is 100% vegan across every product, Leaping Bunny cruelty-free, dermatologist-tested, and formulated without parabens, phthalates, synthetic fragrance, oxybenzone, octinoxate, or EU-banned ingredients.",
+  },
+
 ];
 
 export const PILLAR_FAQS: { question: string; answer: string }[] = [
